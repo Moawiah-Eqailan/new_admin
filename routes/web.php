@@ -27,13 +27,14 @@ Route::middleware('auth')->group(function () {
 
     // Product Routes
     Route::controller(ProductController::class)->prefix('products')->group(function () {
-        Route::get('', 'index')->name('products');  
+        Route::get('', 'index')->name('products');
         Route::get('create', 'create')->name('products.create');
         Route::post('store', 'store')->name('products.store');
         Route::get('show/{id}', 'show')->name('products.show');
         Route::get('edit/{id}', 'edit')->name('products.edit');
         Route::put('edit/{id}', 'update')->name('products.update');
         Route::delete('destroy/{id}', 'destroy')->name('products.destroy');
+        Route::get('/search', 'search')->name('search');
     });
 
     // Category Routes
@@ -45,6 +46,7 @@ Route::middleware('auth')->group(function () {
         Route::get('edit/{id}', 'edit')->name('Categories.edit');
         Route::put('edit/{id}', 'update')->name('Categories.update');
         Route::delete('destroy/{id}', 'destroy')->name('Categories.destroy');
+        Route::get('/searchh', 'searchh')->name('searchh');
     });
 
     // User Routes
@@ -56,6 +58,7 @@ Route::middleware('auth')->group(function () {
         Route::get('edit/{id}', 'edit')->name('Users.edit');
         Route::put('edit/{id}', 'update')->name('Users.update');
         Route::delete('destroy/{id}', 'destroy')->name('Users.destroy');
+        Route::get('/ssearchh', 'ssearchh')->name('ssearchh');
     });
 
     // Profile Route

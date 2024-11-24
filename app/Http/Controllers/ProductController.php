@@ -42,17 +42,17 @@ class ProductController extends Controller
             'description' => 'required|string',
             'category_id' => 'required|integer',
         ]);
-    
+
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('products/images', 'public');
             $validatedData['product_image'] = $imagePath;
         }
-    
+
         Product::create($validatedData);
-    
+
         return redirect()->route('products')->with('success', 'Product added successfully.');
     }
-    
+
 
 
 
@@ -72,43 +72,43 @@ class ProductController extends Controller
      */
 
 
-     public function edit(string $product_id)
-     {
-         $product = Product::findOrFail($product_id);
-     
-         $categories = Category::pluck('category_name', 'category_id');
-     
-         return view('products.edit', compact('product', 'categories'));
-     }
-     
+    public function edit(string $product_id)
+    {
+        $product = Product::findOrFail($product_id);
+
+        $categories = Category::pluck('category_name', 'category_id');
+
+        return view('products.edit', compact('product', 'categories'));
+    }
+
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $product_id)
     {
         $product = Product::findOrFail($product_id);
-    
+
         if ($request->hasFile('image')) {
             if ($product->product_image && Storage::exists('public/' . $product->product_image)) {
                 Storage::delete('public/' . $product->product_image);
             }
-    
+
             $imagePath = $request->file('image')->store('products', 'public');
         } else {
             $imagePath = $product->product_image;
         }
-    
+
         $product->update([
             'product_name' => $request->title,
             'product_price' => $request->price,
             'description' => $request->description,
-            'category_id' => $request->category_id, 
-            'product_image' => $imagePath, 
+            'category_id' => $request->category_id,
+            'product_image' => $imagePath,
         ]);
-    
+
         return redirect()->route('products')->with('success', 'Product updated successfully');
     }
-    
+
 
 
     /**
@@ -121,5 +121,17 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('products')->with('success', 'Product deleted successfully');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $product = Product::where('product_id', $query)
+            ->orWhere('product_name', 'LIKE', "%$query%")
+            ->orWhere('category_id', 'LIKE', "%$query%")
+            ->get();
+
+        return view('products.index', ['product' => $product]);
     }
 }

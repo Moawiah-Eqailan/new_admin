@@ -5,6 +5,16 @@
 @section('contents')
 <div class="d-flex align-items-center justify-content-between">
     <h1 class="mb-0">List Users</h1>
+    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="GET" action="{{ route('ssearchh') }}">
+        <div class="input-group">
+            <input style="width: 250px;" type="text" name="query" class="form-control bg-light border-0 small" placeholder="Search by Id or Name" aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
+            </div>
+        </div>
+    </form>
     <a href="{{ route('Users.create') }}" class="btn btn-primary">Add Users</a>
 </div>
 <hr />
