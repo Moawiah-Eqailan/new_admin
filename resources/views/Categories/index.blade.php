@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Home Category')
+@section('title', 'Category')
 
 @section('contents')
 <div class="d-flex align-items-center justify-content-between">
-    <h1 class="mb-0">List Category</h1>
+    <!-- <h1 class="mb-0">List Category</h1> -->
     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="GET" action="{{ route('searchh') }}">
         <div class="input-group">
             <input style="width: 250px;" type="text" name="query" class="form-control bg-light border-0 small" placeholder="Search by Id or Name" aria-label="Search" aria-describedby="basic-addon2">
@@ -18,11 +18,7 @@
     <a href="{{ route('Categories.create') }}" class="btn btn-primary">Add Category</a>
 </div>
 <hr />
-@if(Session::has('success'))
-<div class="alert alert-success" role="alert">
-    {{ Session::get('success') }}
-</div>
-@endif
+
 <table class="table table-hover">
     <thead class="table-primary">
         <tr>
@@ -49,12 +45,22 @@
             <td class="align-middle">
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <a href="{{ route('Categories.show', $rs->category_id) }}" type="button" class="btn btn-secondary">Detail</a>
+                    @if(Session::has('success'))
+                    <script>
+                        Swal.fire({
+                            title: 'Success!',
+                            text: '{{ Session::get("success") }}',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                    </script>
+                    @endif
                     <a href="{{ route('Categories.edit', $rs->category_id)}}" type="button" class="btn btn-warning">Edit</a>
-                    <form action="{{ route('Categories.destroy', $rs->category_id) }}" method="POST" type="button" class="btn btn-danger p-0" onsubmit="return confirm('Delete?')">
+                    <form id="delete-form-{{ $rs->category_id }}" action="{{ route('Categories.destroy', $rs->category_id) }}" method="POST" style="display: none;">
                         @csrf
                         @method('DELETE')
-                        <button class="btn btn-danger m-0">Delete</button>
                     </form>
+                    <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ $rs->category_id }}')">Delete</button>
                 </div>
             </td>
         </tr>
@@ -66,4 +72,22 @@
         @endif
     </tbody>
 </table>
+<script>
+    function confirmDelete(userId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This action cannot be undone.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(`delete-form-${userId}`).submit();
+            }
+        });
+    }
+</script>
 @endsection

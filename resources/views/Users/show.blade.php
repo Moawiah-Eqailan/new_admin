@@ -6,10 +6,10 @@
     <h1 class="mb-0">Detail User</h1>
     <hr />
     <div class="row">
-        <div class="col mb-3">
+        <!-- <div class="col mb-3">
             <label class="form-label">Id</label>
             <input type="text" name="id" class="form-control" placeholder="Id" value="{{ $users->id }}" readonly>
-        </div>
+        </div> -->
         <div class="col mb-3">
             <label class="form-label">Name</label>
             <input type="text" name="name" class="form-control" placeholder="Name" value="{{ $users->name }}" readonly>

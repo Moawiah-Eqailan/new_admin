@@ -5,7 +5,11 @@
     <div class="sidebar-brand-icon rotate-n-15">
       <!-- <i class="fas fa-laugh-wink"></i> -->
     </div>
-    <div class="sidebar-brand-text mx-1">Admin Dashboard</div>
+    <div class="sidebar-brand-text mx-1">
+    <!-- <img width="100px" src="{{ asset('storage/image/batman1.png') }}" > -->
+    Admin Dashboard
+</div>
+
   </a>
 
   <!-- Divider -->

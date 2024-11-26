@@ -48,9 +48,9 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $users = User::findOrFail($id);
-  
+
         $users->update($request->all());
-  
+
         return redirect()->route('Users')->with('success', 'User updated successfully');
     }
 
@@ -64,15 +64,15 @@ class UserController extends Controller
 
         $users->delete();
 
-        return redirect()->route('Users')->with('success', 'Users deleted successfully');
+        return redirect()->route('Users')->with('success', 'User deleted successfully');
     }
+
+
     public function ssearchh(Request $request)
     {
         $query = $request->input('query');
 
-        $users = User::where('id', $query)
-            ->orWhere('name', 'LIKE', "%$query%")
-            ->get();
+        $users = User::where('name', 'LIKE', "%$query%")->get();
 
         return view('users.index', ['users' => $users]);
     }
