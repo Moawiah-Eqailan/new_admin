@@ -3,7 +3,6 @@
 @section('title', 'Create Users')
 
 @section('contents')
-<h1 class="mb-0">Add Users</h1>
 <hr />
 <form action="{{ route('Users.store') }}" method="POST" enctype="multipart/form-data">
     @csrf

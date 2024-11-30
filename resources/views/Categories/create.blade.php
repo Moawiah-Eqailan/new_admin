@@ -3,7 +3,6 @@
 @section('title', 'Create Category')
 
 @section('contents')
-<h1 class="mb-0">Add Category</h1>
 <hr />
 <form action="{{ route('Categories.store') }}" method="POST" enctype="multipart/form-data">
     @csrf

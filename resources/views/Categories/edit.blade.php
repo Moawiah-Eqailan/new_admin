@@ -3,7 +3,6 @@
 @section('title', 'Edit Category')
 
 @section('contents')
-<h1 class="mb-0">Edit Category</h1>
 <hr />
 <form action="{{ route('Categories.update', $category->category_id) }}" method="POST" enctype="multipart/form-data">
     @csrf
