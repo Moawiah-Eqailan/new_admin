@@ -57,13 +57,16 @@
                     </ul>
                     @if (Route::has('login'))
                     <ul class="navbar-nav ms-auto">
-                        @auth <div>
+                        @auth
+                        <div>
                             <a href="/favorites">
                                 <i class="fa-regular fa-heart" style="margin: 12px;"></i>
                             </a>
+
                             <a href="/cart">
                                 <i class="fa-solid fa-cart-shopping" style="margin: 12px;"></i>
                             </a>
+
                         </div>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -83,6 +86,7 @@
                                         <x-responsive-nav-link :href="route('logout')"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                             {{ __('Logout') }}
                                         </x-responsive-nav-link>
+                                    </form>
                             </ul>
                         </li>
                         @else
@@ -109,3 +113,25 @@
                 </div>
         </nav>
     </header>
+    <script>
+        document.querySelector('.fa-cart-shopping').addEventListener('click', function(event) {
+            @auth
+            return;
+            @else
+            event.preventDefault(); 
+            Swal.fire({
+                title: 'Please log in first',
+                text: 'You must log in to access your cart.',
+                icon: 'warning',
+                confirmButtonText: 'Log In',
+                showCancelButton: true,
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '{{ route('login') }}'; 
+                }
+            });
+            @endauth
+        });
+    </script>

@@ -119,9 +119,14 @@ Route::get('/favorites', [FavoriteController::class, 'index'])->name('Favorites'
 
 
 
-
-Route::middleware(['auth'])->group(function () {
-    Route::post('/cart/{itemId}/toggle', [CartController::class, 'addToCart'])->name('cart.toggle');
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-
-});
+    // Add item to cart
+    Route::post('/cart/{item_id}/add', [CartController::class, 'addToCart'])->name('cart.add');
+    
+    // View cart contents
+    Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+    
+    // Update quantity in cart
+    Route::POST('/cart/update/{cart_id}', [CartController::class, 'updateCart'])->name('cart.update');
+    
+    // Remove item from cart
+    Route::delete('/cart/remove/{cart_id}', [CartController::class, 'removeFromCart'])->name('cart.remove');

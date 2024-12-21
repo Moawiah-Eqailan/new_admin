@@ -24,13 +24,15 @@
                                                 <h4 class="card-title">{{ $cartItem->item->item_name }}</h4>
                                                 <hr>
                                                 <p class="card-text">{{ number_format($cartItem->item->item_price, 2) }} JOD</p>
-                                                
+
                                                 <form action="{{ route('cart.update', $cartItem->id) }}" method="POST">
                                                     @csrf
-                                                    @method('PUT')
-                                                    <input type="number" name="quantity" value="{{ $cartItem->quantity }}" min="1" required>
+                                                    @method('POST')
+                                                    <input type="number" name="quantity" value="{{ $cartItem->quantity }}" min="1" class="form-control" style="width: 80px;">
                                                     <button type="submit" class="btn btn-primary my-2">Update Quantity</button>
                                                 </form>
+                                                <p>Quantity: {{ $cartItem->quantity }}</p>
+
 
                                                 <form action="{{ route('cart.remove', $cartItem->id) }}" method="POST">
                                                     @csrf

@@ -13,10 +13,10 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');  // ربط بالـ users table
-            $table->foreignId('item_id')->constrained()->onDelete('cascade');  // ربط بالـ items table
-            $table->integer('quantity')->default(1);  // لتخزين كمية المنتج في السلة
-            $table->timestamps();  // لتخزين تاريخ الإنشاء والتعديل
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
+            $table->foreignId('item_id')->constrained()->onDelete('cascade');  
+            $table->integer('quantity')->default(1);  
+            $table->timestamps();  
         });
     }
 
@@ -25,6 +25,6 @@ class CreateCartsTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carts');  // حذف الجدول في حالة التراجع عن الـ migration
+        Schema::dropIfExists('carts');  
     }
 }
