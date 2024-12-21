@@ -19,9 +19,8 @@
     <a href="#" id="generateReport" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
         <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
     </a>
-
-
 </div>
+
 <div id="pageContent">
     <!-- Content Row -->
     <div class="row">
@@ -108,72 +107,55 @@
         </div>
     </div>
 
-    <!-- Content Row -->
-
-    <div class="row">
-
-        <!-- Area Chart -->
-        <!-- <div class="col-xl-8 col-lg-7"> -->
-        <!-- <div class="card shadow mb-4"> -->
-        <!-- Card Header - Dropdown -->
-        <!-- <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-
-                </div> -->
-        <!-- Card Body -->
-        <!-- <div class="card-body">
-                    <div class="chart-area">
-                        <div class="chartjs-size-monitor">
-                            <div class="chartjs-size-monitor-expand">
-                                <div class=""></div>
-                            </div>
-                            <div class="chartjs-size-monitor-shrink">
-                                <div class=""></div>
-                            </div>
-                        </div>
-                        <canvas id="myAreaChart" width="1528" height="640" style="display: block; height: 320px; width: 764px;" class="chartjs-render-monitor"></canvas>
-                    </div>
+    <!-- Statistics Table -->
+    <div class="row mb-4">
+        <div class="col-xl-12 col-md-12 mb-4">
+            <div class="card shadow h-100 py-2">
+                <div class="card-body">
+                    <h5 class="text-center text-primary">Statistics Overview</h5>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Statistic</th>
+                                <th scope="col">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Total Users</td>
+                                <td>150</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Total Tasks</td>
+                                <td>50</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Completed Tasks</td>
+                                <td>35</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>Pending Tasks</td>
+                                <td>15</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">5</th>
+                                <td>Pending Requests</td>
+                                <td>10</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div> -->
-
-        <!-- Pie Chart -->
-        <!-- <div class="col-xl-4 col-lg-5">
-            <div class="card shadow mb-4"> -->
-        <!-- Card Header - Dropdown -->
-        <!-- <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-
-                </div> -->
-        <!-- Card Body -->
-        <!-- <div class="card-body">
-                    <div class="chart-pie pt-4 pb-2">
-                        <div class="chartjs-size-monitor">
-                            <div class="chartjs-size-monitor-expand">
-                                <div class=""></div>
-                            </div>
-                            <div class="chartjs-size-monitor-shrink">
-                                <div class=""></div>
-                            </div>
-                        </div>
-                        <canvas id="myPieChart" width="698" height="490" style="display: block; height: 245px; width: 349px;" class="chartjs-render-monitor"></canvas>
-                    </div>
-                    <div class="mt-4 text-center small">
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-primary"></i> Direct
-                        </span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-success"></i> Social
-                        </span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-info"></i> Referral
-                        </span>
-                    </div>
-                </div> 
-            </div>
-        </div> -->
+        </div>
     </div>
+
 </div>
+
 <script>
     document.getElementById('generateReport').addEventListener('click', function() {
         const element = document.getElementById('pageContent');
@@ -195,38 +177,4 @@
     });
 </script>
 
-<!-- Content Row -->
-<!-- <div class="row"> -->
-<!-- Content Column -->
-<!-- <div class="col-lg-6 mb-4"> -->
-<!-- Project Card Example -->
-<!-- <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
-            </div>
-            <div class="card-body">
-                <h4 class="small font-weight-bold">Server Migration <span class="float-right">20%</span></h4>
-                <div class="progress mb-4">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <h4 class="small font-weight-bold">Sales Tracking <span class="float-right">40%</span></h4>
-                <div class="progress mb-4">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <h4 class="small font-weight-bold">Customer Database <span class="float-right">60%</span></h4>
-                <div class="progress mb-4">
-                    <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <h4 class="small font-weight-bold">Payout Details <span class="float-right">80%</span></h4>
-                <div class="progress mb-4">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <h4 class="small font-weight-bold">Account Setup <span class="float-right">Complete!</span></h4>
-                <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-<!-- </div> -->
 @endsection

@@ -21,6 +21,12 @@
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Dashboard</span></a>
   </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="{{ route('Categories') }}">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Category</span></a>
+  </li>
 
   <li class="nav-item">
     <a class="nav-link" href="{{ route('products') }}">
@@ -29,9 +35,9 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="{{ route('Categories') }}">
+    <a class="nav-link" href="{{ route('Items') }}">
       <i class="fas fa-fw fa-tachometer-alt"></i>
-      <span>Category</span></a>
+      <span>Item</span></a>
   </li>
 
   <li class="nav-item">

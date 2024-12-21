@@ -122,4 +122,11 @@ class CategoryController extends Controller
 
         return view('Categories.index', ['categories' => $categories]);
     }
+
+
+    public function app()
+    {
+        $categories = Category::all();
+        return view('layout.app', compact('categories'));
+    }
 }

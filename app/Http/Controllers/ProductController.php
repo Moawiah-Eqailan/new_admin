@@ -37,9 +37,7 @@ class ProductController extends Controller
     {
         $validatedData = $request->validate([
             'product_name' => 'required|string|max:255',
-            'product_price' => 'required|numeric',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'required|string',
             'category_id' => 'required|integer',
         ]);
 
@@ -100,8 +98,6 @@ class ProductController extends Controller
 
         $product->update([
             'product_name' => $request->title,
-            'product_price' => $request->price,
-            'description' => $request->description,
             'category_id' => $request->category_id,
             'product_image' => $imagePath,
         ]);
@@ -127,9 +123,10 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
-    
+        $product->items()->delete();
+
         $product->delete();
-    
+
         return redirect()->route('products')->with('success', 'Product deleted successfully');
     }
 
@@ -146,5 +143,27 @@ class ProductController extends Controller
             ->get();
 
         return view('products.index', ['product' => $product]);
+    }
+
+
+    public function app()
+    {
+        $product = Product::all();
+        return view('layout.app', compact('products'));
+    }
+
+
+    public function view()
+    {
+        $product = Product::all();
+        return view('product', compact('product'));
+    }
+
+    public function showProducts($category_id)
+    {
+        $product = Product::where('category_id', $category_id)->with('category')->get();
+        $categories = Category::pluck('category_name', 'category_id');
+
+        return view('product', compact('product', 'categories'));
     }
 }

@@ -45,17 +45,24 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required'
         ])->validate();
-  
+    
         if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed')
             ]);
         }
-  
+    
         $request->session()->regenerate();
-  
-        return redirect()->route('dashboard');
+    
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('dashboard'); 
+        }
+        
+        return redirect()->route('home');
+        
     }
+    
+  
   
     public function logout(Request $request)
     {

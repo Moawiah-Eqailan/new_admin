@@ -5,10 +5,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ItemController;
-use App\Http\Controllers\FavoriteController;
-use App\Http\Controllers\CartController;
-
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -53,18 +49,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/searchh', 'searchh')->name('searchh');
     });
 
-    // Item Routes
-    Route::controller(ItemController::class)->prefix('Items')->group(function () {
-        Route::get('', 'index')->name('Items');
-        Route::get('create', 'create')->name('Items.create');
-        Route::post('store', 'store')->name('Items.store');
-        Route::get('show/{id}', 'show')->name('Items.show');
-        Route::get('edit/{id}', 'edit')->name('Items.edit');
-        Route::put('edit/{id}', 'update')->name('Items.update');
-        Route::delete('destroy/{id}', 'destroy')->name('Items.destroy');
-        Route::get('/searrchh', 'searrchh')->name('searrchh');
-    });
-
     // User Routes
     Route::controller(UserController::class)->prefix('Users')->group(function () {
         Route::get('', 'index')->name('Users');
@@ -82,46 +66,3 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
-
-
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-
-
-Route::get('/Profile', function () {
-    return view('UserProfile');
-})->name('UserProfile');
-
-
-// home page Routes for users 
-Route::get('/', [CategoryController::class, 'app'])->name('home');
-
-// Product Routes for users
-Route::get('/product', [ProductController::class, 'view'])->name('product');
-
-
-Route::get('/product/{category_id}', [ProductController::class, 'showProducts'])->name('product');
-
-Route::get('/Item/{product_id}', [ItemController::class, 'showItem'])->name('Item');
-
-
-
-
-
-
-Route::get('/detail/{id}', [ItemController::class, 'detail'])->name('Detail');
-Route::post('/favorites/toggle/{id}', [FavoriteController::class, 'toggle']);
-Route::get('/favorites', [FavoriteController::class, 'index'])->name('Favorites');
-
-
-
-
-
-
-Route::middleware(['auth'])->group(function () {
-    Route::post('/cart/{itemId}/toggle', [CartController::class, 'addToCart'])->name('cart.toggle');
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-
-});

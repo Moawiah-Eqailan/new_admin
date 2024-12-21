@@ -20,11 +20,10 @@
             <label for="category_image" class="form-label">Edit Category Image</label>
             <input type="file" name="image" id="category_image" class="form-control" accept="image/*">
             <br>
-            <!-- عرض الصورة القديمة إذا كانت موجودة -->
             @if($category->category_image)
-                <div>
-                    <img src="{{ asset('storage/' . $category->category_image) }}" alt="Category Image" style="width: 200px; height: 200px; object-fit: cover;">
-                </div>
+            <div>
+                <img src="{{ asset('storage/' . $category->category_image) }}" alt="Category Image" style="width: 200px; height: 200px; object-fit: cover;">
+            </div>
             @endif
         </div>
     </div>

@@ -45,6 +45,10 @@
                             text: '{{ Session::get("success") }}',
                             icon: 'success',
                             confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '{{ route("Users") }}';
+                            }
                         });
                     </script>
                     @endif
@@ -79,4 +83,5 @@
         });
     }
 </script>
+
 @endsection

@@ -18,7 +18,7 @@
         <div class="col">
             <label for="image" class="form-label">Detail Image</label>
             <br>
-            <img src='{{asset("storage")}}/{{$product->product_image}}' class="card-img-top" style="width: 200px; height: 200px; object-fit: cover; ">
+            <img src='{{asset("storage")}}/{{$product->product_image}}' class="card-img-top" style="width: 100%; height: 200px; object-fit: contain;">
         </div>
     </div>
     <div class="row">

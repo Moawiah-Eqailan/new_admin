@@ -25,10 +25,10 @@
         <tr>
             <th>ID</th>
             <th>Product Name</th>
-            <th>Product Price</th>
+            <!-- <th>Product Price</th> -->
             <th>Product Image</th>
             <th>Category Id</th>
-            <th>Description</th>
+            <!-- <th>Description</th> -->
             <th>Action</th>
         </tr>
     </thead>
@@ -38,12 +38,13 @@
         <tr>
             <td class="align-middle">{{ $loop->iteration }}</td>
             <td class="align-middle">{{ $rs->product_name }}</td>
-            <td class="align-middle">{{ $rs->product_price }}</td>
-            <td class="align-middle"><img src="{{ asset('storage/' . $rs->product_image) }}" class="card-img-top" style="width: 200px; height: 200px; object-fit: cover;">
+            <!-- <td class="align-middle">{{ $rs->product_price }}</td> -->
+            <td class="align-middle"><img src="{{ asset('storage/' . $rs->product_image) }}" class="card-img-top" style="width: 100%; height: 200px; object-fit: contain;">
+
             </td>
             <td class="align-middle">{{ $rs->category_id }}</td>
 
-            <td class="align-middle">{{ $rs->description }}</td>
+            <!-- <td class="align-middle">{{ $rs->description }}</td> -->
             <td class="align-middle">
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <a href="{{ route('products.show', $rs->product_id) }}" type="button" class="btn btn-secondary">Detail</a>
@@ -54,6 +55,10 @@
                             text: '{{ Session::get("success") }}',
                             icon: 'success',
                             confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '{{ route("products") }}';
+                            }
                         });
                     </script>
                     @endif
@@ -91,5 +96,6 @@
             }
         });
     }
+</script>
 </script>
 @endsection

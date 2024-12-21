@@ -45,6 +45,7 @@
             <td class="align-middle">
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <a href="{{ route('Categories.show', $rs->category_id) }}" type="button" class="btn btn-secondary">Detail</a>
+
                     @if(Session::has('success'))
                     <script>
                         Swal.fire({
@@ -52,6 +53,10 @@
                             text: '{{ Session::get("success") }}',
                             icon: 'success',
                             confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '{{ route("Categories") }}';
+                            }
                         });
                     </script>
                     @endif
@@ -61,6 +66,7 @@
                         @method('DELETE')
                     </form>
                     <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ $rs->category_id }}')">Delete</button>
+                </div>
                 </div>
             </td>
         </tr>

@@ -10,9 +10,9 @@
         <div class="col">
             <input type="text" name="product_name" class="form-control" placeholder="Product Name">
         </div>
-        <div class="col">
+        <!-- <div class="col">
             <input type="text" name="product_price" class="form-control" placeholder="Product Price">
-        </div>
+        </div> -->
     </div>
 
     <div class="row mb-3">
@@ -34,9 +34,9 @@
                 </select>
             </div>
         </div>
-        <div class="col">
+        <!-- <div class="col">
             <textarea class="form-control" name="description" placeholder="Descriptoin"></textarea>
-        </div>
+        </div> -->
     </div>
     <div class="row">
         <div class="d-grid">
