@@ -1,48 +1,78 @@
 @include('layout.header')
 
-<section id="cart" class="position-relative">
-    <div class="container my-5 py-5">
-        <h2 class="text-center my-5">Shopping <span class="text-primary">Cart</span></h2>
+<head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        @if(empty($cartItems) || $cartItems->isEmpty())
-        <div class="detail mb-4 text-center">
-            <p class="hero-paragraph">Your cart is empty.</p>
-        </div>
-        @else
-        <div class="swiper items-swiper mb-5">
-            <div class="swiper-wrapper">
-                <div class="py-12">
-                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                            <div class="p-6 text-gray-900">
-                                <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
+</head>
+
+<section class="position-relative">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12">
+                <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="col-lg-8">
+                                <div class="p-5">
+                                    @if(empty($cartItems) || $cartItems->isEmpty())
+                                    <div class="text-center">
+                                        <h5>Your cart is empty.</h5>
+                                    </div>
+                                    @else
+                                    <div class="d-flex justify-content-between align-items-center mb-5">
+                                        <h1 class="fw-bold mb-0">Shopping  <span class="text-primary">Cart</span></h1>
+
+                                    </div>
+                                    <hr class="my-4">
+
                                     @foreach($cartItems as $cartItem)
-                                    <div class="item-card" style="flex: 1 0 21%; max-width: 18rem;">
-                                        <div class="card">
-                                            <img src="{{ asset('storage/' . $cartItem->item->item_image) }}" class="card-img-top" style="width: 200px; height: 200px; object-fit: cover;">
-                                            <div class="card-body p-4" style="text-align: center;">
-                                                <h4 class="card-title">{{ $cartItem->item->item_name }}</h4>
-                                                <hr>
-                                                <p class="card-text">{{ number_format($cartItem->item->item_price, 2) }} JOD</p>
-
-                                                <form action="{{ route('cart.update', $cartItem->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('POST')
-                                                    <input type="number" name="quantity" value="{{ $cartItem->quantity }}" min="1" class="form-control" style="width: 80px;">
-                                                    <button type="submit" class="btn btn-primary my-2">Update Quantity</button>
-                                                </form>
-                                                <p>Quantity: {{ $cartItem->quantity }}</p>
-
-
-                                                <form action="{{ route('cart.remove', $cartItem->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Remove</button>
-                                                </form>
-                                            </div>
+                                    <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                        <div class="col-md-2 col-lg-2 col-xl-2">
+                                            <img src="{{ asset('storage/' . $cartItem->item->item_image) }}" class="img-fluid rounded-3" alt="{{ $cartItem->item->item_name }}">
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-xl-3">
+                                            <h6 class="mb-0">{{ $cartItem->item->item_name }}</h6>
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                          
+                                                <button class="btn btn-link px-2" type="button" onclick="this.nextElementSibling.stepDown()">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                                <input id="form1" min="1" name="quantity" value="{{ $cartItem->quantity }}" type="number" class="form-control form-control-sm quantity-input" style="width: 60px;" data-id="{{ $cartItem->id }}" readonly disabled/>
+                                                <button class="btn btn-link px-2" type="button" onclick="this.previousElementSibling.stepUp()">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                        </div>
+                                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                            <h6 class="mb-0 item-total-price">{{$cartItem->item->item_price}}</h6>
+                                        </div>
+                                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                            <form action="{{ route('cart.remove', $cartItem->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
+                                            </form>
                                         </div>
                                     </div>
+                                    <hr class="my-4">
                                     @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-lg-4 bg-body-tertiary">
+                                <div class="p-5">
+                                    <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                                    <hr class="my-4">
+                                    <div class="d-flex justify-content-between mb-4">
+                                        <h5 class="text-uppercase">Items</h5>
+                                        <h5>{{ $cartItems->count() }}</h5>
+                                    </div>
+                                    <hr class="my-4">
+                                    <div class="d-flex justify-content-between mb-5">
+                                        <h5 class="text-uppercase">Total</h5>
+                                        <h5 id="total-price">{{ number_format($cartItems->sum(function ($item) { return $item->item->item_price * $item->quantity; }), 2) }} JOD</h5>
+                                    </div>
+                                    <button class="btn btn-primary btn-lg btn-block">Proceed to Checkout</button>
                                 </div>
                             </div>
                         </div>
@@ -50,14 +80,57 @@
                 </div>
             </div>
         </div>
-
-        <!-- Total Price -->
-        <div class="total text-center my-5">
-            <h3>Total: {{ number_format($cartItems->sum(function ($item) { return $item->item->item_price * $item->quantity; }), 2) }} JOD</h3>
-        </div>
-
-        @endif
     </div>
 </section>
-
 @include('layout.footer')
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const quantityInputs = document.querySelectorAll(".quantity-input");
+        const totalPrice = document.getElementById("total-price");
+
+        quantityInputs.forEach(input => {
+            input.previousElementSibling.addEventListener("click", function() {
+                updateQuantity(input, -0); 
+            });
+
+            input.nextElementSibling.addEventListener("click", function() {
+                updateQuantity(input, 0); 
+            });
+        });
+
+        function updateQuantity(input, change) {
+            let newQuantity = parseInt(input.value) + change;
+
+            if (newQuantity < 1) newQuantity = 1;
+            input.value = newQuantity;
+
+            const cartItemId = input.dataset.id;
+
+            fetch(`/cart/update/${cartItemId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({
+                        quantity: newQuantity
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+
+
+                        totalPrice.textContent = data.total.toFixed(2);
+                    } else {
+                        alert("Failed to update quantity.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error updating quantity:", error);
+                });
+        }
+    });
+</script>

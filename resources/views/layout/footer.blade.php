@@ -2,9 +2,10 @@
     <div class="container text-center">
         <p>&copy; 2024 BAT MAN</p>
         <div class="d-flex justify-content-center">
-            <a href="#" class="text-white mx-2">Facebook</a>
-            <a href="#" class="text-white mx-2">Twitter</a>
-            <a href="#" class="text-white mx-2">Instagram</a>
+            <a href="https://www.facebook.com" class="text-white mx-2">Facebook</a>
+            <a href="https://www.x.com" class="text-white mx-2">𝕏</a>
+            <a href="https://www.instagram.com" class="text-white mx-2">Instagram</a>
+
         </div>
     </div>
 </footer>

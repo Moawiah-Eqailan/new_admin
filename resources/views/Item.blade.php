@@ -32,9 +32,9 @@
                                                     <a href="{{ route('Detail', $item->id) }}" class="btn btn-primary">View More</a>
                                                 </div>
                                                 <br>
-                                                <div class="d-flex justify-content-center">
+                                                <!-- <div class="d-flex justify-content-center">
                                                     <a href="cart" class="btn btn-primary">Add To Cart</a>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>

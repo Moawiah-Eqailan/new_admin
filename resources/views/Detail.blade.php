@@ -30,15 +30,13 @@
                                     <hr>
                                     <p class="card-text">{{ $item->item_description }}</p>
                                     <p class="card-text"><strong>Price:</strong> {{ $item->item_price }} Jd</p>
-                                    
-                                    <!-- إضافة حقل الكمية -->
+
                                     <div class="d-flex align-items-center">
                                         <label for="quantity" class="me-2">Quantity:</label>
-                                        <input type="number" name="quantity" id="quantity" min="1" value="1" class="form-control" style="width: 80px;">
+                                        <input type="number" name="quantity" id="quantity" min="1" value="1" class="form-control" style="width: 80px;" readonly disabled/>
                                     </div>
                                     <div class="d-flex mt-4">
                                         <a href="{{ url()->previous() }}" class="btn btn-primary me-2">Back</a>
-                                        <!-- تحديث عملية إضافة إلى السلة مع الكمية -->
                                         <button type="button" class="btn btn-primary me-2" onclick="addToCart('{{ $item->id }}')">Add to Cart</button>
                                     </div>
                                 </div>
@@ -151,59 +149,47 @@
     };
 
 
-
     function addToCart(itemId) {
-        let quantity = document.getElementById('quantity').value; 
+        let quantity = document.getElementById('quantity').value;
         console.log('Adding to cart:', itemId, 'Quantity:', quantity);
 
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'Do you really want to add this product to your cart?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, add it!',
-            cancelButtonText: 'Cancel',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch(`/cart/${itemId}/add`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                    body: JSON.stringify({
-                        item_id: itemId,
-                        quantity: quantity, 
-                    }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Item Added to Cart!',
-                            text: data.message,
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Failed!',
-                            text: 'Failed to add this product to your cart. Please try again.',
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
+
+        fetch(`/cart/${itemId}/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                body: JSON.stringify({
+                    item_id: itemId,
+                    quantity: quantity,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Item Added to Cart!',
+                        text: data.message,
+                    });
+                } else {
                     Swal.fire({
                         icon: 'error',
-                        title: 'An error occurred!',
-                        text: 'An error occurred. Please try again.',
+                        title: 'Failed!',
+                        text: 'Failed to add this product to your cart. Please try again.',
                     });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'An error occurred!',
+                    text: 'An error occurred. Please try again.',
                 });
-            }
-        });
-    }
+            });
+    };
 </script>
 
 

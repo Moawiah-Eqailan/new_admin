@@ -76,4 +76,25 @@ class UserController extends Controller
 
         return view('users.index', ['users' => $users]);
     }
+
+    public function updateUserProfile(Request $request)
+    {
+        $user = auth()->user();
+    
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'phone' => 'nullable|string|max:15',
+            'address' => 'nullable|string|max:255',
+            'postcode' => 'nullable|string|max:10',
+            'state' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+        ]);
+    
+        $user->update($validated);
+    
+        return redirect()->back()->with('success', 'Profile updated successfully!');
+    }
+    
+    
 }

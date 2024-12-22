@@ -12,7 +12,7 @@ class CartController extends Controller
 {
     public function addToCart(Request $request, $item_id)
     {
-        $item = Item::findOrFail($item_id); 
+        $item = Item::findOrFail($item_id);
 
         if (auth()->check()) {
             $cartItem = Cart::where('item_id', $item_id)->where('user_id', auth()->id())->first();
@@ -29,7 +29,7 @@ class CartController extends Controller
                 ]);
             }
         } else {
-            $cart = session()->get('cart', []);  
+            $cart = session()->get('cart', []);
 
             if (isset($cart[$item_id])) {
                 $cart[$item_id]['quantity']++;
@@ -55,16 +55,29 @@ class CartController extends Controller
             $cartItem = Cart::findOrFail($cartId);
             $cartItem->quantity = $request->quantity;
             $cartItem->save();
+
+            $total = Cart::with('item')->where('user_id', auth()->id())->get()->sum(function ($item) {
+                return $item->item->item_price * $item->quantity;
+            });
+
+            return response()->json(['success' => true, 'total' => $total]);
         } else {
             $cart = session()->get('cart', []);
             if (isset($cart[$cartId])) {
                 $cart[$cartId]['quantity'] = $request->quantity;
                 session()->put('cart', $cart);
+
+                $total = array_reduce($cart, function ($carry, $item) {
+                    return $carry + ($item['price'] * $item['quantity']);
+                }, 0);
+
+                return response()->json(['success' => true, 'total' => $total]);
             }
         }
 
-        return redirect()->route('cart.view');
+        return response()->json(['success' => false, 'message' => 'Item not found']);
     }
+
 
     public function removeFromCart($cartId)
     {

@@ -94,6 +94,9 @@ Route::get('/Profile', function () {
     return view('UserProfile');
 })->name('UserProfile');
 
+Route::post('/profile/update', [UserController::class, 'updateUserProfile'])->name('profile.update');
+
+
 
 // home page Routes for users 
 Route::get('/', [CategoryController::class, 'app'])->name('home');
