@@ -28,7 +28,7 @@
                                         <div class="card">
                                             <img src="{{ asset('storage/' . $rs->product_image) }}" class="card-img-top" style="width: 100%; height: 200px; object-fit: contain;">
                                             <div class="card-body p-4 text-center">
-                                                <h4 class="card-title">{{ $rs->product_name }}</h4>
+                                                <h6 class="card-title">{{ $rs->product_name }}</h6>
                                                 <hr>
                                                 <div class="d-flex justify-content-center">
                                                     <a href="{{ route('Item', $rs->product_id) }}" class="btn btn-primary">View More</a>

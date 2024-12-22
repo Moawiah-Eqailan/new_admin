@@ -27,7 +27,7 @@
                                             <div class="card-body p-4" style="text-align: center;">
                                                 <h4 style="font-size: 16px;" class="card-title">{{ $item->item_name }}</h4>
                                                 <hr>
-                                                <p class="card-text">{{ $item->item_price }}</p>
+                                                <p class="card-text">{{ $item->item_price }} JOD</p>
                                                 <div class="d-flex justify-content-center">
                                                     <a href="{{ route('Detail', $item->id) }}" class="btn btn-primary">View More</a>
                                                 </div>
