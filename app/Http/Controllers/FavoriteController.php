@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Session;
 
 class FavoriteController extends Controller
@@ -57,5 +58,30 @@ class FavoriteController extends Controller
         return view('Favorites', compact('favoriteItems'));
     }
 
+    public function addToCart(Request $request, $item_id)
+    {
+        $item = Item::findOrFail($item_id);
+
+        if (auth()->check()) {
+            $cartItem = Cart::where('item_id', $item_id)->where('user_id', auth()->id())->first();
+
+            if ($cartItem) {
+                $cartItem->quantity += 1;
+                $cartItem->save();
+            } else {
+                Cart::create([
+                    'user_id' => auth()->id(),
+                    'item_id' => $item_id,
+                    'quantity' => 1,
+                    'created_at' => Carbon::now(),
+                ]);
+            }
+        } 
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Item added to the cart.',
+        ]);
+    }
     
 }

@@ -35,9 +35,15 @@
                                                 <hr>
                                                 <p class="card-text">{{ $item->item_price }} JOD</p>
                                                 <div class="d-flex justify-content-center">
-                                                    <a href="{{ route('Detail', $item->id) }}" class="btn btn-primary">View More</a>
+                                                    <a href="{{ route('Detail', $item->id) }}" class="btn btn-primary" style="margin: 2px;"><i class="fa-solid fa-eye"></i></a>
+
+                                                    <button style="margin: 2px;" type="button" class="btn btn-primary" onclick="addToCart('{{ $item->id }}')">
+                                                        <i class="fa-solid fa-cart-shopping"></i>
+                                                    </button>
                                                 </div>
-                                                <br>
+                                                <div class="mt-4">
+                                                    <!-- <a href="{{ url()->previous() }}" class="btn btn-primary me-2">Back</a> -->
+                                                </div>
                                                 <!-- <div class="d-flex justify-content-center">
                                                     <a href="cart" class="btn btn-primary">Add To Cart</a>
                                                 </div> -->
@@ -149,7 +155,46 @@
                     });
                 });
         }
-    }
+    };
+
+    function addToCart(itemId) {
+
+
+        fetch(`/item/${itemId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                body: JSON.stringify({
+                    item_id: itemId,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Item Added to Item!',
+                        text: data.message,
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed!',
+                        text: 'Failed to add this product to your Item. Please try again.',
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'An error occurred!',
+                    text: 'An error occurred. Please try again.',
+                });
+            });
+    };
 </script>
 
 @include('layout.footer')

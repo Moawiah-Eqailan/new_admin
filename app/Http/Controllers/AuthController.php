@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Item;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -97,6 +98,14 @@ class AuthController extends Controller
         return view('dashboard', compact('totalUsers', 'totalProducts', 'totalPurchases' , 'totalCart', 'totalPrice'));
     }
 
+
+    public function findParts()
+    {
+        $categories = Category::all(); 
+        $items = Item::all();         
+        $products = Product::all();   
+        return view('filter', compact('categories', 'items', 'products'));
+    }
     
 }
 

@@ -4,18 +4,10 @@
     @yield('content')
     <!-- hero section start  -->
     <section id="hero" class=" position-relative overflow-hidden">
-        <div class="pattern-overlay pattern-right position-absolute">
-            <img src="{{ asset('images/hero-pattern-right.png') }}" alt="Image">
-
-        </div>
-        <div class="pattern-overlay pattern-left position-absolute">
-            <img src="{{ asset('images/hero-pattern-left.png') }}" alt="pattern">
-        </div>
-        <div class="hero-content container text-center">
+        <div class=" container text-center">
             <div class="row">
-                <div class="detail mb-4">
-                    <!-- <h1 class="">Find your <span class="text-primary"> rental car </span> </h1> -->
-                    <h1 class=""> Select your car model and find<span class="text-primary"> the part you need </span> </h1>
+                <div class="detail mb-4" style="padding:12px">
+                    <h1> Select your car model and find<span class="text-primary"> the part you need </span> </h1>
                     <p class="hero-paragraph">We provide the best selection of car parts for your needs.</p>
                 </div>
             </div>
@@ -25,7 +17,6 @@
     <!-- search section start  -->
     <section id="search">
         <div class="container search-block p-5">
-
             <form class="row">
                 <div class="col-12 col-md-6 col-lg-3 mt-4 mt-lg-0">
                     <label for="category_id" class="label-style text-capitalize form-label">Category</label>
@@ -41,7 +32,6 @@
                         </span>
                     </div>
                 </div>
-
                 <div class="col-12 col-md-6 col-lg-3 mt-4 mt-lg-0">
                     <label for="product_id" class="label-style text-capitalize form-label">Product</label>
                     <div class="input-group date">
@@ -53,7 +43,6 @@
                         </span>
                     </div>
                 </div>
-
                 <div class="col-12 col-md-6 col-lg-3 mt-4 mt-lg-0">
                     <label for="item_id" class="label-style text-capitalize form-label">Item</label>
                     <div class="input-group date">
@@ -65,24 +54,23 @@
                         </span>
                     </div>
                 </div>
+                
             </form>
-
-
-
+           
             <div class="d-grid gap-2 mt-4">
-                <!-- <button class="btn btn-primary " type="button">Find your car</button> -->
-                <button class="btn btn-primary " type="button">Find your parts </button>
+                <a href="{{route ('filter')}}" class="btn btn-primary">Find your parts</a>
             </div>
-        </div>
 
+        </div>
     </section>
 
     <!-- process section start  -->
-    <section id="process">
-        <div class=" process-content container">
+    <section id="process" >
+        <div class=" process-content container" class="my-6">
+            <br><br>
             <h2 class=" text-center my-5 pb-5">Our Car Parts <span class="text-primary"> Selection Process </span> </h2>
             <hr class="progress-line">
-            <div class="row process-block">
+            <div id="row process-block">
                 <div class="col-6 col-lg-3 text-start my-4">
                     <div class="bullet"></div>
                     <h5 class="text-uppercase mt-5"> Choose the Parts You Need </h5>
@@ -118,10 +106,8 @@
     <section id="rental" class="position-relative">
         <div class="container my-5 py-5">
             <h2 class="text-center my-5">Cars for <span class="text-primary">Category</span></h2>
-
             <div class="swiper rental-swiper mb-5">
                 <div class="swiper-wrapper">
-
                     <div class="py-12">
                         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -149,13 +135,14 @@
                         </div>
                     </div>
 
-
                 </div>
             </div>
         </div>
     </section>
-
 </main>
+
+
+
 <script>
     document.getElementById('category_id').addEventListener('change', function() {
         const categoryId = this.value;

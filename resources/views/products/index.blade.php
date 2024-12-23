@@ -48,7 +48,7 @@
             <!-- <td class="align-middle">{{ $rs->description }}</td> -->
             <td class="align-middle">
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <a href="{{ route('products.show', $rs->product_id) }}" type="button" class="btn btn-secondary">Detail</a>
+                    <a href="{{ route('products.show', $rs->product_id) }}" type="button"  class="btn btn-secondary">Detail</a>
                     @if(Session::has('success'))
                     <script>
                         Swal.fire({

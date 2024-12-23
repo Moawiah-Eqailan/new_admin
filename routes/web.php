@@ -104,9 +104,14 @@ Route::get('/welcome', function () {
 });
 
 
-Route::get('/Profile', function () {
+
+Route::get('/profile', function () {
     return view('UserProfile');
 })->name('UserProfile');
+
+Route::get('/editUserProfile', function () {
+    return view('EditUserProfile');
+})->name('EditUserProfile');
 
 Route::post('/profile/update', [UserController::class, 'updateUserProfile'])->name('profile.update');
 
@@ -129,35 +134,33 @@ Route::get('/Item/{product_id}', [ItemController::class, 'showItem'])->name('Ite
 
 
 
-
-
-
 Route::get('/detail/{id}', [ItemController::class, 'detail'])->name('Detail');
 Route::get('/item/{id}', [ItemController::class, 'Item'])->name('Item');
+
+
 Route::post('/favorites/toggle/{id}', [FavoriteController::class, 'toggle']);
 Route::get('/favorites', [FavoriteController::class, 'index'])->name('Favorites');
-
-
-
+Route::post('/favorites/{item_id}', [FavoriteController::class, 'addToCart'])->name('Favorites');
 
 
 // Add item to cart
 Route::post('/cart/{item_id}/add', [CartController::class, 'addToCart'])->name('cart.add');
-
-// View cart contents
 Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
-
-// Update quantity in cart
 Route::POST('/cart/update/{cart_id}', [CartController::class, 'updateCart'])->name('cart.update');
-
-// Remove item from cart
 Route::delete('/cart/remove/{cart_id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
 
+Route::post('/item/{item_id}', [CartController::class, 'addToCart'])->name('item');
 
 
 // About
-
 Route::get('/about', function () {
     return view('About');
 })->name('about');
+
+
+
+Route::get('/filter', [AuthController::class, 'findParts'])->name('filter');
+
+
+

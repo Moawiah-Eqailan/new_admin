@@ -16,7 +16,7 @@
                                 <div class="p-5">
                                     @if(empty($cartItems) || $cartItems->isEmpty())
                                     <div class="text-center">
-                                        <h5>Your cart is empty.</h5>
+                                        <h5>Your cart is empty</h5>
                                     </div>
                                     @else
                                     <div class="d-flex justify-content-between align-items-center mb-5">
