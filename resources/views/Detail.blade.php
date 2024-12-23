@@ -33,7 +33,7 @@
 
                                     <div class="d-flex align-items-center">
                                         <label for="quantity" class="me-2">Quantity:</label>
-                                        <input type="number" name="quantity" id="quantity" min="1" value="1" class="form-control" style="width: 80px;" readonly disabled/>
+                                        <input type="number" name="quantity" id="quantity" min="1" value="1" class="form-control" style="width: 80px;" readonly disabled />
                                     </div>
                                     <div class="d-flex mt-4">
                                         <a href="{{ url()->previous() }}" class="btn btn-primary me-2">Back</a>

@@ -1,12 +1,7 @@
 @include('layout.header')
 
-<head>
-</head>
-
-
 <section id="items" class="position-relative">
     <div class="container my-5 py-5">
-        <h2 class="text-center my-5">Favorite <span class="text-primary">Products</span></h2>
 
         @if($favoriteItems->isEmpty())
         <div class="detail mb-4 text-center">

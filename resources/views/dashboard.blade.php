@@ -109,6 +109,42 @@
 
     <!-- Statistics Table -->
     <div class="row mb-4">
+    <div class="col-xl-12 col-md-12 mb-4">
+        <div class="card shadow h-100 py-2">
+            <div class="card-body">
+                <h5 class="text-center text-primary">Statistics Overview</h5>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Statistic</th>
+                            <th scope="col">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Total Users</td>
+                            <td>150</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Total Products</td>
+                            <td>120</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Total Purchases</td>
+                            <td>85</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <!-- <div class="row mb-4">
         <div class="col-xl-12 col-md-12 mb-4">
             <div class="card shadow h-100 py-2">
                 <div class="card-body">
@@ -154,7 +190,7 @@
         </div>
     </div>
 
-</div>
+</div> -->
 
 <script>
     document.getElementById('generateReport').addEventListener('click', function() {

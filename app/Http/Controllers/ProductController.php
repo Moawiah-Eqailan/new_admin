@@ -149,8 +149,9 @@ class ProductController extends Controller
     public function app()
     {
         $product = Product::all();
-        return view('layout.app', compact('products'));
+        return view('layout.app', compact('product'));
     }
+    
 
 
     public function view()
@@ -165,5 +166,11 @@ class ProductController extends Controller
         $categories = Category::pluck('category_name', 'category_id');
 
         return view('product', compact('product', 'categories'));
+    }
+
+    public function getProductsByCategory($categoryId)
+    {
+        $products = Product::where('category_id', $categoryId)->get();
+        return response()->json($products);
     }
 }

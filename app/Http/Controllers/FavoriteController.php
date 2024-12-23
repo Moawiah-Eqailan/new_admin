@@ -56,4 +56,6 @@ class FavoriteController extends Controller
 
         return view('Favorites', compact('favoriteItems'));
     }
+
+    
 }

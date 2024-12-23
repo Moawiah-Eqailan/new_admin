@@ -1,6 +1,6 @@
 @include('layout.header')
 
-<main class="py-4">
+<main>
     @yield('content')
     <!-- hero section start  -->
     <section id="hero" class=" position-relative overflow-hidden">
@@ -30,13 +30,10 @@
                 <div class="col-12 col-md-6 col-lg-3 mt-4 mt-lg-0">
                     <label for="category_id" class="label-style text-capitalize form-label">Category</label>
                     <div class="input-group date">
-                        <select class="form-select form-control p-3" id="vehicle" aria-label="Default select example"
-                            style="background-image: none;">
+                        <select class="form-select form-control p-3" id="category_id" aria-label="Default select example" style="background-image: none;">
                             <option value="" disabled selected>Select Category</option>
-                            @foreach($categories as $rs)
-                            <option value="{{ $rs->category_id }}" {{ old('category_id') == $rs->category_id ? 'selected' : '' }}>
-                                {{ $rs->category_name }}
-                            </option>
+                            @foreach($categories as $category)
+                            <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
                             @endforeach
                         </select>
                         <span class="search-icon-position position-absolute p-3">
@@ -44,7 +41,33 @@
                         </span>
                     </div>
                 </div>
+
+                <div class="col-12 col-md-6 col-lg-3 mt-4 mt-lg-0">
+                    <label for="product_id" class="label-style text-capitalize form-label">Product</label>
+                    <div class="input-group date">
+                        <select class="form-select form-control p-3" id="product_id" aria-label="Default select example" style="background-image: none;">
+                            <option value="" disabled selected>Select Product</option>
+                        </select>
+                        <span class="search-icon-position position-absolute p-3">
+                            <iconify-icon class="search-icons" icon="solar:box-outline"></iconify-icon>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-3 mt-4 mt-lg-0">
+                    <label for="item_id" class="label-style text-capitalize form-label">Item</label>
+                    <div class="input-group date">
+                        <select class="form-select form-control p-3" id="item_id" aria-label="Default select example" style="background-image: none;">
+                            <option value="" disabled selected>Select Item</option>
+                        </select>
+                        <span class="search-icon-position position-absolute p-3">
+                            <iconify-icon class="search-icons" icon="solar:box-outline"></iconify-icon>
+                        </span>
+                    </div>
+                </div>
             </form>
+
+
 
             <div class="d-grid gap-2 mt-4">
                 <!-- <button class="btn btn-primary " type="button">Find your car</button> -->
@@ -133,5 +156,47 @@
     </section>
 
 </main>
+<script>
+    document.getElementById('category_id').addEventListener('change', function() {
+        const categoryId = this.value;
+
+        fetch(`/get-products/${categoryId}`)
+            .then(response => response.json())
+            .then(data => {
+                const productSelect = document.getElementById('product_id');
+                const itemSelect = document.getElementById('item_id');
+                productSelect.innerHTML = '<option value="" disabled selected>Select Product</option>';
+                itemSelect.innerHTML = '<option value="" disabled selected>Select Item</option>';
+
+                data.forEach(product => {
+                    const option = document.createElement('option');
+                    option.value = product.product_id;
+                    option.textContent = product.product_name;
+                    productSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching products:', error));
+    });
+
+    document.getElementById('product_id').addEventListener('change', function() {
+        const productId = this.value;
+
+        fetch(`/get-items/${productId}`)
+            .then(response => response.json())
+            .then(data => {
+                const itemSelect = document.getElementById('item_id');
+                itemSelect.innerHTML = '<option value="" disabled selected>Select Item</option>';
+
+                data.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.item_id;
+                    option.textContent = item.item_name;
+                    itemSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching items:', error));
+    });
+</script>
+
 
 @include('layout.footer')

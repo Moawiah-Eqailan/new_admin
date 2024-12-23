@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -110,11 +111,15 @@ Route::post('/profile/update', [UserController::class, 'updateUserProfile'])->na
 
 
 // home page Routes for users 
-Route::get('/', [CategoryController::class, 'app'])->name('home');
+Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/get-products/{category_id}', [ProductController::class, 'getProductsByCategory']);
+Route::get('/get-items/{product_id}', [ItemController::class, 'getItemsByProduct']);
+
+Route::get('/find-parts', [HomeController::class, 'findParts']);
+
 
 // Product Routes for users
 Route::get('/product', [ProductController::class, 'view'])->name('product');
-
 
 Route::get('/product/{category_id}', [ProductController::class, 'showProducts'])->name('product');
 
@@ -126,6 +131,7 @@ Route::get('/Item/{product_id}', [ItemController::class, 'showItem'])->name('Ite
 
 
 Route::get('/detail/{id}', [ItemController::class, 'detail'])->name('Detail');
+Route::get('/item/{id}', [ItemController::class, 'Item'])->name('Item');
 Route::post('/favorites/toggle/{id}', [FavoriteController::class, 'toggle']);
 Route::get('/favorites', [FavoriteController::class, 'index'])->name('Favorites');
 
@@ -144,3 +150,12 @@ Route::POST('/cart/update/{cart_id}', [CartController::class, 'updateCart'])->na
 
 // Remove item from cart
 Route::delete('/cart/remove/{cart_id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+
+
+
+
+// About
+
+Route::get('/about', function () {
+    return view('About');
+})->name('about');

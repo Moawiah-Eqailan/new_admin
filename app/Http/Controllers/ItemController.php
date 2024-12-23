@@ -41,7 +41,7 @@ class ItemController extends Controller
             'item_description' => 'required|string',
             'item_price' => 'required|numeric',
             'item_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'product_id' => 'required|integer', 
+            'product_id' => 'required|integer',
         ]);
 
         $product = Product::findOrFail($validatedData['product_id']);
@@ -115,7 +115,7 @@ class ItemController extends Controller
         $item = Item::findOrFail($id);
 
         $product = Product::findOrFail($request->product_id);
-        $category_id = $product->category_id; 
+        $category_id = $product->category_id;
 
         if ($request->hasFile('image')) {
             if ($item->item_image && Storage::exists('public/' . $item->item_image)) {
@@ -132,7 +132,7 @@ class ItemController extends Controller
             'item_price' => $request->item_price,
             'item_description' => $request->description,
             'product_id' => $request->product_id,
-            'category_id' => $request->category_id, 
+            'category_id' => $request->category_id,
             'item_image' => $imagePath,
         ]);
 
@@ -191,20 +191,44 @@ class ItemController extends Controller
 
     public function detail($id)
     {
-        $item = Item::findOrFail($id); 
-    
+        $item = Item::findOrFail($id);
+
         $user = auth()->user();
-    
+
         if (!$user) {
             $favorites = session()->get('favorites', []);
             $isFavorite = in_array($item->id, $favorites);
         } else {
             $isFavorite = $user->favorites()->where('item_id', $item->id)->exists();
         }
-    
-        return view('detail', compact('item', 'isFavorite')); 
+
+        return view('detail', compact('item', 'isFavorite'));
     }
-    
-    
-    
+
+
+
+    public function Item($id)
+    {
+        $items = Item::where('product_id', $id)->get();
+        $user = auth()->user();
+
+        foreach ($items as $item) {
+            if (!$user) {
+                $favorites = session()->get('favorites', []);
+                $item->isFavorite = in_array($item->id, $favorites);
+            } else {
+                $item->isFavorite = $user->favorites()->where('item_id', $item->id)->exists();
+            }
+        }
+
+        return view('Item', compact('items'));
+    }
+
+
+
+    public function getItemsByProduct($productId)
+    {
+        $items = Item::where('product_id', $productId)->get();
+        return response()->json($items);
+    }
 }

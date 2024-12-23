@@ -20,7 +20,7 @@
                                     </div>
                                     @else
                                     <div class="d-flex justify-content-between align-items-center mb-5">
-                                        <h1 class="fw-bold mb-0">Shopping  <span class="text-primary">Cart</span></h1>
+                                        <h1 class="fw-bold mb-0">Shopping <span class="text-primary">Cart</span></h1>
 
                                     </div>
                                     <hr class="my-4">
@@ -34,14 +34,14 @@
                                             <h6 class="mb-0">{{ $cartItem->item->item_name }}</h6>
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                          
-                                                <button class="btn btn-link px-2" type="button" onclick="this.nextElementSibling.stepDown()">
-                                                    <i class="fas fa-minus"></i>
-                                                </button>
-                                                <input id="form1" min="1" name="quantity" value="{{ $cartItem->quantity }}" type="number" class="form-control form-control-sm quantity-input" style="width: 60px;" data-id="{{ $cartItem->id }}" readonly disabled/>
-                                                <button class="btn btn-link px-2" type="button" onclick="this.previousElementSibling.stepUp()">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
+
+                                            <button class="btn btn-link px-2" type="button" onclick="this.nextElementSibling.stepDown()">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input id="form1" min="1" name="quantity" value="{{ $cartItem->quantity }}" type="number" class="form-control form-control-sm quantity-input" style="width: 60px;" data-id="{{ $cartItem->id }}" readonly disabled />
+                                            <button class="btn btn-link px-2" type="button" onclick="this.previousElementSibling.stepUp()">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
                                         </div>
                                         <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                             <h6 class="mb-0 item-total-price">{{$cartItem->item->item_price}}</h6>
@@ -72,15 +72,34 @@
                                         <h5 class="text-uppercase">Total</h5>
                                         <h5 id="total-price">{{ number_format($cartItems->sum(function ($item) { return $item->item->item_price * $item->quantity; }), 2) }} JOD</h5>
                                     </div>
-                                    <button class="btn btn-primary btn-lg btn-block">Proceed to Checkout</button>
+
+                                    <!-- Payment Methods Section -->
+                                    <h4 style="font-size: 17px;" class="fw-bold mb-5 mt-2 pt-1">Choose Payment Method</h4>
+                                    <div class="form-check mb-3">
+                                        <input class="text-uppercase" type="radio" name="paymentMethod" id="cash" value="cash" checked>
+                                        <label class="form-check-label" for="cash">
+                                            Pay with Cash
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input class="text-uppercase" type="radio" name="paymentMethod" id="visa" value="visa">
+                                        <label class="form-check-label" for="visa">
+                                            Pay with Visa
+                                        </label>
+                                    </div>
+
+                                    <!-- Proceed Button -->
+                                    <button class="btn btn-primary btn-lg btn-block" style="font-size: 12px;">Proceed to Checkout</button>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </section>
 @include('layout.footer')
 
@@ -92,11 +111,11 @@
 
         quantityInputs.forEach(input => {
             input.previousElementSibling.addEventListener("click", function() {
-                updateQuantity(input, -0); 
+                updateQuantity(input, -0);
             });
 
             input.nextElementSibling.addEventListener("click", function() {
-                updateQuantity(input, 0); 
+                updateQuantity(input, 0);
             });
         });
 
