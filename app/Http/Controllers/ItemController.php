@@ -231,4 +231,10 @@ class ItemController extends Controller
         $items = Item::where('product_id', $productId)->get();
         return response()->json($items);
     }
+
+    public function statistics()
+    {
+        $totalPrice = Item::sum('item_price');
+        return view('dashboard', compact('totalPrice'));
+    }
 }

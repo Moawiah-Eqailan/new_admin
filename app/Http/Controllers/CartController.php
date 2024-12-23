@@ -103,4 +103,10 @@ class CartController extends Controller
 
         return view('Cart', compact('cartItems'));
     }
+
+    public function statistics()
+    {
+        $totalCart = Cart::count();
+        return view('dashboard', compact('totalCart'));
+    }
 }

@@ -1,16 +1,16 @@
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-  
+
   <!-- Sidebar Toggle (Topbar) -->
   <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
     <i class="fa fa-bars"></i>
   </button>
-  
+
   <!-- Topbar Search -->
-  
-  
+
+
   <!-- Topbar Navbar -->
   <ul class="navbar-nav ml-auto">
-  
+
     <!-- Nav Item - Search Dropdown (Visible Only XS) -->
     <li class="nav-item dropdown no-arrow d-sm-none">
       <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -30,11 +30,18 @@
         </form>
       </div>
     </li>
-  
+
     <!-- Nav Item - Alerts -->
     <li class="nav-item dropdown no-arrow mx-1">
       <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-bell fa-fw"></i>
+        <i class="fas fa-bell fa-fw">
+          <!-- <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+          </span> -->
+        </i>
+
+
+
+
         <!-- Counter - Alerts -->
         <!-- <span class="badge badge-danger badge-counter">3+</span> -->
       </a>
@@ -45,11 +52,11 @@
         </h6>
         <a class="dropdown-item d-flex align-items-center" href="#">
           <div class="mr-3">
-            <div class="icon-circle bg-primary">
+            <!-- <div class="icon-circle bg-primary">
               <i class="fas fa-file-alt text-white"></i>
-            </div>
+            </div> -->
           </div>
-          <div>
+          <!-- <div>
             <div class="small text-gray-500">December 12, 2019</div>
             <span class="font-weight-bold">A new monthly report is ready to download!</span>
           </div>
@@ -75,11 +82,11 @@
             <div class="small text-gray-500">December 2, 2019</div>
             Spending Alert: We've noticed unusually high spending for your account.
           </div>
-        </a>
+        </a> -->
         <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
       </div>
     </li>
-  
+
     <!-- Nav Item - Messages -->
     <li class="nav-item dropdown no-arrow mx-1">
       <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -92,7 +99,7 @@
         <h6 class="dropdown-header">
           Message Center
         </h6>
-        <a class="dropdown-item d-flex align-items-center" href="#">
+        <!-- <a class="dropdown-item d-flex align-items-center" href="#">
           <div class="dropdown-list-image mr-3">
             <img class="rounded-circle" src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/img/undraw_profile_1.svg" alt="...">
             <div class="status-indicator bg-success"></div>
@@ -135,13 +142,13 @@
               told me that people say this to all dogs, even if they aren't good...</div>
             <div class="small text-gray-500">Chicken the Dog · 2w</div>
           </div>
-        </a>
+        </a> -->
         <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
       </div>
     </li>
-  
+
     <div class="topbar-divider d-none d-sm-block"></div>
-  
+
     <!-- Nav Item - User Information -->
     <li class="nav-item dropdown no-arrow">
       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -166,7 +173,7 @@
         </a>
       </div>
     </li>
-  
+
   </ul>
-  
+
 </nav>

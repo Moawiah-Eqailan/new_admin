@@ -13,8 +13,9 @@
                 </button>
             </div>
         </div>
+        
     </form>
-
+   
     <a href="{{ route('products.create') }}" class="btn btn-primary">Add Product</a>
 </div>
 <hr />
@@ -96,6 +97,5 @@
             }
         });
     }
-</script>
 </script>
 @endsection

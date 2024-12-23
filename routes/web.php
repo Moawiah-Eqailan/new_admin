@@ -41,6 +41,8 @@ Route::middleware('auth')->group(function () {
             return view('dashboard');
         })->name('dashboard');
 
+        Route::get('/dashboard', [AuthController::class, 'index'])->name('dashboard');
+
         // Product Routes
         Route::controller(ProductController::class)->prefix('products')->group(function () {
             Route::get('', 'index')->name('products');

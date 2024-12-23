@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -172,5 +173,13 @@ class ProductController extends Controller
     {
         $products = Product::where('category_id', $categoryId)->get();
         return response()->json($products);
+    }
+
+
+    public function statistics()
+    {
+        $totalProducts = Product::count();
+        $totalPurchases = Cart::count(); // Replace 'Order' with your actual purchases model
+        return view('dashboard', compact('totalProducts', 'totalPurchases'));
     }
 }

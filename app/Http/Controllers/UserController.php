@@ -96,5 +96,9 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Profile updated successfully!');
     }
     
-    
+    public function statistics()
+    {
+        $totalUsers = User::count();
+        return view('dashboard', compact('totalUsers'));
+    }
 }
