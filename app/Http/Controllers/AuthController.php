@@ -105,13 +105,11 @@ class AuthController extends Controller
         $productId = $request->query('product');
         $id = $request->query('id');
     
-        // قم بجلب البيانات المفلترة بناءً على القيم
         $filteredParts = Item::where('category_id', $categoryId)
                              ->where('product_id', $productId)
                              ->where('id', $id)
                              ->get();
     
-        // إرسال البيانات إلى الصفحة
         return view('UsersPage.filter', compact('filteredParts'));
     }
     
