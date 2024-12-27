@@ -38,7 +38,7 @@
             <td class="align-middle">{{ $loop->iteration }}</td>
             <td class="align-middle">{{ $rs->category_name }}</td>
             <!-- <td class="align-middle">{{ $rs->price }}</td> -->
-            <td class="align-middle"><img src="{{ asset('storage/' . $rs->category_image) }}" class="card-img-top" style="width: 200px; height: 200px; object-fit: cover;">
+            <td class="align-middle"><img src="{{ asset('storage/' . $rs->category_image) }}" class="card-img-top" style="width: 200px; height: 200px; object-fit:contain;">
             </td>
             <!-- <td class="align-middle">{{ $rs->category_code }}</td>
                         <td class="align-middle">{{ $rs->description }}</td>   -->

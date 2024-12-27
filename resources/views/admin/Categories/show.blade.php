@@ -18,6 +18,7 @@
             <br>
            
             <img src='{{asset("storage")}}/{{$category->category_image}}' class="card-img-top" style="width: 200px; height: 200px; object-fit: cover; ">
+            dd({{asset("storage")}}/{{$category->category_image}}); 
         </div>
     </div>
     <div class="row">

@@ -15,7 +15,7 @@ class CategoryController extends Controller
     {
         $categories = Category::orderBy('created_at', 'DESC')->get();
 
-        return view('Admin.Categories.index', compact('categories'));
+        return view('admin.Categories.index', compact('categories'));
     }
 
     /**
@@ -23,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('Admin.Categories.create');
+        return view('admin.Categories.create');
     }
 
     /**
@@ -40,15 +40,13 @@ class CategoryController extends Controller
             $imagePath = $request->file('image')->store('Categories/images', 'public');
             $validatedData['category_image'] = $imagePath;
         } else {
-            $validatedData['category_image'];
+            $validatedData['category_image'] = null;  // If no image is provided, set as null
         }
 
         Category::create($validatedData);
 
         return redirect()->route('Categories')->with('success', 'Category added successfully.');
     }
-
-
 
     /**
      * Display the specified resource.
@@ -57,7 +55,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($category_id);
 
-        return view('Admin.Categories.show', compact('category'));
+        return view('admin.Categories.show', compact('category'));
     }
 
     /**
@@ -66,9 +64,8 @@ class CategoryController extends Controller
     public function edit(string $category_id)
     {
         $category = Category::findOrFail($category_id);
-        return view('Admin.Categories.edit', compact('category'));
+        return view('admin.Categories.edit', compact('category'));
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -82,13 +79,15 @@ class CategoryController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
+            // Delete old image if exists
             if ($category->category_image && Storage::exists('public/' . $category->category_image)) {
                 Storage::delete('public/' . $category->category_image);
             }
 
+            // Store new image
             $imagePath = $request->file('image')->store('Categories/images', 'public');
         } else {
-            $imagePath = $category->category_image;
+            $imagePath = $category->category_image; // Retain old image if no new image is uploaded
         }
 
         $category->update([
@@ -99,8 +98,6 @@ class CategoryController extends Controller
         return redirect()->route('Categories')->with('success', 'Category updated successfully');
     }
 
-
-
     /**
      * Remove the specified resource from storage.
      */
@@ -108,10 +105,16 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($category_id);
 
+        // Delete image if exists
+        if ($category->category_image && Storage::exists('public/' . $category->category_image)) {
+            Storage::delete('public/' . $category->category_image);
+        }
+
         $category->delete();
 
         return redirect()->route('Categories')->with('success', 'Category deleted successfully');
     }
+
     public function searchh(Request $request)
     {
         $query = $request->input('query');
@@ -120,9 +123,8 @@ class CategoryController extends Controller
             ->orWhere('category_name', 'LIKE', "%$query%")
             ->get();
 
-        return view('Admin.Categories.index', ['categories' => $categories]);
+        return view('admin.Categories.index', ['categories' => $categories]);
     }
-
 
     public function app()
     {
