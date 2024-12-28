@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -80,7 +81,7 @@ class UserController extends Controller
     public function updateUserProfile(Request $request)
     {
         $user = auth()->user();
-    
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
@@ -90,12 +91,37 @@ class UserController extends Controller
             'state' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
         ]);
-    
+
         $user->update($validated);
-    
+
         return redirect()->back()->with('success', 'Profile updated successfully!');
     }
+
+
+    public function updatePassword(Request $request)
+    {
+        $user = auth()->user();
     
+        $validated = $request->validate([
+            'old_password' => 'required|string|min:6',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+    
+        if (!Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->withErrors(['old_password' => 'The old password is incorrect.']);
+        }
+    
+        if ($request->old_password === $request->password) {
+            return redirect()->back()->withErrors(['password' => 'The new password must be different from the old one.']);
+        }
+    
+        $user->password = Hash::make($request->password);
+        $user->save();
+    
+        return redirect()->back()->with('success', 'Password updated successfully!');
+    }
+    
+
     public function statistics()
     {
         $totalUsers = User::count();

@@ -44,12 +44,12 @@
             </div>
         </div>
         @endif
-        <div class="d-flex mt-4">
-            <a href="{{ url()->previous() }}" class="btn btn-primary me-2">Back</a>
-        </div>
+     
     </div>
 </section>
-
+<div class="d-flex mt-4" style="margin-left: 44px;">
+    <a href="{{ url()->previous() }}" class="btn btn-primary me-2">Back</a>
+</div>
 
 <script>
     function toggleHeart(element, itemId) {
@@ -83,13 +83,9 @@
                                 icon.classList.remove('fa-solid', 'fa-heart');
                                 icon.classList.add('fa-regular', 'fa-heart');
 
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Removed from Favorites!',
-                                    text: 'This product has been successfully removed from your favorites.',
-                                }).then(() => {
+                                {
                                     window.location.href = "/favorites";
-                                });
+                                };
                             } else {
                                 Swal.fire({
                                     icon: 'error',
@@ -154,41 +150,41 @@
     function addToCart(itemId) {
 
 
-fetch(`/item/${itemId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-        },
-        body: JSON.stringify({
-            item_id: itemId,
-        }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Item Added to Item!',
-                text: data.message,
+        fetch(`/item/${itemId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                body: JSON.stringify({
+                    item_id: itemId,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Item Added to Item!',
+                        text: data.message,
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed!',
+                        text: 'Failed to add this product to your Item. Please try again.',
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'An error occurred!',
+                    text: 'An error occurred. Please try again.',
+                });
             });
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Failed!',
-                text: 'Failed to add this product to your Item. Please try again.',
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'An error occurred!',
-            text: 'An error occurred. Please try again.',
-        });
-    });
-};
+    };
 </script>
 
 

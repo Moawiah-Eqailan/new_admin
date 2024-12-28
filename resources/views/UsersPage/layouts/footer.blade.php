@@ -1,3 +1,26 @@
+<head>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        footer {
+            margin-top: auto;
+        }
+    </style>
+</head>
+<div class="d-flex mt-4" style="margin-left: 44px;">
+    <a href="{{ url()->previous() }}" class="btn btn-primary me-2">Back</a>
+</div>
+<br><br>
 <footer id="footer" class="bg-dark text-white py-4">
     <div class="container text-center">
         <p>&copy; 2024 BAT MAN</p>

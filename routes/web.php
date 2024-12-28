@@ -113,6 +113,11 @@ Route::get('/editProfile', function () {
     return view('UsersPage.UserPage.EditUserProfile');
 })->name('EditUserProfile');
 
+Route::get('/changepassword', function () {
+    return view('UsersPage.UserPage.ChangePassword');
+})->name('ChangePassword');
+Route::post('/password/update', [UserController::class, 'updatePassword'])->name('password.update');
+
 Route::post('/profile/update', [UserController::class, 'updateUserProfile'])->name('profile.update');
 
 
@@ -168,3 +173,12 @@ Route::get('/cart/count', function() {
         'count' => DB::table('carts')->where('user_id', '=', Auth::user()->id)->count('id')
     ]);
 });
+
+
+Route::get('/check-auth', function () {
+    return response()->json(['isAuthenticated' => auth()->check()]);
+});
+
+
+
+

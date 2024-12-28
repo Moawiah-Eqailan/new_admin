@@ -22,7 +22,7 @@
             <br>
             @if($category->category_image)
             <div>
-                <img src="{{ asset('storage/' . $category->category_image) }}" alt="Category Image" style="width: 200px; height: 200px; object-fit: cover;">
+                <img src="{{ asset('storage/' . $category->category_image) }}" alt="Category Image"  class="card-img-top" style="width: 100%; height: 200px; object-fit: contain;">
             </div>
             @endif
         </div>

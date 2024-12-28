@@ -29,8 +29,8 @@
                                                 <div class="card-body">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <h4 class="card-title">{{ $item->item_name }}
-                                                            <a href="javascript:void(0);" onclick="toggleHeart(this)">
-                                                                <i class="{{ $item->isFavorite ? 'fa-solid' : 'fa-regular' }} fa-heart" style="margin: 5px; color:red" onclick="toggleHeart(this)"></i>
+                                                            <a href="javascript:void(0);" onclick="toggleHeart(this, '{{ $item->id }}', '{{ $item->item_name }}')">
+                                                                <i class="{{ $item->isFavorite ? 'fa-solid' : 'fa-regular' }} fa-heart" style="margin: 5px; color: red;"></i>
                                                             </a>
                                                         </h4>
                                                     </div>
@@ -39,7 +39,7 @@
                                                     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                                                     <p class="card-text">{{ $item->item_description }}</p>
 
-                                                    <button type="button" class="btn btn-primary me-2" onclick="addToCart('{{ $item->id }}')">
+                                                    <button style="margin: 2px;" type="button" class="btn btn-primary" onclick="addToCart('{{ $item->id }}', '{{ $item->item_name }}')">
                                                         <i class="fa-solid fa-cart-shopping"></i>
                                                     </button>
                                                 </div>
@@ -56,43 +56,69 @@
         </div>
         @endif
 
-        <div class="d-flex mt-4">
-            <a href="{{ url()->previous() }}" class="btn btn-primary me-2">Back</a>
-        </div>
+ 
     </div>
 </section>
 
-@include('UsersPage.layouts.footer')
-
 
 <script>
-  function toggleHeart(element) {
+    function toggleHeart(element, itemId, itemName) {
         const icon = element.querySelector('i');
         const isFavorite = icon.classList.contains('fa-solid');
-        const itemId = "{{ $item->id }}";
 
-        fetch(`/favorites/toggle/${itemId}`, {
-                method: 'POST',
+        fetch(`/check-auth`, {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    favorite: !isFavorite
-                })
+                }
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
-                    if (isFavorite) {
-                        icon.classList.remove('fa-solid', 'fa-heart');
-                        icon.classList.add('fa-regular', 'fa-heart');
-                    } else {
-                        icon.classList.remove('fa-regular', 'fa-heart');
-                        icon.classList.add('fa-solid', 'fa-heart');
-                    }
+                if (!data.isAuthenticated) {
+                    Swal.fire({
+                        title: 'Login Required',
+                        html: `Please log in to add <span style="color: #94CA21;">${itemName}</span> to your favorites.`,
+                        icon: 'warning',
+                        confirmButtonText: 'Login',
+                        cancelButtonText: 'Cancel',
+                        showCancelButton: true,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/login';
+                        }
+                    });
 
-                    location.reload();
+                } else {
+                    fetch(`/favorites/toggle/${itemId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                favorite: !isFavorite
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                if (isFavorite) {
+                                    icon.classList.remove('fa-solid', 'fa-heart');
+                                    icon.classList.add('fa-regular', 'fa-heart');
+                                } else {
+                                    icon.classList.remove('fa-regular', 'fa-heart');
+                                    icon.classList.add('fa-solid', 'fa-heart');
+                                }
+
+                                location.reload();
+                            } else {
+                                console.error('Failed to update the favorite status');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
                 }
             })
             .catch(error => {
@@ -100,24 +126,53 @@
             });
     }
 
-    function addToCart(itemId) {
-        fetch(`/item/${itemId}`, {
-                method: 'POST',
+
+    function addToCart(itemId, itemName) {
+        fetch('/check-auth', {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                },
-                body: JSON.stringify({
-                    item_id: itemId,
-                }),
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
-                    console.log('Item added to cart successfully');
-                    location.reload(); 
+                if (!data.isAuthenticated) {
+                    Swal.fire({
+                        title: 'Login Required',
+                        html: `Please log in to add <span style="color: #94CA21;">${itemName}</span> to your cart.`,
+                        icon: 'warning',
+                        confirmButtonText: 'Login',
+                        cancelButtonText: 'Cancel',
+                        showCancelButton: true,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/login';
+                        }
+                    });
                 } else {
-                    console.log('Failed to add item to cart');
+                    fetch(`/item/${itemId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            },
+                            body: JSON.stringify({
+                                item_id: itemId,
+                            }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                console.log('Item added to cart successfully');
+                                location.reload();
+                            } else {
+                                console.log('Failed to add item to cart');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
                 }
             })
             .catch(error => {
@@ -125,3 +180,5 @@
             });
     }
 </script>
+
+@include('UsersPage.layouts.footer')

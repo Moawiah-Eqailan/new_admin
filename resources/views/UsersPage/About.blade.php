@@ -30,9 +30,7 @@
         <p class="hero-paragraph" style="line-height: 1.6; margin-bottom: 1.5rem;">
             We believe every car deserves the best care, and we are here to ensure you get the parts and services you need to maintain your vehicle’s performance. Thank you for trusting us, and we are committed to delivering the best shopping experience and after-sales service.
         </p>
-        <div class="d-flex mt-4">
-            <a href="{{ url()->previous() }}" class="btn btn-primary me-2">Back</a>
-        </div>
+     
     </div>
 
 </div>

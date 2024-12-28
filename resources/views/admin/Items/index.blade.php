@@ -34,7 +34,7 @@
             <td class="align-middle">{{ $loop->iteration }}</td>
             <td class="align-middle">{{ $rs->item_name }}</td>
             <td class="align-middle">
-                <img src="{{ asset('storage/' . $rs->item_image) }}" class="card-img-top" style="width: 200px; height: 200px; object-fit: cover;">
+                <img src="{{ asset('storage/' . $rs->item_image) }}" class="card-img-top" style="width: 200px; height: 200px; object-fit: contain;">
             </td>
             <td class="align-middle">
                 <div class="btn-group" role="group" aria-label="Basic example">

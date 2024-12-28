@@ -13,17 +13,17 @@
 
 </div>
 <div class="row">
-<div class="col">
+    <div class="col">
         <div class="form-group">
             <label for="category_id">From Category </label>
             <select name="category_id" id="category_id" class="form-control" required disabled>
-                    <option value="" disabled selected>Select Category</option>
-                    @foreach($categories as $id => $name)
-                    <option value="{{ $id }}" {{ $item->category_id == $id ? 'selected' : '' }}>
-                        {{ $name }}
-                    </option>
-                    @endforeach
-                </select>
+                <option value="" disabled selected>Select Category</option>
+                @foreach($categories as $id => $name)
+                <option value="{{ $id }}" {{ $item->category_id == $id ? 'selected' : '' }}>
+                    {{ $name }}
+                </option>
+                @endforeach
+            </select>
         </div>
     </div>
     <div class="col">
@@ -39,14 +39,14 @@
             </select>
         </div>
     </div>
-   
+
 </div>
 <div class="row mb-3">
     <div class="col">
         <label for="image" class="form-label">Detail Image</label>
         <br>
 
-        <img src='{{asset("storage")}}/{{$item->item_image}}' class="card-img-top" style="width: 200px; height: 200px; object-fit: cover; ">
+        <img src='{{asset("storage")}}/{{$item->item_image}}' class="card-img-top" style="width: 100%; height: 200px; object-fit: contain;">
     </div>
 </div>
 <div class="row">

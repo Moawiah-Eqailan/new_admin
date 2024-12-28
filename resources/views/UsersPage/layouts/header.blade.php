@@ -78,7 +78,7 @@
 
 
                         <li class="nav-item dropdown" style="margin-left:39px">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle"id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
                                 {{ Auth::user()->name }}
 

@@ -30,10 +30,12 @@ class ItemController extends Controller
     public function create()
     {
         $product = Product::pluck('product_name', 'product_id');
-
-        return view('Admin.Items.create', compact('product'));
+        $category = Category::pluck('category_name', 'category_id');
+    
+        return view('Admin.Items.create', compact('product', 'category'));
     }
-
+    
+    
     /**
      * Store a newly created item in storage.
      */
@@ -45,6 +47,7 @@ class ItemController extends Controller
             'item_price' => 'required|numeric',
             'item_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'product_id' => 'required|integer',
+            
         ]);
 
         $product = Product::findOrFail($validatedData['product_id']);

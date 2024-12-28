@@ -1,13 +1,13 @@
 @include('UsersPage.layouts.header')
 
-<div class="p-5 py-5 bg-light rounded shadow-lg">
+<div class="p-5 py-5 rounded ">
     <!-- <div class="d-flex flex-column align-items-center text-center "><img class="rounded-circle" width="150px" src="{{ asset('storage/image/batman1.png') }}" alt="Profile Image"> -->
     <!-- <span class="font-weight-bold">{{ Auth::user()->name }}</span><span class="text-black-50">{{ Auth::user()->email }}</span><span> </span> -->
     <!-- </div> -->
     <form method="POST" action="{{ route('profile.update') }}" class="bg-white p-4 rounded shadow-sm">
         @csrf
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="text-primary fw-bold">Edit User Profile </h3>
+            <h3 class="text-primary fw-bold">Edit User Profile  / <a class="text-primary fw-bold" href="{{route('ChangePassword')}}">Change Password</a></h3>
         </div>
         <div class="row g-3">
             <div class="col-md-12">
@@ -61,9 +61,7 @@
             <button class="btn btn-primary profile-button px-5 py-2 rounded-pill shadow-lg" type="submit">Save Profile</button>
         </div>
     </form>
-    <div class="d-flex mt-4">
-        <a href="{{ url()->previous() }}" class="btn btn-primary me-2">Back</a>
-    </div>
+
 </div>
 
 

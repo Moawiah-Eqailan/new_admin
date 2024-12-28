@@ -14,6 +14,20 @@
             <input type="text" name="price" class="form-control" placeholder="Price" value="{{ $product->product_price }}" readonly>
         </div>
     </div>
+    <div class="row">
+        
+        <div class="col mb-3">
+            <label for="category_id">From Category </label>
+            <select name="category_id" id="category_id" class="form-control" required disabled>
+                <option value="" disabled selected>Select Category</option>
+                @foreach($categories as $id => $name)
+                <option value="{{ $id }}" {{ $product->category_id == $id ? 'selected' : '' }}>
+                    {{ $name }}
+                </option>
+                @endforeach
+            </select>
+        </div>
+    </div>
     <div class="row mb-3">
         <div class="col">
             <label for="image" class="form-label">Detail Image</label>
@@ -21,13 +35,8 @@
             <img src='{{asset("storage")}}/{{$product->product_image}}' class="card-img-top" style="width: 100%; height: 200px; object-fit: contain;">
         </div>
     </div>
-    <div class="row">
-        
-        <div class="col mb-3">
-            <label class="form-label">Description</label>
-            <textarea class="form-control" name="description" placeholder="Descriptoin" readonly>{{ $product->description }}</textarea>
-        </div>
-    </div>
+
+
     <div class="row">
         <div class="col mb-3">
             <label class="form-label">Created At</label>

@@ -22,7 +22,7 @@
 
                                     @foreach($items as $item)
                                     <div class="item-card" style="flex: 1 0 calc(33.333% - 1rem); max-width: calc(33.333% - 1rem); box-sizing: border-box;">
-                                        <a href="javascript:void(0);" onclick="toggleHeart(this, '{{ $item->id }}')">
+                                        <a href="javascript:void(0);" onclick="toggleHeart(this, '{{ $item->id }}', '{{ $item->item_name }}')">
                                             <i class="{{ $item->isFavorite ? 'fa-solid' : 'fa-regular' }} fa-heart" style="margin: 5px; color: red;"></i>
                                         </a>
                                         <div class="card">
@@ -34,9 +34,10 @@
                                                 <p class="card-text">{{ $item->item_price }} JOD</p>
                                                 <div class="d-flex justify-content-center">
                                                     <a href="{{ route('Detail', $item->id) }}" class="btn btn-primary" style="margin: 2px;"><i class="fa-solid fa-eye"></i></a>
-                                                    <button style="margin: 2px;" type="button" class="btn btn-primary" onclick="addToCart('{{ $item->id }}')">
+                                                    <button style="margin: 2px;" type="button" class="btn btn-primary" onclick="addToCart('{{ $item->id }}', '{{ $item->item_name }}')">
                                                         <i class="fa-solid fa-cart-shopping"></i>
                                                     </button>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -51,77 +52,132 @@
             </div>
         </div>
         @endif
-        <div class="d-flex mt-4">
-            <a href="{{ url()->previous() }}" class="btn btn-primary me-2">Back</a>
-        </div>
+   
     </div>
 </section>
 
 
 <script>
-function toggleHeart(element, itemId) {
-    const icon = element.querySelector('i');
-    const isFavorite = icon.classList.contains('fa-solid');
+    function toggleHeart(element, itemId, itemName) {
+        const icon = element.querySelector('i');
+        const isFavorite = icon.classList.contains('fa-solid');
 
-    fetch(`/favorites/toggle/${itemId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({
-            favorite: !isFavorite
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            if (isFavorite) {
-                icon.classList.remove('fa-solid', 'fa-heart');
-                icon.classList.add('fa-regular', 'fa-heart');
-            } else {
-                icon.classList.remove('fa-regular', 'fa-heart');
-                icon.classList.add('fa-solid', 'fa-heart');
-            }
+        fetch(`/check-auth`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.isAuthenticated) {
+                    Swal.fire({
+                        title: 'Login Required',
+                        html: `Please log in to add <span style="color: #94CA21;">${itemName}</span> to your favorites.`,
+                        icon: 'warning',
+                        confirmButtonText: 'Login',
+                        cancelButtonText: 'Cancel',
+                        showCancelButton: true,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/login';
+                        }
+                    });
 
-            location.reload();  
-        } else {
-            console.error('Failed to update the favorite status');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
+                } else {
+                    fetch(`/favorites/toggle/${itemId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                favorite: !isFavorite
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                if (isFavorite) {
+                                    icon.classList.remove('fa-solid', 'fa-heart');
+                                    icon.classList.add('fa-regular', 'fa-heart');
+                                } else {
+                                    icon.classList.remove('fa-regular', 'fa-heart');
+                                    icon.classList.add('fa-solid', 'fa-heart');
+                                }
+
+                                location.reload();
+                            } else {
+                                console.error('Failed to update the favorite status');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 
 
 
-function addToCart(itemId) {
-    fetch(`/item/${itemId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-        },
-        body: JSON.stringify({
-            item_id: itemId,
-        }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            console.log('Item added to cart successfully');
-            location.reload();  
-        } else {
-            console.log('Failed to add item to cart');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
 
-   
+    function addToCart(itemId, itemName) {
+        fetch(`/check-auth`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.isAuthenticated) {
+                    Swal.fire({
+                        title: 'Login Required',
+                        html: `Please log in to add <span style="color: #94CA21;">${itemName}</span> to your cart.`,
+                        icon: 'warning',
+                        confirmButtonText: 'Login',
+                        cancelButtonText: 'Cancel',
+                        showCancelButton: true,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/login'; 
+                        }
+                    });
+
+                } else {
+                    fetch(`/item/${itemId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            },
+                            body: JSON.stringify({
+                                item_id: itemId,
+                            }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                console.log('Item added to cart successfully');
+                                location.reload();
+                            } else {
+                                console.log('Failed to add item to cart');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 </script>
 
 @include('UsersPage.layouts.footer')

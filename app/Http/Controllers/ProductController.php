@@ -62,8 +62,9 @@ class ProductController extends Controller
     public function show(string $product_id)
     {
         $product = Product::findOrFail($product_id);
+        $categories = Category::pluck('category_name', 'category_id');
 
-        return view('Admin.products.show', compact('product'));
+        return view('Admin.products.show', compact('product','categories'));
     }
 
     /**
@@ -143,7 +144,7 @@ class ProductController extends Controller
             ->orWhere('category_id', 'LIKE', "%$query%")
             ->get();
 
-        return view('products.index', ['product' => $product]);
+        return view('Admin.products.index', ['product' => $product]);
     }
 
 
