@@ -840,3 +840,50 @@ iconify-icon.property-icon {
   font-size: 30px;
 
 }
+
+
+/* For Webkit browsers (Chrome, Safari, etc.) */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #94CA21;
+    border-radius: 6px;
+    border: 3px solid #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94CA21;
+}
+
+/* For Firefox */
+*{
+  scrollbar-width: thin;
+  scrollbar-color: #94CA21 #f1f1f1;
+}
+
+/* Specific styling for the PDF viewer scrollbar */
+#pdfViewer::-webkit-scrollbar {
+    width: 12px;
+}
+
+#pdfViewer::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 6px;
+}
+
+#pdfViewer::-webkit-scrollbar-thumb {
+    background: #94CA21;
+    border-radius: 6px;
+    border: 3px solid #f1f1f1;
+}
+
+#pdfViewer::-webkit-scrollbar-thumb:hover {
+    background: #94CA21;
+}

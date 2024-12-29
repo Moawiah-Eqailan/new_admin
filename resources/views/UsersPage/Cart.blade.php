@@ -88,8 +88,12 @@
                                         </label>
                                     </div>
 
-                                    <!-- Proceed Button -->
-                                    <button class="btn btn-primary btn-lg btn-block" style="font-size: 12px;">Proceed to Checkout</button>
+                                    <a href="{{ route('CheckOut') }}">
+                                        <button class="btn btn-primary btn-lg btn-block" style="font-size: 12px;">
+                                            Proceed to Checkout
+                                        </button>
+                                    </a>
+
                                 </div>
                             </div>
 
@@ -97,7 +101,6 @@
                     </div>
                 </div>
             </div>
-         
         </div>
     </div>
 

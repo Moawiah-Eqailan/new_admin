@@ -155,6 +155,10 @@ Route::get('/about', function () {
     return view('UsersPage.About');
 })->name('about');
 
+Route::get('/contact', function () {
+    return view('UsersPage.Contact');
+})->name('contact');
+
 // Filter and Search Routes
 Route::get('/filter', [AuthController::class, 'filter'])->name('filter');
 Route::post('/filter/toggle/{id}', [FilterController::class, 'toggle']);
@@ -182,3 +186,6 @@ Route::get('/check-auth', function () {
 
 
 
+Route::get('/CheckOut', function () {
+    return view('UsersPage.CheckOut');
+})->name('CheckOut');

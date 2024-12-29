@@ -214,31 +214,8 @@
             font-size: 12px;
         }
 
-        .btn {
-            background: #642b73;
-            background: -webkit-linear-gradient(to right, #c6426e, #642b73);
-            background: linear-gradient(to right, #c6426e, #642b73);
-            border-radius: 20px;
-            text-align: center;
-            padding: 10px 30px;
-            box-sizing: border-box;
-            display: inline-block;
-            transition: box-shadow ease-in-out 0.2s;
-            cursor: pointer;
-        }
 
-        .btn:hover {
-            box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.35);
-        }
 
-        .btn button {
-            outline: none;
-            border: none;
-            font-size: 14px;
-            background: transparent;
-            color: white;
-            padding: 0;
-        }
 
         .btn i {
             position: relative;
@@ -333,8 +310,8 @@
                     <input type="number" name="security-code" id="#code" placeholder="Security Code" onfocus="flipCard(event);" onblur="deactivateBorder(event)" onkeyup="traceCodeInput(event)" value="">
                 </div>
                 <div class="form-input btn">
-                    <i class="fas fa-check"></i>
-                    <button type="submit">Done</button>
+
+                    <button type="submit" class="btn btn-primary me-2"> <i class="fas fa-check"></i> Done</button>
                 </div>
             </form>
         </div>
@@ -389,9 +366,14 @@
         let newString = "";
         let spaceCounter = [4, 9, 14];
         let initString = "XXXX XXXX XXXX XXXX";
-        if (spaceCounter.some((val) => e.target.value.length == val))
-            e.target.value += " ";
-        if (e.target.value.length <= 19) {
+
+        e.target.value = e.target.value.replace(/\D/g, '');
+
+        if (e.target.value.length >= 1 && e.target.value.length <= 19) {
+            if (spaceCounter.some((val) => e.target.value.length == val)) {
+                e.target.value += " ";
+            }
+
             let userInput = e.target.value;
             for (let i = 0; i < 19; i++) {
                 if (i < userInput.length) {
@@ -406,31 +388,58 @@
         }
     }
 
+
     function traceNameInput(e) {
-        if (e.target.value.length > 11) activateBorder(e);
+        e.target.value = e.target.value.replace(/[^A-Za-z]/g, ''); 
+
+        if (e.target.value.length > 70) {
+            e.target.value = e.target.value.substring(0, 70); 
+        }
 
         let focusedInput = document.querySelector(`.${e.target.name}`);
         if (e.target.value == "") focusedInput.innerHTML = "NAME SURNAME";
         else focusedInput.innerHTML = e.target.value.toUpperCase();
     }
 
+
     function traceDateInput(e) {
-        let focusedInput = document.querySelector(`.${e.target.name}`);
-        let newString = "";
-        let initString = "MM/YY";
-        if (e.target.value.length == 2) e.target.value = e.target.value + "/";
-        if (e.target.value.length < 6) {
-            for (let i = 0; i < 5; i++) {
-                if (i < e.target.value.length)
-                    newString += e.target.value[i];
-                else
-                    newString += initString[i];
-            }
-            focusedInput.innerHTML = newString;
-        } else {
-            e.target.value = e.target.value.substr(0, 5);
+    let focusedInput = document.querySelector(`.${e.target.name}`);
+    let newString = "";
+    let initString = "MM/YY";
+
+    if (e.target.value.length == 2) e.target.value = e.target.value + "/";
+
+    if (e.target.value.length < 6) {
+        if (e.target.value.length === 1 && e.target.value > 1) {
+            e.target.value = "0" + e.target.value; 
         }
+
+        if (e.target.value.length === 3) {
+            const month = parseInt(e.target.value.substring(0, 2), 10);
+            const year = parseInt(e.target.value.substring(3), 10);
+
+            if (month > 12) {
+                e.target.value = e.target.value.substring(0, 2);
+            }
+            if (year < 25 || year > 30) {
+                e.target.value = e.target.value.substring(0, 2);
+            }
+        }
+
+        for (let i = 0; i < 5; i++) {
+            if (i < e.target.value.length) {
+                newString += e.target.value[i];
+            } else {
+                newString += initString[i];
+            }
+        }
+
+        focusedInput.innerHTML = newString;
+    } else {
+        e.target.value = e.target.value.substr(0, 5);
     }
+}
+
 
     function traceCodeInput(e) {
         let focusedInput = document.querySelector(`.${e.target.name}`);

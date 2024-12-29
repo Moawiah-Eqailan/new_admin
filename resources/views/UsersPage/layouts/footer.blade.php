@@ -23,7 +23,7 @@
 <br><br>
 <footer id="footer" class="bg-dark text-white py-4">
     <div class="container text-center">
-        <p>&copy; 2024 BAT MAN</p>
+        <p>&copy; 2025 BAT<span class="text-primary">PARTS</span> </p>
         <div class="d-flex justify-content-center">
             <a href="https://www.facebook.com" class="text-white mx-2">Facebook</a>
             <a href="https://www.x.com" class="text-white mx-2">𝕏</a>
