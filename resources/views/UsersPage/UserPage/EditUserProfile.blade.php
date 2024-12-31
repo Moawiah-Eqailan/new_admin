@@ -29,21 +29,24 @@
             font-size: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.5rem;
+            font-family:'Kalam', cursive;
+
         }
 
         .password-link {
-            color: #94CA21;
+            color: #f5f5f5;
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-weight: 500;
             transition: all 0.3s ease;
+            font-family:'Kalam', cursive;
         }
 
         .password-link:hover {
-            color: #7ab01a;
+            color: #94CA21;
         }
 
         .edit-form {
@@ -129,9 +132,13 @@
         <h1 class="edit-title">
             <i class="fas fa-edit"></i> Edit<span class="text-primary">Profile</span>
         </h1>
-        <a href="{{ route('ChangePassword') }}" class="password-link">
-        <i class="fa-solid fa-lock"></i>            Change Password
-        </a>
+        <h1 class="edit-title">
+
+            <a href="{{ route('ChangePassword') }}" class="password-link">
+                <i class="fa-solid fa-lock"></i>Change <span class="text-primary">Password</span>
+            </a>
+        </h1>
+
     </div>
 
     <form method="POST" action="{{ route('profile.update') }}" class="edit-form">

@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Item;
-use App\Models\Favorite;
 use App\Models\Cart;
 
 use Illuminate\Http\Request;

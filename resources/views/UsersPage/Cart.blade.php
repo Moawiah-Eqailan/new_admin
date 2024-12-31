@@ -2,7 +2,12 @@
 
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <style>
+        .quantity-input {
+            text-align: center;
+            width: 60px;
+        }
+    </style>
 </head>
 
 <section class="position-relative">
@@ -38,8 +43,7 @@
                                             <button class="btn btn-link px-2" type="button" onclick="this.nextElementSibling.stepDown()">
                                                 <i class="fas fa-minus"></i>
                                             </button>
-                                            <input id="form1" min="1" name="quantity" value="{{ $cartItem->quantity }}" type="number" class="form-control form-control-sm quantity-input" style="width: 60px;" data-id="{{ $cartItem->id }}" readonly disabled />
-                                            <button class="btn btn-link px-2" type="button" onclick="this.previousElementSibling.stepUp()">
+                                            <input id="form1" min="1" name="quantity" value="{{ $cartItem->quantity }}" type="number" class="form-control form-control-sm quantity-input" style="width: 100px; text-align: center;" data-id="{{ $cartItem->id }}" readonly disabled /> <button class="btn btn-link px-2" type="button" onclick="this.previousElementSibling.stepUp()">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                         </div>
@@ -88,11 +92,10 @@
                                         </label>
                                     </div>
 
-                                    <a href="{{ route('CheckOut') }}">
-                                        <button class="btn btn-primary btn-lg btn-block" style="font-size: 12px;">
-                                            Proceed to Checkout
-                                        </button>
-                                    </a>
+                                    <!-- استبدل الجزء الخاص بزر Checkout بهذا -->
+                                    <button class="btn btn-primary btn-lg btn-block" style="font-size: 12px;">
+                                        Proceed to Checkout
+                                    </button>
 
                                 </div>
                             </div>
@@ -105,6 +108,10 @@
     </div>
 
 </section>
+
+
+
+
 @include('UsersPage.layouts.footer')
 
 <script>
@@ -114,11 +121,11 @@
 
         quantityInputs.forEach(input => {
             input.previousElementSibling.addEventListener("click", function() {
-                updateQuantity(input, -0);
+                updateQuantity(input, -1);
             });
 
             input.nextElementSibling.addEventListener("click", function() {
-                updateQuantity(input, 0);
+                updateQuantity(input, 1);
             });
         });
 
@@ -143,8 +150,6 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-
-
                         totalPrice.textContent = data.total.toFixed(2);
                     } else {
                         alert("Failed to update quantity.");
@@ -154,5 +159,45 @@
                     console.error("Error updating quantity:", error);
                 });
         }
+
+        const checkoutButton = document.querySelector('button.btn.btn-primary.btn-lg.btn-block');
+
+        checkoutButton.addEventListener("click", function(event) {
+            event.preventDefault();
+
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            if (paymentMethod === "cash") {
+                // إذا كان الدفع نقداً، نقوم أولاً بتفريغ السلة
+                fetch('/cart/clear', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // بعد تفريغ السلة بنجاح، نعرض رسالة الشكر
+                            Swal.fire({
+                                title: 'شكراً لك!',
+                                text: 'شكراً لشرائك من متجرنا طلبك قيد المعالجة',
+                                icon: 'success',
+                                confirmButtonText: 'حسناً'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = "{{ route('home') }}";
+                                }
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error clearing cart:", error);
+                    });
+            } else if (paymentMethod === "visa") {
+                window.location.href = "{{ route('CheckOut') }}";
+            }
+        });
     });
 </script>

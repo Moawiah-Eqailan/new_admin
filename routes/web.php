@@ -137,6 +137,8 @@ Route::get('/Item/{product_id}', [ItemController::class, 'showItem'])->name('Ite
 Route::get('/item/{id}', [ItemController::class, 'Item'])->name('Item');
 Route::get('/get-items/{product_id}', [ItemController::class, 'getItemsByProduct']);
 Route::get('/detail/{id}', [ItemController::class, 'detail'])->name('Detail');
+Route::get('/detail/{id}', [ItemController::class, 'showItemDetail'])->name('Detail');
+
 
 // Favorites Routes
 Route::get('/favorites', [FavoriteController::class, 'index'])->name('Favorites');
@@ -149,7 +151,7 @@ Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
 Route::post('/cart/update/{cart_id}', [CartController::class, 'updateCart'])->name('cart.update');
 Route::delete('/cart/remove/{cart_id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 Route::post('/item/{item_id}', [CartController::class, 'addToCart'])->name('item');
-
+Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
 // Static Pages
 Route::get('/about', function () {
     return view('UsersPage.About');

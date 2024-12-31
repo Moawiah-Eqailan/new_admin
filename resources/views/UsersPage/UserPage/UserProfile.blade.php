@@ -241,7 +241,7 @@
                 <i class="fas fa-edit"></i> Edit Profile
             </a>
             <a href="{{ route('AllProduct') }}" class="action-button">
-                <i class="fas fa-car-alt"></i> Browse Parts
+            <i class="fa-solid fa-cart-shopping"></i> Your orders
             </a>
         </div>
         <i class="fas fa-car car-decoration"></i>
@@ -249,7 +249,7 @@
 
     <div class="info-card">
         <div class="card-header">
-            <h2>Personal Information</h2>
+            <h2>Personal <span class="text-primary">Information</span></h2>
         </div>
         <div class="form-grid">
             <div class="form-group">
@@ -272,7 +272,7 @@
 
     <div class="info-card">
         <div class="card-header">
-            <h2>Address Information</h2>
+            <h2>Address <span class="text-primary">Information</span></h2>
         </div>
         <div class="form-grid">
             <div class="form-group">

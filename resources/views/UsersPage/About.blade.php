@@ -160,7 +160,7 @@
 
     <div class="content-section">
         <p>
-            Welcome to <strong>BATPARTS</strong>, your premier destination for high-quality auto spare parts in Jordan. We've established ourselves as a leading online marketplace specializing in automotive components, serving both individual car owners and professional workshops across the Hashemite Kingdom.
+            Welcome to <strong> <span class="text-primary">BATPARTS</span>  </strong>, your premier destination for high-quality auto spare parts in Jordan. We've established ourselves as a leading online marketplace specializing in automotive components, serving both individual car owners and professional workshops across the Hashemite Kingdom.
         </p>
         <p>
             Our commitment to excellence drives us to source only the finest parts from trusted manufacturers worldwide. We understand that your vehicle deserves nothing but the best, which is why we maintain strict quality control standards for all our products.

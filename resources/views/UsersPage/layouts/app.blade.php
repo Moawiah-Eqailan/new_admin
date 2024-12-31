@@ -11,7 +11,7 @@
 
             <br>
             <br>
-            
+
             <div class="row">
                 <div class="detail mb-4">
                     <h1 class="hero-h1-text"> Select your car model and find<span class="text-primary"> the part you need </span> </h1>
@@ -25,7 +25,7 @@
     <section id="search">
         <div class="container search-block p-5">
             <form class="row">
-                <div class="col-12 col-md-6 col-lg-3 mt-4 mt-lg-0">
+                <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
                     <label for="category_id" class="label-style text-capitalize form-label">Category</label>
                     <div class="input-group date">
                         <select class="form-select form-control p-3" id="category_id" aria-label="Default select example" style="background-image: none;">
@@ -35,29 +35,29 @@
                             @endforeach
                         </select>
                         <span class="search-icon-position position-absolute p-3">
-                            <iconify-icon class="search-icons" icon="solar:bus-outline"></iconify-icon>
+                            <iconify-icon class="search-icons" icon="solar:bus-outline" style="color: #94CA21;"></iconify-icon>
                         </span>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-3 mt-4 mt-lg-0">
+                <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
                     <label for="product_id" class="label-style text-capitalize form-label">Car</label>
                     <div class="input-group date">
                         <select class="form-select form-control p-3" id="product_id" aria-label="Default select example" style="background-image: none;">
                             <option value="" disabled selected>Select Car</option>
                         </select>
                         <span class="search-icon-position position-absolute p-3">
-                            <iconify-icon class="search-icons" icon="solar:box-outline"></iconify-icon>
+                            <iconify-icon class="search-icons" icon="solar:box-outline" style="color: #94CA21;"></iconify-icon>
                         </span>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-3 mt-4 mt-lg-0">
+                <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
                     <label for="id" class="label-style text-capitalize form-label">Part</label>
                     <div class="input-group date">
                         <select class="form-select form-control p-3" id="id" aria-label="Default select example" style="background-image: none;">
                             <option value="" disabled selected>Select Part</option>
                         </select>
                         <span class="search-icon-position position-absolute p-3">
-                            <iconify-icon class="search-icons" icon="solar:box-outline"></iconify-icon>
+                            <iconify-icon class="search-icons" icon="solar:box-outline" style="color: #94CA21;"></iconify-icon>
                         </span>
                     </div>
                 </div>
@@ -112,42 +112,41 @@
 
     <!-- rental section start  -->
     <section id="rental" class="position-relative">
-        <div class="container my-5 py-5">
-            <h2 class="text-center my-5">Cars for <span class="text-primary">Category</span></h2>
-            <div class="swiper rental-swiper mb-5">
-                <div class="swiper-wrapper">
-                    <div class="py-12">
-                        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                                <div class="p-6 text-gray-900">
-                                    <!-- Flex Container -->
-                                    <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
-                                        @foreach($categories as $rs)
-                                        <!-- Swiper Slide -->
-                                        <div class="category-item" style="flex: 1 0 calc(33.333% - 1rem); max-width: calc(33.333% - 1rem);">
-                                            <div class="card">
-                                                <img src="{{ asset('storage/' . $rs->category_image) }}" class="card-img-top"
-                                                    style="width: 100%; height: 230px; object-fit: contain;" alt="{{ $rs->category_name }}">
-                                                <div class="card-body p-4" style="text-align: center;">
-                                                    <h4 class="card-title">{{ $rs->category_name }}</h4>
-                                                    <hr>
-                                                    <div class="d-flex justify-content-center">
-                                                        <a href="{{ route('product', ['category_id' => $rs->category_id]) }}" class="btn btn-primary">View More</a>
-                                                    </div>
-                                                </div>
+    <div class="container my-5 py-5">
+        <h2 class="text-center my-5">Cars for <span class="text-primary">Category</span></h2>
+        <div class="swiper rental-swiper mb-5">
+            <div class="swiper-wrapper">
+                <div class="py-12">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                            <div class="p-6 text-gray-900">
+                                <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
+                                    @foreach($categories as $rs)
+                                    <div class="category-item" style="flex: 1 0 calc(33.333% - 1rem); max-width: calc(33.333% - 1rem); box-sizing: border-box; display: flex; justify-content: center; align-items: center;">
+                                        <div class="card" style="width: 18rem; display: flex; flex-direction: column; align-items: center;">
+                                            <img src="{{ asset('storage/' . $rs->category_image) }}" class="card-img-top"
+                                                style="height: 230px; object-fit: contain;" alt="{{ $rs->category_name }}">
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">{{ $rs->category_name }}</h5>
+                                                <hr>
+                                                <a href="{{ route('product', ['category_id' => $rs->category_id]) }}" class="btn btn-primary">View More</a>
                                             </div>
                                         </div>
-                                        @endforeach
                                     </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+
+
+
 
 </main>
 

@@ -28,7 +28,7 @@
             font-size: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.5rem;
         }
 
         .password-link {

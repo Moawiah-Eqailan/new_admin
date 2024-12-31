@@ -1,8 +1,7 @@
 @include('UsersPage.layouts.header')
 
 <section id="items" class="position-relative">
-    <div class="container my-5 py-5">
-
+    <div class="container my-5 py-5 d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         @if($favoriteItems->isEmpty())
         <div class="detail mb-4 text-center">
             <p class="hero-paragraph">You have no favorite products.</p>
@@ -14,7 +13,7 @@
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 text-gray-900">
-                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; justify-content: center; align-items: center;">
                                     @foreach($favoriteItems as $favorite)
                                     <div class="item-card">
                                         <a href="javascript:void(0);" onclick="toggleHeart(this, `{{ $favorite->id }}`)">
@@ -44,12 +43,8 @@
             </div>
         </div>
         @endif
-     
     </div>
 </section>
-<div class="d-flex mt-4" style="margin-left: 44px;">
-    <a href="{{ url()->previous() }}" class="btn btn-primary me-2">Back</a>
-</div>
 
 <script>
     function toggleHeart(element, itemId) {

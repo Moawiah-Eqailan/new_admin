@@ -18,7 +18,8 @@
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 text-gray-900">
-                                <div class="d-flex flex-wrap gap-3 justify-content-between">
+                                <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
+
                                     @foreach($product as $rs)
                                     <div class="product-item" style="flex: 1 0 calc(33.333% - 1rem); max-width: calc(33.333% - 1rem); box-sizing: border-box;">
                                         <div class="card">
@@ -33,6 +34,7 @@
                                         </div>
                                     </div>
                                     @endforeach
+
                                 </div>
                             </div>
                         </div>
@@ -41,9 +43,10 @@
             </div>
         </div>
         @endif
-   
+
     </div>
 </section>
+
 
 
 @include('UsersPage.layouts.footer')

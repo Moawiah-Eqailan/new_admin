@@ -398,7 +398,7 @@
 
         let focusedInput = document.querySelector(`.${e.target.name}`);
         if (e.target.value == "") focusedInput.innerHTML = "NAME SURNAME";
-        else focusedInput.innerHTML = e.target.value.toUpperCase();
+        else focusedInput.innerHTML = e.target.value.toUpperCase(); 
     }
 
 

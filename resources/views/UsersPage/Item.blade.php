@@ -22,14 +22,13 @@
 
                                     @foreach($items as $item)
                                     <div class="item-card" style="flex: 1 0 calc(33.333% - 1rem); max-width: calc(33.333% - 1rem); box-sizing: border-box;">
-                                        <a href="javascript:void(0);" onclick="toggleHeart(this, '{{ $item->id }}', '{{ $item->item_name }}')">
-                                            <i class="{{ $item->isFavorite ? 'fa-solid' : 'fa-regular' }} fa-heart" style="margin: 5px; color: red;"></i>
-                                        </a>
                                         <div class="card">
+                                            <a href="javascript:void(0);" onclick="toggleHeart(this, '{{ $item->id }}', '{{ $item->item_name }}')">
+                                                <i class="{{ $item->isFavorite ? 'fa-solid' : 'fa-regular' }} fa-heart" style="margin: 5px; color: red;"></i>
+                                            </a>
                                             <img src="{{ asset('storage/' . $item->item_image) }}" class="card-img-top" style="width: 100%; height: 200px; object-fit: contain;">
                                             <div class="card-body p-4" style="text-align: center;">
                                                 <h4 style="font-size: 16px;" class="card-title">{{ $item->item_name }}</h4>
-                                                <a href="javascript:void(0);" onclick="toggleHeart(this)"></a>
                                                 <hr>
                                                 <p class="card-text">{{ $item->item_price }} JOD</p>
                                                 <div class="d-flex justify-content-center">
@@ -37,7 +36,6 @@
                                                     <button style="margin: 2px;" type="button" class="btn btn-primary" onclick="addToCart('{{ $item->id }}', '{{ $item->item_name }}')">
                                                         <i class="fa-solid fa-cart-shopping"></i>
                                                     </button>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -52,9 +50,10 @@
             </div>
         </div>
         @endif
-   
+
     </div>
 </section>
+
 
 
 <script>
@@ -145,7 +144,7 @@
                         showCancelButton: true,
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = '/login'; 
+                            window.location.href = '/login';
                         }
                     });
 

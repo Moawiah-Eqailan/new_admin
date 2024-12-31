@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Item;
 use App\Models\Cart;
@@ -272,6 +273,31 @@ class ItemController extends Controller
         ]);
     }
 
-
+    public function showItemDetail($id)
+    {
+        $item = Item::find($id);
+    
+        if (!$item) {
+            abort(404, 'Item not found');
+        }
+    
+        $isFavorite = Auth::check() && $item->favorites()->where('user_id', Auth::id())->exists();
+    
+        $relatedItems = Item::where('product_id', $item->product_id)
+            ->where('id', '!=', $item->id)
+            ->limit(6)
+            ->get();
+    
+        logger($relatedItems);
+    
+        return view('UsersPage.detail', [
+            'item' => $item,
+            'relatedItems' => $relatedItems,
+            'isFavorite' => $isFavorite,
+        ]);
+    }
+    
+    
+    
     
 }

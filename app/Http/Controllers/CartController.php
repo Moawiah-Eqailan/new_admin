@@ -6,6 +6,8 @@ use App\Models\Cart;
 use App\Models\Item;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
@@ -108,5 +110,11 @@ class CartController extends Controller
     {
         $totalCart = Cart::count();
         return view('dashboard', compact('totalCart'));
+    }
+
+    public function clearCart()
+    {
+        Cart::where('user_id', auth()->id())->delete();
+        return response()->json(['success' => true]);
     }
 }
