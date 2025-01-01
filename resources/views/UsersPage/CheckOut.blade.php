@@ -1,11 +1,12 @@
 @include('UsersPage.layouts.header')
 
-
 <head>
+    <!-- Sweet Alert CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,700|Nova+Mono&display=swap');
         @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,700&display=swap');
-
 
         .modal-wrapper {
             display: flex;
@@ -153,7 +154,6 @@
             margin: 0 10px;
         }
 
-        /* TRANSITION EFFECT */
         .card-front {
             transform: perspective(600px) rotateY(0deg);
         }
@@ -214,9 +214,6 @@
             font-size: 12px;
         }
 
-
-
-
         .btn i {
             position: relative;
             top: 0;
@@ -252,9 +249,6 @@
         }
     </style>
 </head>
-
-
-
 
 <br><br><br>
 
@@ -292,7 +286,7 @@
     </div>
     <div class="card-form">
         <div class="form-wrapper">
-            <form action="#">
+            <form action="#" id="creditCardForm">
                 <div class="form-input">
                     <i class="far fa-credit-card"></i>
                     <input type="text" name="card-number" id="#number" placeholder="Card Number" onfocus="flipCard(event);" onblur="deactivateBorder(event)" onkeyup="traceNumberInput(event)" value="">
@@ -310,7 +304,6 @@
                     <input type="number" name="security-code" id="#code" placeholder="Security Code" onfocus="flipCard(event);" onblur="deactivateBorder(event)" onkeyup="traceCodeInput(event)" value="">
                 </div>
                 <div class="form-input btn">
-
                     <button type="submit" class="btn btn-primary me-2"> <i class="fas fa-check"></i> Done</button>
                 </div>
             </form>
@@ -325,6 +318,46 @@
     var cardFront = document.querySelector(".card-front");
     var cardRear = document.querySelector(".card-rear");
     var cardLogo = document.querySelector(".card-logo");
+
+    // Form submission handling
+    document.getElementById('creditCardForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Get all form inputs
+        const cardNumber = document.querySelector('[name="card-number"]').value;
+        const cardHolder = document.querySelector('[name="card-holder-name"]').value;
+        const expiryDate = document.querySelector('[name="valid-thru-date"]').value;
+        const securityCode = document.querySelector('[name="security-code"]').value;
+
+        // Basic validation
+        if (cardNumber.length === 19 && // Card number with spaces
+            cardHolder.trim() !== '' &&
+            expiryDate.length === 5 &&
+            securityCode.length === 3) {
+
+            // Create and show the sweet alert
+            Swal.fire({
+                title: 'شكراً لشرائك من متجرنا',
+                text: 'طلبك قيد المعالجة',
+                icon: 'success',
+                confirmButtonText: 'حسناً'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect to home page
+                    window.location.href = '/';
+                }
+            });
+        } else {
+            // Show error if form is incomplete
+            Swal.fire({
+                title: 'خطأ',
+                text: 'الرجاء إدخال جميع البيانات بشكل صحيح',
+                icon: 'error',
+                confirmButtonText: 'حسناً'
+            });
+        }
+    });
+    12
 
     function flipCard(e) {
         if ((isFront && e.target.name == "security-code") || (!isFront && e.target.name != "security-code")) {
@@ -346,7 +379,7 @@
         let borderBox = document.querySelector(".active-border");
         let focusedInput = document.querySelector(`.${e.target.name}`);
         let newRect = focusedInput.getBoundingClientRect();
-        let removePadding = 4; //PADDING+BORDER OF .active-border
+        let removePadding = 4;
 
         borderBox.style.display = "inline-block";
         borderBox.style.opacity = "1";
@@ -390,55 +423,55 @@
 
 
     function traceNameInput(e) {
-        e.target.value = e.target.value.replace(/[^A-Za-z]/g, ''); 
+        e.target.value = e.target.value.replace(/[^A-Za-z]/g, '');
 
         if (e.target.value.length > 70) {
-            e.target.value = e.target.value.substring(0, 70); 
+            e.target.value = e.target.value.substring(0, 70);
         }
 
         let focusedInput = document.querySelector(`.${e.target.name}`);
         if (e.target.value == "") focusedInput.innerHTML = "NAME SURNAME";
-        else focusedInput.innerHTML = e.target.value.toUpperCase(); 
+        else focusedInput.innerHTML = e.target.value.toUpperCase();
     }
 
 
     function traceDateInput(e) {
-    let focusedInput = document.querySelector(`.${e.target.name}`);
-    let newString = "";
-    let initString = "MM/YY";
+        let focusedInput = document.querySelector(`.${e.target.name}`);
+        let newString = "";
+        let initString = "MM/YY";
 
-    if (e.target.value.length == 2) e.target.value = e.target.value + "/";
+        if (e.target.value.length == 2) e.target.value = e.target.value + "/";
 
-    if (e.target.value.length < 6) {
-        if (e.target.value.length === 1 && e.target.value > 1) {
-            e.target.value = "0" + e.target.value; 
-        }
-
-        if (e.target.value.length === 3) {
-            const month = parseInt(e.target.value.substring(0, 2), 10);
-            const year = parseInt(e.target.value.substring(3), 10);
-
-            if (month > 12) {
-                e.target.value = e.target.value.substring(0, 2);
+        if (e.target.value.length < 6) {
+            if (e.target.value.length === 1 && e.target.value > 1) {
+                e.target.value = "0" + e.target.value;
             }
-            if (year < 25 || year > 30) {
-                e.target.value = e.target.value.substring(0, 2);
-            }
-        }
 
-        for (let i = 0; i < 5; i++) {
-            if (i < e.target.value.length) {
-                newString += e.target.value[i];
-            } else {
-                newString += initString[i];
-            }
-        }
+            if (e.target.value.length === 3) {
+                const month = parseInt(e.target.value.substring(0, 2), 10);
+                const year = parseInt(e.target.value.substring(3), 10);
 
-        focusedInput.innerHTML = newString;
-    } else {
-        e.target.value = e.target.value.substr(0, 5);
+                if (month > 12) {
+                    e.target.value = e.target.value.substring(0, 2);
+                }
+                if (year < 25 || year > 30) {
+                    e.target.value = e.target.value.substring(0, 2);
+                }
+            }
+
+            for (let i = 0; i < 5; i++) {
+                if (i < e.target.value.length) {
+                    newString += e.target.value[i];
+                } else {
+                    newString += initString[i];
+                }
+            }
+
+            focusedInput.innerHTML = newString;
+        } else {
+            e.target.value = e.target.value.substr(0, 5);
+        }
     }
-}
 
 
     function traceCodeInput(e) {

@@ -7,6 +7,21 @@
             text-align: center;
             width: 60px;
         }
+
+        .btn-danger {
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            transform: rotate(90deg);
+        }
     </style>
 </head>
 
@@ -19,6 +34,7 @@
                         <div class="row g-0">
                             <div class="col-lg-8">
                                 <div class="p-5">
+
                                     @if(empty($cartItems) || $cartItems->isEmpty())
                                     <div class="text-center">
                                         <h5>Your cart is empty</h5>
@@ -26,7 +42,6 @@
                                     @else
                                     <div class="d-flex justify-content-between align-items-center mb-5">
                                         <h1 class="fw-bold mb-0">Shopping <span class="text-primary">Cart</span></h1>
-
                                     </div>
                                     <hr class="my-4">
 
@@ -39,11 +54,11 @@
                                             <h6 class="mb-0">{{ $cartItem->item->item_name }}</h6>
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-
                                             <button class="btn btn-link px-2" type="button" onclick="this.nextElementSibling.stepDown()">
                                                 <i class="fas fa-minus"></i>
                                             </button>
-                                            <input id="form1" min="1" name="quantity" value="{{ $cartItem->quantity }}" type="number" class="form-control form-control-sm quantity-input" style="width: 100px; text-align: center;" data-id="{{ $cartItem->id }}" readonly disabled /> <button class="btn btn-link px-2" type="button" onclick="this.previousElementSibling.stepUp()">
+                                            <input id="form1" min="1" name="quantity" value="{{ $cartItem->quantity }}" type="number" class="form-control form-control-sm quantity-input" style="width: 100px; text-align: center;" data-id="{{ $cartItem->id }}" readonly disabled />
+                                            <button class="btn btn-link px-2" type="button" onclick="this.previousElementSibling.stepUp()">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                         </div>
@@ -69,15 +84,16 @@
                                     <hr class="my-4">
                                     <div class="d-flex justify-content-between mb-4">
                                         <h5 class="text-uppercase">Items</h5>
-                                        <h5>{{ $cartItems->count() }}</h5>
+                                        <h5 id="total-items">{{ $cartItems->count() }}</h5>
                                     </div>
                                     <hr class="my-4">
                                     <div class="d-flex justify-content-between mb-5">
                                         <h5 class="text-uppercase">Total</h5>
-                                        <h5 id="total-price">{{ number_format($cartItems->sum(function ($item) { return $item->item->item_price * $item->quantity; }), 2) }} JOD</h5>
+                                        <h5 id="total-price">{{ number_format($cartItems->sum(function ($item) { return $item->item->item_price * $item->quantity; }), 2) }} </h5>
+                                        <h5 id="total-price"> JOD</h5>
                                     </div>
 
-                                    <!-- Payment Methods Section -->
+                                    @if(!empty($cartItems) && !$cartItems->isEmpty())
                                     <h4 style="font-size: 17px;" class="fw-bold mb-5 mt-2 pt-1">Choose Payment Method</h4>
                                     <div class="form-check mb-3">
                                         <input class="text-uppercase" type="radio" name="paymentMethod" id="cash" value="cash" checked>
@@ -85,32 +101,20 @@
                                             Pay with Cash
                                         </label>
                                     </div>
-                                    <div class="form-check mb-3">
-                                        <input class="text-uppercase" type="radio" name="paymentMethod" id="visa" value="visa">
-                                        <label class="form-check-label" for="visa">
-                                            Pay with Visa
-                                        </label>
-                                    </div>
-
-                                    <!-- استبدل الجزء الخاص بزر Checkout بهذا -->
-                                    <button class="btn btn-primary btn-lg btn-block" style="font-size: 12px;">
+                                    <button class="btn btn-primary btn-lg btn-block" style="font-size: 12px;" id="checkout-button">
                                         Proceed to Checkout
                                     </button>
+                                    @endif
 
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </section>
-
-
-
 
 @include('UsersPage.layouts.footer')
 
@@ -160,44 +164,96 @@
                 });
         }
 
-        const checkoutButton = document.querySelector('button.btn.btn-primary.btn-lg.btn-block');
-
+        const checkoutButton = document.querySelector('#checkout-button');
         checkoutButton.addEventListener("click", function(event) {
             event.preventDefault();
 
-            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-
-            if (paymentMethod === "cash") {
-                // إذا كان الدفع نقداً، نقوم أولاً بتفريغ السلة
-                fetch('/cart/clear', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // بعد تفريغ السلة بنجاح، نعرض رسالة الشكر
-                            Swal.fire({
-                                title: 'شكراً لك!',
-                                text: 'شكراً لشرائك من متجرنا طلبك قيد المعالجة',
-                                icon: 'success',
-                                confirmButtonText: 'حسناً'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href = "{{ route('home') }}";
-                                }
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error clearing cart:", error);
+            Swal.fire({
+                title: '<strong>This is the information that will be used to contact you</strong>',
+                html: `
+                <form class="edit-form">
+                    @csrf
+                    <div class="form-group">
+                        <label class="form-label text-left"><i class="fas fa-user"></i>Full Name</label>
+                        <input type="text" name="name" class="form-control" value="{{ Auth::user()->name }}" readonly disabled>
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label class="form-label text-left"><i class="fas fa-envelope"></i>Email Address</label>
+                        <input type="email" name="email" class="form-control" value="{{ Auth::user()->email }}" readonly disabled>
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label class="form-label text-left"><i class="fas fa-phone"></i>Phone Number</label>
+                        <input type="text" name="phone" class="form-control" value="{{ Auth::user()->phone }}" readonly disabled>
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label class="form-label text-left"><i class="fas fa-home"></i>Address</label>
+                        <input type="text" name="address" class="form-control" value="{{ Auth::user()->address }}" readonly disabled>
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label class="form-label text-left"> <i class="fas fa-flag"></i>Province</label>
+                        <input type="text" name="state" class="form-control" value="{{ Auth::user()->state }}" readonly disabled>
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label class="form-label text-left"><i class="fas fa-globe"></i>Country</label>
+                        <input type="text" class="form-control" value="Jordan" readonly disabled>
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <label class="form-label text-left"><i class="fas fa-city"></i>City</label>
+                        <input type="text" class="form-control" value="{{ Auth::user()->city }}" readonly disabled>
+                    </div>
+                </form>
+            `,
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText: 'DONE',
+                preConfirm: () => {
+                    // Define cartItems and total dynamically from your backend
+                    const cartItems = @json($cartItems);
+                    const total = @php
+                    echo $cartItems->sum(function($item) {
+                        return $item->item->item_price * $item->quantity;
                     });
-            } else if (paymentMethod === "visa") {
-                window.location.href = "{{ route('CheckOut') }}";
-            }
+                    @endphp;
+
+                    const userId = @php echo Auth::id();
+                    @endphp;
+                    fetch('/orders/create', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                            },
+                            body: JSON.stringify({
+                                cartItems: cartItems, // تأكد من أن cartItems تحتوي على العناصر المناسبة
+                                total: total,
+                                userId: userId // تأكد من أن userId تم تمريره بشكل صحيح
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                console.log('Order placed successfully!', data);
+                            } else {
+                                console.error('Error:', data.error);
+                                console.log('Cart Items:', cartItems);
+                                console.log('Total:', total);
+                                console.log('User ID:', userId);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Request failed', error);
+
+                        });
+
+
+                }
+            });
         });
     });
 </script>

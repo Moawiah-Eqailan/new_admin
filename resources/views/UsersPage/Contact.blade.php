@@ -184,7 +184,7 @@
     </style>
 </head>
 
-<div class="contact-container">
+<div class="contact-container"style="margin-top:80px">
 
     <div class="contact-header">
         <h1>Contact <span>Us</span></h1>

@@ -126,8 +126,7 @@
     </style>
 </head>
 
-<br><br>
-<div class="container">
+<div class="container"style="margin-top:80px">
     <div class="edit-header">
         <h1 class="edit-title">
             <i class="fas fa-edit"></i> Edit<span class="text-primary">Profile</span>

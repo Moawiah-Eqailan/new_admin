@@ -10,6 +10,8 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FilterController;
+use App\Http\Controllers\OrderController;
+
 use Illuminate\Support\Facades\Auth;
 
 
@@ -105,9 +107,23 @@ Route::get('/profile', function () {
     return view('UsersPage.UserPage.UserProfile');
 })->name('UserProfile');
 
-Route::get('/allProduct', function () {
-    return view('UsersPage.UserPage.AllProduct');
-})->name('AllProduct');
+// Route::get('/order', function () {
+//     return view('UsersPage.UserPage.order');
+// })->name('order');
+
+// Route::get('/order', [OrderController::class, 'showOrders'])->name('order');
+
+
+
+Route::get('/orders', [OrderController::class, 'index'])->name('Orders');
+Route::post('/orders/create', [OrderController::class, 'create']);
+
+// In web.php or api.php
+Route::post('/orders/create', [OrderController::class, 'createOrder']);
+
+Route::post('/create-order', [OrderController::class, 'createOrder'])->middleware('auth');
+
+
 
 Route::get('/editProfile', function () {
     return view('UsersPage.UserPage.EditUserProfile');
@@ -191,3 +207,10 @@ Route::get('/check-auth', function () {
 Route::get('/CheckOut', function () {
     return view('UsersPage.CheckOut');
 })->name('CheckOut');
+
+
+
+
+
+
+Route::post('/orders/create', [OrderController::class, 'createOrder'])->name('orders.create');

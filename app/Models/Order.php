@@ -9,12 +9,20 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'order_id';
+    protected $table = 'orders'; 
+    
+    public $timestamps = true;
 
     protected $fillable = [
         'category_id',
         'product_id',
         'item_id',
+        'cart_id',
+        'order_status',
+        'item_image',
     ];
-
+    public function items()
+    {
+        return $this->belongsToMany(Item::class)->withPivot('quantity', 'price');
+    }
 }

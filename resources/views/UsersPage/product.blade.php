@@ -1,6 +1,6 @@
 @include('UsersPage.layouts.header')
 
-<section id="products" class="position-relative">
+<section id="products" class="position-relative"style="margin-top:80px">
     <div class="container my-5 py-5">
 
         <h2 class="text-center my-5">

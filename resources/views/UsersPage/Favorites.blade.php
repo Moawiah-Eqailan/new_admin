@@ -1,6 +1,6 @@
 @include('UsersPage.layouts.header')
 
-<section id="items" class="position-relative">
+<section id="items" class="position-relative"style="margin-top:80px">
     <div class="container my-5 py-5 d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         @if($favoriteItems->isEmpty())
         <div class="detail mb-4 text-center">

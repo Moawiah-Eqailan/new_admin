@@ -231,7 +231,8 @@
     </style>
 </head>
 
-<div class="profile-container">
+<div class="profile-container" style="margin-top:80px">
+    
     <div class="profile-header">
 
         <h1 class="profile-name">{{ Auth::user()->name }}</h1>
@@ -240,7 +241,7 @@
             <a href="{{ route('EditUserProfile') }}" class="action-button">
                 <i class="fas fa-edit"></i> Edit Profile
             </a>
-            <a href="{{ route('AllProduct') }}" class="action-button">
+            <a href="{{ route('Orders') }}" class="action-button">
             <i class="fa-solid fa-cart-shopping"></i> Your orders
             </a>
         </div>

@@ -3,7 +3,7 @@
 <main>
     @yield('content')
     <!-- hero section start  -->
-    <section id="hero" class=" position-relative overflow-hidden">
+    <section id="hero" class=" position-relative overflow-hidden"style="margin-top:50px">
         <div class=" container text-center">
 
             <iframe autoplay loop muted playsinline class="hero-video" src="https://player.vimeo.com/video/1042477402?autoplay=1&loop=1&muted=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen>

@@ -49,9 +49,9 @@
     </div>
 </section>
 
-<section id="items" class="position-relative">
+<section id="items" class="position-relative"style="margin-top:80px">
     <div class="container my-5 py-5">
-        <h2 class="text-center my-5">Related  <span class="text-primary">Products</span></h2>
+        <h2 class="text-center my-5">Related <span class="text-primary">Products</span></h2>
         @if($relatedItems->isEmpty())
         <div class="detail mb-4 text-center">
             <p class="hero-paragraph">No related items found for this product</p>
@@ -63,9 +63,11 @@
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 text-gray-900">
-                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; justify-content: center; align-items: center;">
+                                <!-- Changed to flex container with center alignment -->
+                                <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: center;">
                                     @foreach($relatedItems as $item)
-                                    <div class="item-card">
+                                    <!-- Added max-width to cards to maintain consistent sizing -->
+                                    <div class="item-card" style="flex: 0 1 300px; max-width: 300px;">
                                         <div class="card">
                                             <img src="{{ asset('storage/' . $item->item_image) }}" class="card-img-top" style="width: 100%; height: 200px; object-fit: contain;">
                                             <div class="card-body p-4" style="text-align: center;">

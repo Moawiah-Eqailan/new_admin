@@ -134,7 +134,7 @@
     </style>
 </head>
 
-<div class="about-container">
+<div class="about-container" style="margin-top:80px">
     <div class="hero-section">
         <h1>About <span>BATPARTS</span></h1>
         <p>Your Trusted Partner in Auto Parts Excellence</p>
