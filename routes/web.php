@@ -12,7 +12,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\ContactController;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -178,19 +178,13 @@ Route::get('/about', function () {
 
 
 
-// Route::get('/contact', function () {
-//     return view('UsersPage.Contact');
-// })->name('contact');
-
-// Route::get('/contact', function () {
-//     return view('UsersPage.email.Contact');
-// })->name('contact');
 
 
 
-Route::get('/contact', [ContactUsController::class, 'index'])->name('contact');
-Route::post('/contact/send', [ContactUsController::class, 'store'])->name('contact.send');
-
+Route::get('/contact', function () {
+    return view('UsersPage.contact');  
+});
+Route::post('/contact', [ContactController::class, 'send'])->name('contact');  
 
 
 

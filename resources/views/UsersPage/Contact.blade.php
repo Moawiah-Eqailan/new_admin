@@ -209,23 +209,39 @@
     </div>
 
     <div class="contact-form">
-        <form method="POST" action="{{route('contact.send')}}">
+        <form method="POST" action="{{ route('contact') }}">
             @csrf
+            @if(session('success'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Your message has been sent successfully',
+                    text: 'Thank you for contacting us',
+                    confirmButtonText: 'Ok'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/';
+                    }
+                });
+            </script>
+            @endif
+
+
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-user"></i> Full Name</label>
-                    <input type="text" name="name" value="{{ Auth::user()->name }}" readonly disabled>
+                    <input type="text" name="name" value="{{ Auth::user()->name }}" readonly>
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-envelope"></i> Email</label>
-                    <input type="email" name="email" value="{{ Auth::user()->email }}" readonly disabled>
+                    <input type="email" name="email" value="{{ Auth::user()->email }}" readonly>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-phone"></i> Phone Number</label>
-                    <input type="tel" name="phone" value="{{ Auth::user()->phone }}" readonly disabled>
+                    <input type="tel" name="phone" value="{{ Auth::user()->phone }}" readonly>
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-tag"></i> Subject</label>
@@ -245,8 +261,8 @@
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-city"></i> City</label>
-                    <select name="city" readonly disabled>
-                        <option value="" disabled selected>{{ Auth::user()->city }}</option>
+                    <select name="city" readonly>
+                        <option value="{{ Auth::user()->city }}" selected>{{ Auth::user()->city }}</option>
                         <option value="Amman">Amman</option>
                         <option value="Zarqa">Zarqa</option>
                         <option value="Irbid">Irbid</option>
