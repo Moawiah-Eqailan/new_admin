@@ -46,6 +46,12 @@
       <span>Users</span></a>
   </li>
 
+  <li class="nav-item">
+    <a class="nav-link" href="{{ route('Users') }}">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Messages</span></a>
+  </li>
+
   <!-- <li class="nav-item">
     <a class="nav-link" href="/profile">
       <i class="fas fa-fw fa-tachometer-alt"></i>

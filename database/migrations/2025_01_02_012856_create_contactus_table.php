@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('subject');
             $table->text('message');
             $table->string('user_city');
+            $table->string('user_state');
             $table->timestamps();
         });
     }

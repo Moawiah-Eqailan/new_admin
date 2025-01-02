@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Item;
 use App\Models\Category;
+use App\Models\ContactUs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -95,8 +96,9 @@ class AuthController extends Controller
         $totalPurchases = Cart::count();
         $totalCart = Cart::count();
         $totalPrice = Item::sum('item_price');
+        $totalMessage = ContactUs::count();
 
-        return view('dashboard', compact('totalUsers', 'totalProducts', 'totalPurchases' , 'totalCart', 'totalPrice'));
+        return view('dashboard', compact('totalUsers', 'totalProducts', 'totalPurchases' , 'totalCart', 'totalPrice','totalMessage'));
     }
 
 

@@ -256,9 +256,10 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label><i class="fas fa-globe"></i> Country</label>
-                    <input type="text" value="Jordan" readonly disabled>
+                    <label class="form-label"> <i class="fas fa-home"></i> Address / Street</label>
+                    <input name="state" type="text" class="form-input" value="{{ Auth::user()->state }}">
                 </div>
+
                 <div class="form-group">
                     <label><i class="fas fa-city"></i> City</label>
                     <select name="city" readonly>
@@ -279,11 +280,23 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label><i class="fas fa-globe"></i> Country</label>
+                <input type="text" value="Jordan" readonly disabled>
+            </div>
+
+
             <button type="submit" class="submit-btn">
                 <i class="fas fa-paper-plane"></i> Send Message
             </button>
         </form>
     </div>
 </div>
+
+
+
+
+
+
 
 @include('UsersPage.layouts.footer')
