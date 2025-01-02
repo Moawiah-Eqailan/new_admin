@@ -96,7 +96,7 @@
                 <tr>
                     <th>رقم الطلب</th>
                     <th>المنتج</th>
-                    <th>الفئة</th>
+                    <th>اسم المنتج</th>
                     <th>حالة الطلب</th>
                     <th> صوره المنتج</th>
                     <th>الإجراءات</th>
@@ -106,8 +106,8 @@
                 @foreach ($orders as $order)
                     <tr>
                         <td>{{ $order->id }}</td>
-                        <td>{{ $order->product_id }}</td>
-                        <td>{{ $order->category_id }}</td>
+                        <td>{{ $order->cart_id  }}</td>
+                        <td>{{ $order->item_name }}</td>
                         <td>
                             <span class="badge 
                                 @if($order->order_status == 'pending') 

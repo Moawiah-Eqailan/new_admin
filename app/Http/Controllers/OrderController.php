@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Cart;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Models\OrderItem;
+use DB;
 
 class OrderController extends Controller
 {
@@ -17,54 +20,79 @@ class OrderController extends Controller
         return view('UsersPage.UserPage.orders', compact('orders'));
     }
 
-    public function createOrder(Request $request)
+
+
+
+    public function create(Request $request)
     {
         try {
-            $cartItems = Cart::where('user_id', Auth::id())->get();
-
-            if ($cartItems->isEmpty()) {
-                return response()->json(['error' => 'Your cart is empty.'], 400);
-            }
-
-            Log::info('Cart Items:', $cartItems->toArray());
-
-            $total = $cartItems->sum(function ($item) {
-                return $item->item->item_price * $item->quantity;
-            });
-
-            if ($total <= 0) {
-                return response()->json(['error' => 'Total price calculation failed.'], 400);
-            }
-
+            DB::beginTransaction();
+    
+            // تأكد من البيانات القادمة
+            $cartItems = $request->cartItems;
+            $total = $request->total;
+            $userId = $request->userId;
+    
+            // إنشاء الطلب
             $order = Order::create([
-                'user_id' => Auth::id(),
-                'order_status' => 'Pending', 
-                'category_id',
-                'product_id',
-                'item_id',
-                'cart_id',
-                'item_image',
+                'user_id' => $userId,
+                'total_amount' => $total,
+                'payment_method' => 'cash',
+                'status' => 'pending'
             ]);
-
+    
+            // حفظ العناصر المرتبطة بالطلب في جدول Order
             foreach ($cartItems as $cartItem) {
-                $order->items()->attach($cartItem->item_id, [
-                    'quantity' => $cartItem->quantity,
-                    'price' => $cartItem->item->item_price,
+                $order->items()->create([ // إذا كنت تستخدم علاقة "many to many"
+                    'item_id' => $cartItem['item_id'], 
+                    'quantity' => $cartItem['quantity'],
+                    'price' => $cartItem['item_price']
                 ]);
             }
-
-
-            Cart::where('user_id', Auth::id())->delete();
-
+    
+            // مسح السلة بعد حفظ الطلب
+            Cart::where('user_id', $userId)->delete();
+    
+            DB::commit();
+    
             return response()->json([
                 'success' => true,
-                'message' => 'Order placed successfully!',
+                'message' => 'Order placed successfully',
                 'order_id' => $order->id
             ]);
         } catch (\Exception $e) {
-            Log::error('Error creating order: ' . $e->getMessage());
-
-            return response()->json(['error' => 'An error occurred while creating the order: ' . $e->getMessage()], 500);
+            DB::rollback();
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
+    public function store(Request $request)
+{
+    $validatedData = $request->validate([
+        'cartItems' => 'required|array',
+        'total' => 'required|numeric',
+        'userId' => 'required|exists:users,id',
+    ]);
+
+    // إنشاء الطلب
+    $order = Order::create([
+        'user_id' => $validatedData['userId'],
+        'total' => $validatedData['total'],
+        'status' => 'Pending', // يمكنك تغيير الحالة حسب الحاجة
+    ]);
+
+    // إدراج العناصر المرتبطة بالطلب
+    foreach ($validatedData['cartItems'] as $item) {
+        $order->items()->create([
+            'item_id' => $item['item']['id'],
+            'quantity' => $item['quantity'],
+            'price' => $item['item']['item_price'],
+        ]);
+    }
+
+    return response()->json(['success' => true, 'order_id' => $order->id]);
+}
+
 }

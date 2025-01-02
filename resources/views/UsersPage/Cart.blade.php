@@ -2,6 +2,8 @@
 
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         .quantity-input {
             text-align: center;
@@ -119,17 +121,33 @@
 @include('UsersPage.layouts.footer')
 
 <script>
+
+const style = document.createElement('style');
+    style.textContent = `
+        .text-left {
+            text-align: left !important;
+            display: block;
+            width: 100%;
+        }
+        .form-group i {
+            position: absolute;
+            right: 3rem;
+            margin-top: 2.4rem;
+            color: #94CA21;
+        }
+    `;
+    document.head.appendChild(style);
     document.addEventListener("DOMContentLoaded", function() {
         const quantityInputs = document.querySelectorAll(".quantity-input");
         const totalPrice = document.getElementById("total-price");
 
         quantityInputs.forEach(input => {
             input.previousElementSibling.addEventListener("click", function() {
-                updateQuantity(input, -1);
+                updateQuantity(input, -0);
             });
 
             input.nextElementSibling.addEventListener("click", function() {
-                updateQuantity(input, 1);
+                updateQuantity(input, 0);
             });
         });
 
@@ -165,95 +183,90 @@
         }
 
         const checkoutButton = document.querySelector('#checkout-button');
-        checkoutButton.addEventListener("click", function(event) {
-            event.preventDefault();
+checkoutButton.addEventListener("click", function(event) {
+    event.preventDefault();
 
-            Swal.fire({
-                title: '<strong>This is the information that will be used to contact you</strong>',
-                html: `
-                <form class="edit-form">
-                    @csrf
-                    <div class="form-group">
-                        <label class="form-label text-left"><i class="fas fa-user"></i>Full Name</label>
-                        <input type="text" name="name" class="form-control" value="{{ Auth::user()->name }}" readonly disabled>
-                    </div>
-                    <br/>
-                    <div class="form-group">
-                        <label class="form-label text-left"><i class="fas fa-envelope"></i>Email Address</label>
-                        <input type="email" name="email" class="form-control" value="{{ Auth::user()->email }}" readonly disabled>
-                    </div>
-                    <br/>
-                    <div class="form-group">
-                        <label class="form-label text-left"><i class="fas fa-phone"></i>Phone Number</label>
-                        <input type="text" name="phone" class="form-control" value="{{ Auth::user()->phone }}" readonly disabled>
-                    </div>
-                    <br/>
-                    <div class="form-group">
-                        <label class="form-label text-left"><i class="fas fa-home"></i>Address</label>
-                        <input type="text" name="address" class="form-control" value="{{ Auth::user()->address }}" readonly disabled>
-                    </div>
-                    <br/>
-                    <div class="form-group">
-                        <label class="form-label text-left"> <i class="fas fa-flag"></i>Province</label>
-                        <input type="text" name="state" class="form-control" value="{{ Auth::user()->state }}" readonly disabled>
-                    </div>
-                    <br/>
-                    <div class="form-group">
-                        <label class="form-label text-left"><i class="fas fa-globe"></i>Country</label>
-                        <input type="text" class="form-control" value="Jordan" readonly disabled>
-                    </div>
-                    <br/>
-                    <div class="form-group">
-                        <label class="form-label text-left"><i class="fas fa-city"></i>City</label>
-                        <input type="text" class="form-control" value="{{ Auth::user()->city }}" readonly disabled>
-                    </div>
-                </form>
-            `,
-                showCloseButton: true,
-                focusConfirm: false,
-                confirmButtonText: 'DONE',
-                preConfirm: () => {
-                    // Define cartItems and total dynamically from your backend
-                    const cartItems = @json($cartItems);
-                    const total = @php
-                    echo $cartItems->sum(function($item) {
-                        return $item->item->item_price * $item->quantity;
-                    });
-                    @endphp;
+    Swal.fire({
+        title: '<strong>This is the information that will be used to contact you</strong>',
+        html: `
+        <form class="edit-form">
+            @csrf
+            <div class="form-group">
+                <label class="form-label text-left"><i class="fas fa-user"></i>Full Name</label>
+                <input type="text" name="name" class="form-control" value="{{ Auth::user()->name }}" readonly disabled>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label class="form-label text-left"><i class="fas fa-envelope"></i>Email Address</label>
+                <input type="email" name="email" class="form-control" value="{{ Auth::user()->email }}" readonly disabled>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label class="form-label text-left"><i class="fas fa-phone"></i>Phone Number</label>
+                <input type="text" name="phone" class="form-control" value="{{ Auth::user()->phone }}" readonly disabled>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label class="form-label text-left"><i class="fas fa-home"></i>Address</label>
+                <input type="text" name="address" class="form-control" value="{{ Auth::user()->address }}" readonly disabled>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label class="form-label text-left"> <i class="fas fa-flag"></i>Province</label>
+                <input type="text" name="state" class="form-control" value="{{ Auth::user()->state }}" readonly disabled>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label class="form-label text-left"><i class="fas fa-globe"></i>Country</label>
+                <input type="text" class="form-control" value="Jordan" readonly disabled>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label class="form-label text-left"><i class="fas fa-city"></i>City</label>
+                <input type="text" class="form-control" value="{{ Auth::user()->city }}" readonly disabled>
+            </div>
+        </form>
+    `,
+        showCloseButton: true,
+        focusConfirm: false,
+        confirmButtonText: 'DONE',
+        preConfirm: () => {
+            const cartItems = @json($cartItems); // تم تحويل cartItems إلى JSON
+            const total = @php echo $cartItems->sum(function($item) { return $item->item->item_price * $item->quantity; }); @endphp;
+            const userId = @php echo Auth::id(); @endphp;
 
-                    const userId = @php echo Auth::id();
-                    @endphp;
-                    fetch('/orders/create', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                            },
-                            body: JSON.stringify({
-                                cartItems: cartItems, // تأكد من أن cartItems تحتوي على العناصر المناسبة
-                                total: total,
-                                userId: userId // تأكد من أن userId تم تمريره بشكل صحيح
-                            })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                console.log('Order placed successfully!', data);
-                            } else {
-                                console.error('Error:', data.error);
-                                console.log('Cart Items:', cartItems);
-                                console.log('Total:', total);
-                                console.log('User ID:', userId);
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Request failed', error);
-
-                        });
-
-
+            // التأكد من أن الـ CSRF token مضاف بشكل صحيح
+            fetch('/orders/create', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+    },
+    body: JSON.stringify({
+        cartItems: cartItems,
+        total: total,
+        userId: userId
+    })
+})
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
                 }
+                return Promise.reject('Failed to create order');
+            })
+            .then(data => {
+                if (data.success) {
+                    Swal.fire('Order placed successfully', '', 'success');
+                } else {
+                    Swal.fire('Error placing order', data.error || 'Unknown error', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Error', 'An error occurred while placing the order.', 'error');
             });
-        });
+        }
+    });
+});
     });
 </script>

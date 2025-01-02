@@ -176,15 +176,14 @@
 
 
 
-        .form-group i{
+        .form-group i {
             color: #94CA21;
 
         }
-   
     </style>
 </head>
 
-<div class="contact-container"style="margin-top:80px">
+<div class="contact-container" style="margin-top:80px">
 
     <div class="contact-header">
         <h1>Contact <span>Us</span></h1>
@@ -210,23 +209,23 @@
     </div>
 
     <div class="contact-form">
-        <form>
+        <form method="POST" action="{{route('contact.send')}}">
             @csrf
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-user"></i> Full Name</label>
-                    <input type="text" name="name" value="{{ Auth::user()->name }}" required>
+                    <input type="text" name="name" value="{{ Auth::user()->name }}" readonly disabled>
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-envelope"></i> Email</label>
-                    <input type="email" name="email" value="{{ Auth::user()->email }}" required>
+                    <input type="email" name="email" value="{{ Auth::user()->email }}" readonly disabled>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-phone"></i> Phone Number</label>
-                    <input type="tel" name="phone" value="{{ Auth::user()->phone }}">
+                    <input type="tel" name="phone" value="{{ Auth::user()->phone }}" readonly disabled>
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-tag"></i> Subject</label>
@@ -246,7 +245,7 @@
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-city"></i> City</label>
-                    <select name="city">
+                    <select name="city" readonly disabled>
                         <option value="" disabled selected>{{ Auth::user()->city }}</option>
                         <option value="Amman">Amman</option>
                         <option value="Zarqa">Zarqa</option>

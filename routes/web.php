@@ -1,4 +1,5 @@
 <?php
+use App\Mail\Email;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -11,10 +12,10 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ContactUsController;
 
 use Illuminate\Support\Facades\Auth;
-
-
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -116,7 +117,7 @@ Route::get('/profile', function () {
 
 
 Route::get('/orders', [OrderController::class, 'index'])->name('Orders');
-Route::post('/orders/create', [OrderController::class, 'create']);
+Route::post('/orders/create', [OrderController::class, 'create'])->name('orders.create');
 
 // In web.php or api.php
 Route::post('/orders/create', [OrderController::class, 'createOrder']);
@@ -173,9 +174,28 @@ Route::get('/about', function () {
     return view('UsersPage.About');
 })->name('about');
 
-Route::get('/contact', function () {
-    return view('UsersPage.Contact');
-})->name('contact');
+
+
+
+
+// Route::get('/contact', function () {
+//     return view('UsersPage.Contact');
+// })->name('contact');
+
+// Route::get('/contact', function () {
+//     return view('UsersPage.email.Contact');
+// })->name('contact');
+
+
+
+Route::get('/contact', [ContactUsController::class, 'index'])->name('contact');
+Route::post('/contact/send', [ContactUsController::class, 'store'])->name('contact.send');
+
+
+
+
+
+
 
 // Filter and Search Routes
 Route::get('/filter', [AuthController::class, 'filter'])->name('filter');
@@ -184,13 +204,13 @@ Route::post('/filter/toggle/{id}', [FilterController::class, 'index']);
 
 
 
-Route::get('/favorites/count', function() {
+Route::get('/favorites/count', function () {
     return response()->json([
         'count' => DB::table('favorites')->where('user_id', '=', Auth::user()->id)->count('id')
     ]);
 });
 
-Route::get('/cart/count', function() {
+Route::get('/cart/count', function () {
     return response()->json([
         'count' => DB::table('carts')->where('user_id', '=', Auth::user()->id)->count('id')
     ]);
@@ -214,3 +234,11 @@ Route::get('/CheckOut', function () {
 
 
 Route::post('/orders/create', [OrderController::class, 'createOrder'])->name('orders.create');
+
+
+
+
+Route::get('/mail', function () {
+    Mail::to("info@BatParts.com")->send(new Email('Moawiah'));
+    return "Email Was Sent";
+});
