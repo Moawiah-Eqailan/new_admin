@@ -30,7 +30,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-family:'Kalam', cursive;
+            font-family: 'Kalam', cursive;
 
         }
 
@@ -42,7 +42,7 @@
             gap: 0.5rem;
             font-weight: 500;
             transition: all 0.3s ease;
-            font-family:'Kalam', cursive;
+            font-family: 'Kalam', cursive;
         }
 
         .password-link:hover {
@@ -126,7 +126,7 @@
     </style>
 </head>
 
-<div class="container"style="margin-top:80px">
+<div class="container" style="margin-top:80px">
     <div class="edit-header">
         <h1 class="edit-title">
             <i class="fas fa-edit"></i> Edit<span class="text-primary">Profile</span>
@@ -213,8 +213,8 @@
     </form>
 </div>
 
+@if(session('success'))
 <script>
-    @if(session('success'))
     Swal.fire({
         title: 'Success!',
         text: '{{ session("success") }}',
@@ -226,7 +226,7 @@
             window.location.href = '{{ route("UserProfile") }}';
         }
     });
-    @endif
 </script>
+@endif
 
 @include('UsersPage.layouts.footer')

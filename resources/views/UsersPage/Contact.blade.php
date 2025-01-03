@@ -217,7 +217,8 @@
                     icon: 'success',
                     title: 'Your message has been sent successfully',
                     text: 'Thank you for contacting us',
-                    confirmButtonText: 'Ok'
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#94CA21'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.href = '/';
@@ -291,12 +292,29 @@
             </button>
         </form>
     </div>
+    <div class="d-flex mt-4">
+        <a href="{{ url()->previous() }}" class="btn btn-primary me-2">Back</a>
+    </div>
 </div>
 
 
+<footer id="footer" class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <p>&copy; 2025 BAT<span class="text-primary">PARTS</span> </p>
+        <div class="d-flex justify-content-center">
+            <a href="https://www.facebook.com" class="text-white mx-2">Facebook</a>
+            <a href="https://www.x.com" class="text-white mx-2">𝕏</a>
+            <a href="https://www.instagram.com" class="text-white mx-2">Instagram</a>
 
+        </div>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+<script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/jquery-1.11.0.min.js') }}"></script>
+<script src="{{ asset('js/plugins.js') }}"></script>
 
-
-
-@include('UsersPage.layouts.footer')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>

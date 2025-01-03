@@ -122,56 +122,53 @@
     </style>
 </head>
 
-<br><br>
-<div class="container">
-    <div class="edit-header">
-        <h1 class="edit-title">
-        <i class="fa-solid fa-lock-open"></i>Change<span class="text-primary">Password</span>
-        </h1>
+<div class="container" style="margin-top:80px">
+    <div class="container">
+        <div class="edit-header">
+            <h1 class="edit-title">
+                <i class="fa-solid fa-lock-open"></i>Change<span class="text-primary">Password</span>
+            </h1>
+        </div>
+
+        <form method="POST" action="{{ route('password.update') }}" class="edit-form">
+            @csrf
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Old Password</label>
+                    <i class="fas fa-lock form-icon"></i>
+                    <input type="password" name="old_password" class="form-control" placeholder="Enter your old password">
+                    @error('old_password')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label class="form-label">New Password</label>
+                    <i class="fas fa-lock form-icon"></i>
+                    <input type="password" name="password" class="form-control" placeholder="Enter your new password">
+                    @error('password')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Confirm New Password</label>
+                    <i class="fas fa-lock form-icon"></i>
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm your new password">
+                    @error('password_confirmation')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-save"></i> Save Password
+            </button>
+        </form>
     </div>
-
-    <form method="POST" action="{{ route('password.update') }}" class="edit-form">
-        @csrf
-        <div class="form-grid">
-            <!-- Old Password -->
-            <div class="form-group">
-                <label class="form-label">Old Password</label>
-                <i class="fas fa-lock form-icon"></i>
-                <input type="password" name="old_password" class="form-control" placeholder="Enter your old password">
-                @error('old_password')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-        </div>
-        <div class="form-grid">
-
-            <!-- New Password -->
-            <div class="form-group">
-                <label class="form-label">New Password</label>
-                <i class="fas fa-lock form-icon"></i>
-                <input type="password" name="password" class="form-control" placeholder="Enter your new password">
-                @error('password')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <!-- Confirm New Password -->
-            <div class="form-group">
-                <label class="form-label">Confirm New Password</label>
-                <i class="fas fa-lock form-icon"></i>
-                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm your new password">
-                @error('password_confirmation')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-        </div>
-
-        <button type="submit" class="submit-btn">
-            <i class="fas fa-save"></i> Save Password
-        </button>
-    </form>
 </div>
-
 @if(session('success'))
 <script>
     Swal.fire({

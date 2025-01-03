@@ -185,3 +185,14 @@
         }
     });
 </script>
+@if(session('swal'))
+    <script>
+        Swal.fire({
+            icon: "{{ session('swal')['icon'] }}",
+            title: "{{ session('swal')['title'] }}",
+            text: "{{ session('swal')['text'] }}",
+        }).then(function() {
+            window.location.href = "/";
+        });
+    </script>
+@endif

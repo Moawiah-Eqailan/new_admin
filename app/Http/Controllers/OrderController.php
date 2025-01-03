@@ -62,14 +62,26 @@ class OrderController extends Controller
                     $cartItem->item->quantity -= $cartItem->quantity;
                     $cartItem->item->save();
                 }
+
+                Cart::where('user_id', $user->id)->delete();
             });
 
-            return response()->json(['success' => true, 'message' => 'Order placed successfully']);
+            return redirect('cart')
+                ->with('swal', [
+                    'icon' => 'success',
+                    'title' => 'Thank you for shopping with us',
+                    'text' => 'Your order is being prepared.',
+                ]);
         } catch (\Exception $e) {
             Log::error('Error placing order: ' . $e->getMessage());
             Log::error('Stack trace: ' . $e->getTraceAsString());
 
-            return response()->json(['success' => false, 'message' => 'Error placing order. Please try again later.']);
+            return redirect('cart')
+                ->with('swal', [
+                    'icon' => 'error',
+                    'title' => 'An error occurred',
+                    'text' => 'There was an error while placing your order. Please try again later.',
+                ]);
         }
     }
 }
