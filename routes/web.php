@@ -13,9 +13,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ContactController;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -104,7 +103,7 @@ Route::middleware('auth')->group(function () {
 
 
 // User Profile Routes
-Route::get('/profile', function () {
+Route::get('/UserProfile', function () {
     return view('UsersPage.UserPage.UserProfile');
 })->name('UserProfile');
 
@@ -117,12 +116,10 @@ Route::get('/profile', function () {
 
 
 Route::get('/orders', [OrderController::class, 'index'])->name('Orders');
-Route::post('/orders/create', [OrderController::class, 'create'])->name('orders.create');
 
 // In web.php or api.php
-Route::post('/orders/create', [OrderController::class, 'createOrder']);
 
-Route::post('/create-order', [OrderController::class, 'createOrder'])->middleware('auth');
+Route::post('/orders/create', [OrderController::class, 'createOrder'])->name('orders.create');
 
 
 
@@ -226,13 +223,12 @@ Route::get('/CheckOut', function () {
 
 
 
-
-Route::post('/orders/create', [OrderController::class, 'createOrder'])->name('orders.create');
-
-
-
-
-Route::get('/mail', function () {
-    Mail::to("info@BatParts.com")->send(new Email('Moawiah'));
-    return "Email Was Sent";
+Route::get('/orders/create', function () {
+    return view('UsersPage.UserPage.Orders');  
 });
+
+
+
+
+
+

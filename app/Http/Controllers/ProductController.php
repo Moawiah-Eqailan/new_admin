@@ -180,7 +180,7 @@ class ProductController extends Controller
     public function statistics()
     {
         $totalProducts = Product::count();
-        $totalPurchases = Cart::count(); // Replace 'Order' with your actual purchases model
+        $totalPurchases = Cart::count(); 
         return view('dashboard', compact('totalProducts', 'totalPurchases'));
     }
 }

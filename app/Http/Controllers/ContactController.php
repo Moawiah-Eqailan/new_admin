@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ContactUs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB; // تأكد من إضافة هذا السطر
+use Illuminate\Support\Facades\DB; 
 
 class ContactController extends Controller
 {

@@ -40,7 +40,7 @@ class CategoryController extends Controller
             $imagePath = $request->file('image')->store('Categories/images', 'public');
             $validatedData['category_image'] = $imagePath;
         } else {
-            $validatedData['category_image'] = null;  // If no image is provided, set as null
+            $validatedData['category_image'] = null;  
         }
 
         Category::create($validatedData);
@@ -79,15 +79,13 @@ class CategoryController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            // Delete old image if exists
             if ($category->category_image && Storage::exists('public/' . $category->category_image)) {
                 Storage::delete('public/' . $category->category_image);
             }
 
-            // Store new image
             $imagePath = $request->file('image')->store('Categories/images', 'public');
         } else {
-            $imagePath = $category->category_image; // Retain old image if no new image is uploaded
+            $imagePath = $category->category_image; 
         }
 
         $category->update([
@@ -105,7 +103,6 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($category_id);
 
-        // Delete image if exists
         if ($category->category_image && Storage::exists('public/' . $category->category_image)) {
             Storage::delete('public/' . $category->category_image);
         }

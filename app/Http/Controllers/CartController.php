@@ -117,6 +117,9 @@ class CartController extends Controller
         Cart::where('user_id', auth()->id())->delete();
         return response()->json(['success' => true]);
     }
-
-    
+    public function getCartItems($userId)
+    {
+        $cartItems = Cart::where('user_id', $userId)->get();
+        return response()->json($cartItems);
+    }
 }

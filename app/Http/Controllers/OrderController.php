@@ -9,7 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\OrderItem;
-use DB;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+
+
 
 class OrderController extends Controller
 {
@@ -21,78 +24,52 @@ class OrderController extends Controller
     }
 
 
-
-
-    public function create(Request $request)
+    public function createOrder(Request $request)
     {
+        $user = Auth::user();
+
+        $total = DB::table('items')
+            ->join('carts', 'items.id', '=', 'carts.item_id')
+            ->where('carts.user_id', $user->id)
+            ->sum('items.item_price');
+
+        $cartItems = Cart::where('user_id', $user->id)
+            ->with('item')
+            ->get();
+
         try {
-            DB::beginTransaction();
-    
-            // تأكد من البيانات القادمة
-            $cartItems = $request->cartItems;
-            $total = $request->total;
-            $userId = $request->userId;
-    
-            // إنشاء الطلب
-            $order = Order::create([
-                'user_id' => $userId,
-                'total_amount' => $total,
-                'payment_method' => 'cash',
-                'status' => 'pending'
-            ]);
-    
-            // حفظ العناصر المرتبطة بالطلب في جدول Order
-            foreach ($cartItems as $cartItem) {
-                $order->items()->create([ // إذا كنت تستخدم علاقة "many to many"
-                    'item_id' => $cartItem['item_id'], 
-                    'quantity' => $cartItem['quantity'],
-                    'price' => $cartItem['item_price']
+            DB::transaction(function () use ($cartItems, $total, $user) {
+                $order = Order::create([
+                    'user_id' => $user->id,
+                    'total' => $total,
+                    'status' => 'pending',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ]);
-            }
-    
-            // مسح السلة بعد حفظ الطلب
-            Cart::where('user_id', $userId)->delete();
-    
-            DB::commit();
-    
-            return response()->json([
-                'success' => true,
-                'message' => 'Order placed successfully',
-                'order_id' => $order->id
-            ]);
+
+                foreach ($cartItems as $cartItem) {
+                    if (!$cartItem->item) {
+                        throw new \Exception("Item not found for cart item: " . $cartItem->id);
+                    }
+
+                    OrderItem::create([
+                        'order_id' => $order->id,
+                        'item_id' => $cartItem->item_id,
+                        'quantity' => $cartItem->quantity,
+                        'price' => $cartItem->item->item_price,
+                    ]);
+
+                    $cartItem->item->quantity -= $cartItem->quantity;
+                    $cartItem->item->save();
+                }
+            });
+
+            return response()->json(['success' => true, 'message' => 'Order placed successfully']);
         } catch (\Exception $e) {
-            DB::rollback();
-            return response()->json([
-                'success' => false,
-                'error' => $e->getMessage()
-            ], 500);
+            Log::error('Error placing order: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
+
+            return response()->json(['success' => false, 'message' => 'Error placing order. Please try again later.']);
         }
     }
-    public function store(Request $request)
-{
-    $validatedData = $request->validate([
-        'cartItems' => 'required|array',
-        'total' => 'required|numeric',
-        'userId' => 'required|exists:users,id',
-    ]);
-
-    // إنشاء الطلب
-    $order = Order::create([
-        'user_id' => $validatedData['userId'],
-        'total' => $validatedData['total'],
-        'status' => 'Pending', // يمكنك تغيير الحالة حسب الحاجة
-    ]);
-
-    // إدراج العناصر المرتبطة بالطلب
-    foreach ($validatedData['cartItems'] as $item) {
-        $order->items()->create([
-            'item_id' => $item['item']['id'],
-            'quantity' => $item['quantity'],
-            'price' => $item['item']['item_price'],
-        ]);
-    }
-
-    return response()->json(['success' => true, 'order_id' => $order->id]);
-}
-
 }

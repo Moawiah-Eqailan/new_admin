@@ -98,7 +98,6 @@
                     <th>المنتج</th>
                     <th>اسم المنتج</th>
                     <th>حالة الطلب</th>
-                    <th> صوره المنتج</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
@@ -106,21 +105,20 @@
                 @foreach ($orders as $order)
                     <tr>
                         <td>{{ $order->id }}</td>
-                        <td>{{ $order->cart_id  }}</td>
-                        <td>{{ $order->item_name }}</td>
+                        <td>{{ $order->user_id  }}</td>
+                        <td>{{ $order->total }} JOD</td>
                         <td>
                             <span class="badge 
-                                @if($order->order_status == 'pending') 
+                                @if($order->status== 'pending') 
                                     bg-warning 
-                                @elseif($order->order_status == 'delivered') 
+                                @elseif($order->status== 'delivered') 
                                     bg-success 
-                                @elseif($order->order_status == 'cancelled') 
+                                @elseif($order->status== 'cancelled') 
                                     bg-danger 
                                 @endif">
-                                {{ $order->order_status }}
+                                {{ $order->status}}
                             </span>
                         </td>
-                        <td><img src="https://2.bp.blogspot.com/-_xt1l3SQjf4/ViDuvIfFU2I/AAAAAAAA5Xc/S1yMyotgar4/s1600/beautiful-twilight-wallpaper-free-download-1024x640.jpg" class="card-img-top" style="width: 100%; height: 200px; object-fit: contain;"></td>
                         </td>
 
                         <td>
