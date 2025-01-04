@@ -185,31 +185,32 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($orders as $order)
-                <tr class="order-row">
-                    <td>{{ $loop->iteration }}</td>
-                    <td>
-                        <span class="quantity-value">
-                            {{ number_format($order->orderItems ? $order->orderItems->sum(function ($item) { return $item->quantity; }) : 2) }}
-                        </span>
-                    </td>
-                    <td>
-                        <span class="price-value">
-                            {{ number_format($order->orderItems ? $order->orderItems->sum(function ($item) { return $item->item->item_price * $item->quantity; }) : 0, 2) }} JOD
-                        </span>
-                    </td>
-                    <td>
-                        <span class="status-badge 
-                            @if($order->status == 'pending') status-pending
-                            @elseif($order->status == 'delivered') status-delivered
-                            @elseif($order->status == 'cancelled') status-cancelled
-                            @endif">
-                            {{ $order->status }}
-                        </span>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
+    @foreach ($orders as $order)
+    <tr class="order-row">
+        <td>{{ $loop->iteration }}</td>
+        <td>
+            <span class="quantity-value">
+                {{ number_format($order->orderItems ? $order->orderItems->sum(function ($item) { return $item->quantity; }) : 2) }}
+            </span>
+        </td>
+        <td>
+            <span class="price-value">
+                {{ number_format($order->orderItems ? $order->orderItems->sum(function ($item) { return $item->item->item_price * $item->quantity; }) : 0, 2) }} JOD
+            </span>
+        </td>
+        <td>
+            <span class="status-badge 
+                @if($order->status == 'pending') status-pending
+                @elseif($order->status == 'delivered') status-delivered
+                @elseif($order->status == 'cancelled') status-cancelled
+                @endif">
+                {{ $order->status }}
+            </span>
+        </td>
+    </tr>
+    @endforeach
+</tbody>
+
         </table>
     </div>
     <div class="d-flex mt-4">

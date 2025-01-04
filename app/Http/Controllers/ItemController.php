@@ -8,6 +8,7 @@ use App\Models\Category;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Item;
 use App\Models\Cart;
@@ -21,7 +22,9 @@ class ItemController extends Controller
     public function index()
     {
         $items = Item::orderBy('created_at', 'DESC')->paginate(10);
-
+        $items = DB::table('items')
+        ->orderBy('items.id', 'desc')
+        ->paginate(10);
         return view('Admin.Items.index', compact('items'));
     }
 

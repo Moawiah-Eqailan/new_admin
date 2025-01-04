@@ -1,60 +1,136 @@
 @extends('layouts.app')
-  
-@section('title', 'Profile')
-  
+
+
 @section('contents')
-    <hr />
- 
-    <form method="POST" enctype="multipart/form-data" id="profile_setup_frm" action="" >
-    <div class="row">
-        <div class="col-md-12 border-right">
-            <div class="p-3 py-5">
-              
-                <div class="row" id="res"></div>
-                <div class="row mt-2">
-  
-                    <div class="col-md-6">
-                        <label class="labels">Name</label>
-                        <input type="text" name="name" class="form-control" disabled placeholder="first name" value="{{ auth()->user()->name }}">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="labels">Email</label>
-                        <input type="text" name="email" disabled class="form-control" value="{{ auth()->user()->email }}" placeholder="Email">
-                    </div>
+
+<form method="POST" enctype="multipart/form-data" id="profile_setup_frm" action="">
+    <div class="profile-container">
+        <div class="form-card">
+            <div class="form-header">
+                <h2 class="form-title">
+                    <i class="fas fa-user me-2"></i>
+                    Profile Details
+                </h2>
+                <p class="form-subtitle">View your profile information</p>
+            </div>
+
+            <div class="profile-form">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-user me-2" style="margin: 8px;"></i>
+                        Name
+                    </label>
+                    <input type="text" name="name" class="form-input" disabled placeholder="First Name" value="{{ auth()->user()->name }}">
                 </div>
-                <!-- <div class="row mt-2">
-                    <div class="col-md-6">
-                        <label class="labels">Phone</label>
-                        <input type="text" name="phone" class="form-control" placeholder="Phone Number" value="{{ auth()->user()->phone }}">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="labels">Address</label>
-                        <input type="text" name="address" class="form-control" value="{{ auth()->user()->address }}" placeholder="Address">
-                    </div>
-                </div> -->
-                 
-                <!-- <div class="mt-5 text-center"><button id="btn" class="btn btn-primary profile-button" type="submit">Save Profile</button></div> -->
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-envelope me-2" style="margin: 8px;"></i>
+                        Email
+                    </label>
+                    <input type="text" name="email" disabled class="form-input" placeholder="Email" value="{{ auth()->user()->email }}">
+                </div>
+
+
             </div>
         </div>
-         
-    </div>   
-            
-        </form>
+    </div>
+</form>
+
+<style>
+    .profile-container {
+        padding: 2rem;
+        background-color: #f8f9fc;
+        min-height: calc(100vh - 100px);
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .form-title {
+        color: #4e73df;
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-subtitle {
+        color: #858796;
+        font-size: 1rem;
+    }
+
+    .profile-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #4e73df;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-input {
+        padding: 0.8rem 1rem;
+        border: 2px solid #e3e6f0;
+        border-radius: 10px;
+        font-size: 1rem;
+        background-color: #f8f9fc;
+    }
+
+    .form-input[disabled] {
+        cursor: default;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .save-btn {
+        padding: 0.8rem 1.5rem;
+        border-radius: 10px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        background: linear-gradient(45deg, #4e73df, #2e59d9);
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .save-btn:hover {
+        background: linear-gradient(45deg, #2e59d9, #224abe);
+        transform: translateY(-2px);
+        text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+        .form-group {
+            flex-direction: column;
+        }
+    }
+</style>
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

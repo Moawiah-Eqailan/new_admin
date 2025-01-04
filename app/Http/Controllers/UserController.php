@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -13,6 +14,12 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('created_at', 'DESC')->get();
+
+
+        $users = DB::table('users')
+        ->orderBy('users.id', 'desc')
+        ->paginate(10);
+
         return view('Admin.Users.index', compact('users'));
     }
 
@@ -74,7 +81,7 @@ class UserController extends Controller
         $query = $request->input('query');
 
         $users = User::where('name', 'LIKE', "%$query%")->get();
-
+        $users = User::where('email', 'LIKE', "%$query%")->get();
         return view('Admin.users.index', ['users' => $users]);
     }
 

@@ -11,11 +11,58 @@
   <!-- Custom fonts for this template-->
   <link href="{{ asset('admin_assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-  
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- Custom styles for this template-->
   <link href="{{ asset('admin_assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
+  <style>
+    /* For Webkit browsers (Chrome, Safari, etc.) */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #4e73df;
+      border-radius: 6px;
+      border: 3px solid #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4e73df;
+    }
+
+    /* For Firefox */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #4e73df #f1f1f1;
+    }
+
+    /* Specific styling for the PDF viewer scrollbar */
+    #pdfViewer::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    #pdfViewer::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 6px;
+    }
+
+    #pdfViewer::-webkit-scrollbar-thumb {
+      background: #4e73df;
+      border-radius: 6px;
+      border: 3px solid #f1f1f1;
+    }
+
+    #pdfViewer::-webkit-scrollbar-thumb:hover {
+      background: #4e73df;
+    }
+  </style>
 </head>
 
 <body id="page-top">
@@ -38,7 +85,7 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          
+
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -48,7 +95,7 @@
           @yield('contents')
 
           <!-- Content Row -->
-         
+
         </div>
         <!-- /.container-fluid -->
 

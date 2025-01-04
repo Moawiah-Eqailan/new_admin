@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -15,7 +16,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::orderBy('created_at', 'DESC')->get();
+        $product = Product::orderBy('created_at', 'DESC')->paginate(10);
+        $product = DB::table('products')
+        ->orderBy('products.product_id', 'desc')
+        ->paginate(10);
 
         return view('Admin.products.index', compact('product'));
     }

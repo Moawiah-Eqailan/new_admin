@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::orderBy('created_at', 'DESC')->get();
-
+        $categories = DB::table('categories')
+            ->orderBy('categories.category_id', 'desc')
+            ->paginate(10);
         return view('admin.Categories.index', compact('categories'));
     }
 
@@ -40,7 +43,7 @@ class CategoryController extends Controller
             $imagePath = $request->file('image')->store('Categories/images', 'public');
             $validatedData['category_image'] = $imagePath;
         } else {
-            $validatedData['category_image'] = null;  
+            $validatedData['category_image'] = null;
         }
 
         Category::create($validatedData);
@@ -85,7 +88,7 @@ class CategoryController extends Controller
 
             $imagePath = $request->file('image')->store('Categories/images', 'public');
         } else {
-            $imagePath = $category->category_image; 
+            $imagePath = $category->category_image;
         }
 
         $category->update([

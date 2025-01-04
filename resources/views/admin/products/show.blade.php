@@ -1,50 +1,219 @@
 @extends('layouts.app')
-  
-@section('title', 'Detail Product')
-  
+
 @section('contents')
-    <hr />
-    <div class="row">
-        <div class="col mb-3">
-            <label class="form-label">Product Name</label>
-            <input type="text" name="title" class="form-control" placeholder="Title" value="{{ $product->product_name }}" readonly>
+<div class="detail-item-container">
+    <div class="form-card">
+        <div class="form-header">
+            <h2 class="form-title">
+                <i class="fas fa-box me-2"></i>
+                Product Details
+            </h2>
+            <p class="form-subtitle">Viewing product information</p>
         </div>
-        <div class="col mb-3">
-            <label class="form-label">Price</label>
-            <input type="text" name="price" class="form-control" placeholder="Price" value="{{ $product->product_price }}" readonly>
-        </div>
-    </div>
-    <div class="row">
-        
-        <div class="col mb-3">
-            <label for="category_id">From Category </label>
-            <select name="category_id" id="category_id" class="form-control" required disabled>
-                <option value="" disabled selected>Select Category</option>
-                @foreach($categories as $id => $name)
-                <option value="{{ $id }}" {{ $product->category_id == $id ? 'selected' : '' }}>
-                    {{ $name }}
-                </option>
-                @endforeach
-            </select>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col">
-            <label for="image" class="form-label">Detail Image</label>
-            <br>
-            <img src='{{asset("storage")}}/{{$product->product_image}}' class="card-img-top" style="width: 100%; height: 200px; object-fit: contain;">
-        </div>
-    </div>
+
+        <div class="item-form">
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="fas fa-tag me-2" style="margin: 8px;" style="margin: 8px;"></i>
+                    Product Name
+                </label>
+                <input type="text"
+                    name="product_name"
+                    class="form-input"
+                    value="{{ $product->product_name }}"
+                    readonly disabled>
+            </div>
 
 
-    <div class="row">
-        <div class="col mb-3">
-            <label class="form-label">Created At</label>
-            <input type="text" name="created_at" class="form-control" placeholder="Created At" value="{{ $product->created_at }}" readonly>
         </div>
-        <div class="col mb-3">
-            <label class="form-label">Updated At</label>
-            <input type="text" name="updated_at" class="form-control" placeholder="Updated At" value="{{ $product->updated_at }}" readonly>
+
+        <div class="item-form">
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="fas fa-list me-2" style="margin: 8px;"></i>
+                    From Category
+                </label>
+                <select name="category_id" class="form-input" disabled>
+                    <option value="" disabled selected>Select Category</option>
+                    @foreach($categories as $id => $name)
+                    <option value="{{ $id }}" {{ $product->category_id == $id ? 'selected' : '' }}>
+                        {{ $name }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div class="item-form">
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="fas fa-image me-2" style="margin: 8px;"></i>
+                    Product Image
+                </label>
+                <div class="image-preview">
+                    <img src="{{ asset('storage/' . $product->product_image) }}"
+                        alt="Product Image"
+                        class="detail-image">
+                </div>
+            </div>
+
+            <div class="timestamp-group">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-calendar-plus me-2" style="margin: 8px;"></i>
+                        Created At
+                    </label>
+                    <input type="text"
+                        name="created_at"
+                        class="form-input"
+                        value="{{ $product->created_at }}"
+                        readonly disabled>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-calendar-check me-2" style="margin: 8px;"></i>
+                        Updated At
+                    </label>
+                    <input type="text"
+                        name="updated_at"
+                        class="form-input"
+                        value="{{ $product->updated_at }}"
+                        readonly disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a href="{{ route('products') }}" class="return-btn">
+                <i class="fas fa-arrow-left me-2" style="margin: 8px;"></i>
+                Back to Products
+            </a>
         </div>
     </div>
+</div>
+
+<style>
+    .detail-item-container {
+        padding: 2rem;
+        background-color: #f8f9fc;
+        min-height: calc(100vh - 100px);
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .form-title {
+        color: #4e73df;
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-subtitle {
+        color: #858796;
+        font-size: 1rem;
+    }
+
+    .item-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-input {
+        padding: 0.8rem 1rem;
+        border: 2px solid #e3e6f0;
+        border-radius: 10px;
+        font-size: 1rem;
+        background-color: #f8f9fc;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #4e73df;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-input[readonly] {
+        cursor: default;
+    }
+
+    .image-preview {
+        border: 2px solid #e3e6f0;
+        border-radius: 10px;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .detail-image {
+        max-width: 100%;
+        height: 200px;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+
+    .timestamp-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .return-btn {
+        padding: 0.8rem 1.5rem;
+        border-radius: 10px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        background: linear-gradient(45deg, #4e73df, #2e59d9);
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .return-btn:hover {
+        background: linear-gradient(45deg, #2e59d9, #224abe);
+        transform: translateY(-2px);
+        text-decoration: none;
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .timestamp-group {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
 @endsection
