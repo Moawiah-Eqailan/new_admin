@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +9,25 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @keyframes slideIn {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .animate-slideIn {
@@ -50,16 +63,17 @@
         }
     </style>
 </head>
+
 <body class="min-h-screen bg-gray-100 relative">
     <div class="custom-shape"></div>
-    
+
     <header class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center animate-slideIn">
             <div class="flex items-center">
                 <i class="fas fa-cog text-white text-4xl animate-spin" style="margin: 5px;"></i>
                 <h class="navbar-brand" style="font-weight: bold;">BAT<span class="text-primary" style="color: #fff; font-weight: bold;">PARTS</span></h>
             </div>
-           
+
         </div>
     </header>
 
@@ -72,20 +86,29 @@
                     <p class="text-gray-600 mt-2">Welcome to Auto Parts Store</p>
                 </div>
             </div>
-            
+
             <form method="POST" action="{{ route('login') }}" class="px-8 py-6">
                 @csrf
-                
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li style="color: red;">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
                 <div class="mb-6 relative">
                     <input id="email" type="email" name="email" required placeholder="Email Address"
-                           class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
+                        class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
                     <i class="fas fa-envelope input-icon"></i>
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
 
                 <div class="mb-6 relative">
                     <input id="password" type="password" name="password" required placeholder="Password"
-                           class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
+                        class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
                     <i class="fas fa-lock input-icon"></i>
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
 
@@ -98,11 +121,11 @@
                     </label>
                 </div>
 
-                <button type="submit" class="w-full bg-[#94CA21] text-white px-8 py-3 rounded-lg font-bold hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105"style="color: #94CA21;">
+                <button type="submit" class="w-full bg-[#94CA21] text-white px-8 py-3 rounded-lg font-bold hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105" style="color: #94CA21;">
                     <i class="fas fa-sign-in-alt mr-2"></i>Login
                 </button>
 
-                
+
                 <div class="mt-6 text-center">
                     <p class="text-gray-600">
                         Don't have an account?
@@ -115,4 +138,5 @@
         </div>
     </main>
 </body>
+
 </html>

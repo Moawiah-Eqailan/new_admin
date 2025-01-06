@@ -24,7 +24,7 @@ class ItemController extends Controller
         $items = Item::orderBy('created_at', 'DESC')->paginate(10);
         $items = DB::table('items')
         ->orderBy('items.id', 'desc')
-        ->paginate(10);
+        ->paginate(5);
         return view('Admin.Items.index', compact('items'));
     }
 

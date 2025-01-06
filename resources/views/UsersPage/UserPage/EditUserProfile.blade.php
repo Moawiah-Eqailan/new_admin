@@ -236,64 +236,7 @@
             window.location.href = '{{ route("UserProfile") }}';
         }
     });
-    document.querySelector('form').addEventListener('submit', function(event) {
-        let isValid = true;
-        const name = document.querySelector('input[name="name"]').value;
-        const email = document.querySelector('input[name="email"]').value;
-        const phone = document.querySelector('input[name="phone"]').value;
-        const address = document.querySelector('input[name="address"]').value;
-        const postcode = document.querySelector('input[name="postcode"]').value;
-        const state = document.querySelector('input[name="state"]').value;
-        const city = document.querySelector('select[name="city"]').value;
-
-        // تحقق من صحة الاسم
-        if (name.trim() === "") {
-            alert("Full Name is required.");
-            isValid = false;
-        }
-
-        // تحقق من صحة البريد الإلكتروني
-        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        if (!emailPattern.test(email)) {
-            alert("Please enter a valid email address.");
-            isValid = false;
-        }
-
-        // تحقق من صحة رقم الهاتف
-        if (phone.trim() === "") {
-            alert("Phone number is required.");
-            isValid = false;
-        }
-
-        // تحقق من صحة العنوان
-        if (address.trim() === "") {
-            alert("Address is required.");
-            isValid = false;
-        }
-
-        // تحقق من صحة الرمز البريدي
-        if (postcode.trim() === "") {
-            alert("Postal code is required.");
-            isValid = false;
-        }
-
-        // تحقق من صحة المحافظة
-        if (state.trim() === "") {
-            alert("Province is required.");
-            isValid = false;
-        }
-
-        // تحقق من صحة المدينة
-        if (city === "") {
-            alert("City is required.");
-            isValid = false;
-        }
-
-        // إذا كان التحقق فاشلاً، توقف عن إرسال النموذج
-        if (!isValid) {
-            event.preventDefault();
-        }
-    });
+ 
 </script>
 @endif
 

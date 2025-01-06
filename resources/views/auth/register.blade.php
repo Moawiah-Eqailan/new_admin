@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +9,25 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @keyframes slideIn {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .animate-slideIn {
@@ -57,16 +70,17 @@
         }
     </style>
 </head>
+
 <body class="min-h-screen bg-gray-100 relative">
     <div class="custom-shape"></div>
-    
+
     <header class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center animate-slideIn">
             <div class="flex items-center">
                 <i class="fas fa-cog text-white text-4xl animate-spin" style="margin: 5px;"></i>
                 <h class="navbar-brand" style="font-weight: bold;">BAT<span class="text-primary" style="color: #fff; font-weight: bold;">PARTS</span></h>
-                </div>
-           
+            </div>
+
         </div>
     </header>
 
@@ -79,43 +93,43 @@
                     <p class="text-gray-600 mt-2">Join Auto Parts Store</p>
                 </div>
             </div>
-            
+
             <form method="POST" action="{{ route('register') }}" class="px-8 py-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 @csrf
-                
+
                 <div class="relative">
                     <input id="name" type="text" name="name" required placeholder="Full Name"
-                           class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
+                        class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
                     <i class="fas fa-user input-icon"></i>
                 </div>
 
                 <div class="relative">
                     <input id="email" type="email" name="email" required placeholder="Email Address"
-                           class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
+                        class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
                     <i class="fas fa-envelope input-icon"></i>
                 </div>
 
                 <div class="relative">
                     <input id="phone" type="tel" name="phone" required placeholder="Phone Number"
-                           class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
+                        class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
                     <i class="fas fa-phone input-icon"></i>
                 </div>
 
                 <div class="relative">
                     <input id="address" type="text" name="address" required placeholder="Address"
-                           class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
+                        class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
                     <i class="fas fa-map-marker-alt input-icon"></i>
                 </div>
 
                 <div class="relative">
                     <input id="postcode" type="text" name="postcode" required placeholder="Postcode"
-                           class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
+                        class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
                     <i class="fas fa-map-pin input-icon"></i>
                 </div>
 
                 <div class="relative">
                     <input id="state" type="text" name="state" required placeholder="State"
-                           class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
+                        class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
                     <i class="fas fa-map input-icon"></i>
                 </div>
 
@@ -140,16 +154,24 @@
 
                 <div class="relative">
                     <input id="password" type="password" name="password" required placeholder="Password"
-                           class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
+                        class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
                     <i class="fas fa-lock input-icon"></i>
                 </div>
 
                 <div class="relative">
                     <input id="password_confirmation" type="password" name="password_confirmation" required placeholder="Confirm Password"
-                           class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
+                        class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
                     <i class="fas fa-lock input-icon"></i>
                 </div>
-
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li style="color: red;">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 <div class="md:col-span-2 flex items-center justify-between mt-6">
                     <a href="{{ route('login') }}" class="text-[#94CA21] hover:underline transition-colors duration-300">
                         <i class="fas fa-arrow-left mr-2"></i>Already have an account?
@@ -163,4 +185,5 @@
         </div>
     </main>
 </body>
+
 </html>

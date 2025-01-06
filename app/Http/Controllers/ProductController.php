@@ -19,7 +19,7 @@ class ProductController extends Controller
         $product = Product::orderBy('created_at', 'DESC')->paginate(10);
         $product = DB::table('products')
         ->orderBy('products.product_id', 'desc')
-        ->paginate(10);
+        ->paginate(5);
 
         return view('Admin.products.index', compact('product'));
     }

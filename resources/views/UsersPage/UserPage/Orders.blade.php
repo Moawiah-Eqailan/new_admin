@@ -242,7 +242,7 @@
                         </a>
                     </td>
                 </tr>
-                @endforeach
+                @endforeachz
             </tbody>
         </table>
     </div>
