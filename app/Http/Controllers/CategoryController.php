@@ -18,7 +18,7 @@ class CategoryController extends Controller
         $categories = Category::orderBy('created_at', 'DESC')->get();
         $categories = DB::table('categories')
             ->orderBy('categories.category_id', 'desc')
-            ->paginate(10);
+            ->paginate(5);
         return view('admin.Categories.index', compact('categories'));
     }
 

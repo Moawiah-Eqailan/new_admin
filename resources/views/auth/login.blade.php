@@ -1,47 +1,118 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Auto Parts Store</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+        .animate-slideIn {
+            animation: slideIn 0.5s ease-out forwards;
+        }
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        .animate-fadeIn {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .login-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94CA21;
+        }
+
+        .custom-shape {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #94CA21 0%, #7ba91b 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 100%);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-100 relative">
+    <div class="custom-shape"></div>
+    
+    <header class="container mx-auto px-6 py-4">
+        <div class="flex justify-between items-center animate-slideIn">
+            <div class="flex items-center">
+                <i class="fas fa-cog text-white text-4xl animate-spin" style="margin: 5px;"></i>
+                <h class="navbar-brand" style="font-weight: bold;">BAT<span class="text-primary" style="color: #fff; font-weight: bold;">PARTS</span></h>
+            </div>
+           
         </div>
+    </header>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    <main class="container mx-auto px-4 py-12 relative">
+        <div class="max-w-md mx-auto login-card rounded-2xl shadow-2xl overflow-hidden animate-fadeIn">
+            <div class="text-center py-8 relative overflow-hidden">
+                <div class="relative z-10">
+                    <i class="fas fa-user-circle text-[#94CA21] text-6xl mb-4"></i>
+                    <h2 class="text-2xl font-bold text-gray-800">Login</h2>
+                    <p class="text-gray-600 mt-2">Welcome to Auto Parts Store</p>
+                </div>
+            </div>
+            
+            <form method="POST" action="{{ route('login') }}" class="px-8 py-6">
+                @csrf
+                
+                <div class="mb-6 relative">
+                    <input id="email" type="email" name="email" required placeholder="Email Address"
+                           class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+                <div class="mb-6 relative">
+                    <input id="password" type="password" name="password" required placeholder="Password"
+                           class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
+                    <i class="fas fa-lock input-icon"></i>
+                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                </div>
+
+                <div class="mb-6">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" name="remember" class="rounded border-gray-300 text-[#94CA21] focus:ring-[#94CA21]">
+                        <span class="ml-2 text-gray-600">Remember me</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full bg-[#94CA21] text-white px-8 py-3 rounded-lg font-bold hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105"style="color: #94CA21;">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Login
+                </button>
+
+                
+                <div class="mt-6 text-center">
+                    <p class="text-gray-600">
+                        Don't have an account?
+                        <a href="/register" class="text-[#94CA21] hover:underline font-bold transition-colors duration-300">
+                            Create New Account
+                        </a>
+                    </p>
+                </div>
+            </form>
         </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </main>
+</body>
+</html>

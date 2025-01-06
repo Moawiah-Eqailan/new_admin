@@ -109,12 +109,13 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::get('/', [HomeController::class, 'home'])->name('home');
 
 Route::middleware('auth')->group(function () {
     // Middleware for Customer Role
     Route::group(['middleware' => function ($request, $next) {
         if (Auth::user()->role !== 'customer') {
-            return redirect()->route('login');
+            return redirect()->route('home');
         }
         return $next($request);
     }], function () {
@@ -155,7 +156,6 @@ Route::middleware('auth')->group(function () {
 
 
         // Home Page Routes
-        Route::get('/', [HomeController::class, 'home'])->name('home');
         Route::get('/find-parts', [HomeController::class, 'findParts']);
 
         // Product Routes for Users
@@ -194,12 +194,6 @@ Route::middleware('auth')->group(function () {
         })->name('about');
 
 
-
-
-
-
-
-
         Route::get('/contact', function () {
             return view('UsersPage.contact');
         });
@@ -234,17 +228,7 @@ Route::middleware('auth')->group(function () {
             return response()->json(['isAuthenticated' => auth()->check()]);
         });
 
-
-
-
-        Route::get('/CheckOut', function () {
-            return view('UsersPage.CheckOut');
-        })->name('CheckOut');
-
-
-
-
-
+  
         Route::get('/orders/create', function () {
             return view('UsersPage.UserPage.Orders');
         });

@@ -44,7 +44,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-family:'Kalam', cursive;
+            font-family: 'Kalam', cursive;
         }
 
         .orders-title i {
@@ -147,20 +147,21 @@
         .animated {
             animation: slideIn 0.5s ease forwards;
         }
+
         .edit-title {
             color: white;
             font-size: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-family:'Kalam', cursive;
+            font-family: 'Kalam', cursive;
 
         }
+
         .orders-title i {
             color: #94CA21;
             font-size: 2.5rem;
         }
-
     </style>
 </head>
 
@@ -170,7 +171,7 @@
             <i class="fas fa-box"></i>
             Your<span class="text-primary">Order</span>
         </h1>
-      
+
         <i class="fas fa-box-open box-decoration"></i>
     </div>
 
@@ -182,34 +183,40 @@
                     <th>Number of Products</th>
                     <th>Total Price</th>
                     <th>Order Status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-    @foreach ($orders as $order)
-    <tr class="order-row">
-        <td>{{ $loop->iteration }}</td>
-        <td>
-            <span class="quantity-value">
-                {{ number_format($order->orderItems ? $order->orderItems->sum(function ($item) { return $item->quantity; }) : 2) }}
-            </span>
-        </td>
-        <td>
-            <span class="price-value">
-                {{ number_format($order->orderItems ? $order->orderItems->sum(function ($item) { return $item->item->item_price * $item->quantity; }) : 0, 2) }} JOD
-            </span>
-        </td>
-        <td>
-            <span class="status-badge 
+                @foreach ($orders as $order)
+                <tr class="order-row">
+                    <td>{{ $loop->iteration }}</td>
+                    <td>
+                        <span class="quantity-value">
+                            {{ number_format($order->orderItems ? $order->orderItems->sum(function ($item) { return $item->quantity; }) : 2) }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="price-value">
+                            {{ number_format($order->orderItems ? $order->orderItems->sum(function ($item) { return $item->item->item_price * $item->quantity; }) : 0, 2) }} JOD
+                        </span>
+                    </td>
+                    <td>
+                        <span class="status-badge 
                 @if($order->status == 'pending') status-pending
                 @elseif($order->status == 'delivered') status-delivered
                 @elseif($order->status == 'cancelled') status-cancelled
                 @endif">
-                {{ $order->status }}
-            </span>
-        </td>
-    </tr>
-    @endforeach
-</tbody>
+                            {{ $order->status }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="#" class="action-btn view-btn" title="View Details">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
 
         </table>
     </div>

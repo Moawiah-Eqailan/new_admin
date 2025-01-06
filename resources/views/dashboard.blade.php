@@ -162,7 +162,8 @@
                                 <div class="col">
                                     <div class="progress progress-sm mr-2">
                                         <div class="progress-bar bg-info" role="progressbar"
-                                            style="width: {{ $totalProducts }}%" aria-valuemin="0" aria-valuemax="100"></div>
+                                            style="width: {{ $totalProducts }}%" aria-valuemin="0" aria-valuemax="100">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
