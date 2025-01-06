@@ -135,7 +135,9 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/orders', [OrderController::class, 'index'])->name('Orders');
 
-        // In web.php or api.php
+
+        Route::get('/order/details/{orderId}', [OrderController::class, 'showOrderDetails'])->name('DetailOrders');
+
 
         Route::post('/orders/create', [OrderController::class, 'createOrder'])->name('orders.create');
 

@@ -18,7 +18,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::where('user_id', auth()->id())->get(); 
+        $orders = Order::where('user_id', auth()->id())->get();
 
         return view('UsersPage.UserPage.orders', compact('orders'));
     }
@@ -84,4 +84,17 @@ class OrderController extends Controller
                 ]);
         }
     }
+
+
+
+
+    public function showOrderDetails($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+    
+        $items = $order->orderItems; 
+    
+        return view('UsersPage.UserPage.detailOrders', compact('order', 'items'));
+    }
+    
 }
