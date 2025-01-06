@@ -4,7 +4,7 @@
     <div class="container my-5 py-5">
         @foreach($filteredParts as $item)
 
-        <h2 class="text-center my-5">{{ $item->item_name }} </h2>
+        <h2 class="text-center my-5 text-primary">{{ $item->item_name }} </h2>
 
         @if($filteredParts->isEmpty())
         <div class="detail mb-4 text-center">
@@ -32,14 +32,13 @@
                                             <div class="col-md-8">
                                                 <div class="card-body">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <h4 class="card-title">{{ $item->item_name }}
                                                             <!-- <a href="javascript:void(0);" onclick="toggleHeart(this, '{{ $item->id }}', '{{ $item->item_name }}')">
                                                                 <i class="{{ $item->isFavorite ? 'fa-solid' : 'fa-regular' }} fa-heart" style="margin: 5px; color: red;"></i>
                                                             </a> -->
                                                         </h4>
                                                     </div>
                                                     <hr>
-                                                    <h5 class="card-title">{{ $item->item_name }}</h5>
+                                                    <!-- <h5 class="card-title">{{ $item->item_name }}</h5> -->
                                                     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                                                     <p class="card-text">{{ $item->item_description }}</p>
                                                     <p class="card-text">{{ $item->item_price }} JOD</p>

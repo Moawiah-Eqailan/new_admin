@@ -35,6 +35,8 @@
                 </tr>
             </thead>
             <tbody>
+                @if($users->count() > 0)
+
                 @foreach($users as $rs)
                 <tr class="user-row">
                     <td><span class="id-badge">{{ $loop->iteration }}</span></td>
@@ -70,6 +72,7 @@
                     </td>
                 </tr>
                 @endforeach
+                @else
                 <tr>
                     <td colspan="5" class="empty-state">
                         <div class="empty-state-content">
@@ -78,7 +81,7 @@
                         </div>
                     </td>
                 </tr>
-
+                @endif
             </tbody>
         </table>
         @if ($users instanceof \Illuminate\Pagination\LengthAwarePaginator && $users->lastPage() > 1)
@@ -351,12 +354,6 @@
     }
 </script>
 
-<!-- Hidden Delete Forms -->
-@foreach($users as $rs)
-<form id="delete-form-{{ $rs->id }}" action="{{ route('Users.destroy', $rs->id) }}" method="POST" style="display: none;">
-    @csrf
-    @method('DELETE')
-</form>
-@endforeach
+
 
 @endsection

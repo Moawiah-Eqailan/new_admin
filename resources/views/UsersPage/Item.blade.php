@@ -1,15 +1,14 @@
 @include('UsersPage.layouts.header')
 
-<section id="items" class="position-relative"style="margin-top:80px">
+<section id="items" class="position-relative" style="margin-top:80px">
     <div class="container my-5 py-5">
-
-        <h2 class="text-center my-5">
-            <span class="text-primary">{{ $items->first()->product->product_name ?? 'Coming Soon' }}</span>
+        <h2 class="text-center my-5 text-3xl font-bold">
+            <span class="text-blue-600 text-primary">{{ $items->first()->product->product_name ?? 'Coming Soon' }}</span>
         </h2>
 
         @if($items->isEmpty())
         <div class="detail mb-4 text-center">
-            <p class="hero-paragraph">No items found for this Product</p>
+            <p class="text-lg text-gray-600">No items found for this Product</p>
         </div>
         @else
         <div class="swiper items-swiper mb-5">
@@ -18,22 +17,53 @@
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 text-gray-900">
-                                <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
-
+                                <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
                                     @foreach($items as $item)
-                                    <div class="item-card" style="flex: 1 0 calc(33.333% - 1rem); max-width: calc(33.333% - 1rem); box-sizing: border-box;">
-                                        <div class="card">
-                                            <a href="javascript:void(0);" onclick="toggleHeart(this, '{{ $item->id }}', '{{ $item->item_name }}')">
-                                                <i class="{{ $item->isFavorite ? 'fa-solid' : 'fa-regular' }} fa-heart" style="margin: 5px; color: red;"></i>
-                                            </a>
-                                            <img src="{{ asset('storage/' . $item->item_image) }}" class="card-img-top" style="width: 100%; height: 200px; object-fit: contain;">
-                                            <div class="card-body p-4" style="text-align: center;">
-                                                <h4 style="font-size: 16px;" class="card-title">{{ $item->item_name }}</h4>
-                                                <hr>
-                                                <p class="card-text">{{ $item->item_price }} JOD</p>
-                                                <div class="d-flex justify-content-center">
-                                                    <a href="{{ route('Detail', $item->id) }}" class="btn btn-primary" style="margin: 2px;"><i class="fa-solid fa-eye"></i></a>
-                                                    <button style="margin: 2px;" type="button" class="btn btn-primary" onclick="addToCart('{{ $item->id }}', '{{ $item->item_name }}')">
+                                    <div class="item-card transition-transform duration-300 hover:scale-105"
+                                        style="flex: 0 1 calc(33.333% - 2rem); 
+                                                max-width: calc(33.333% - 2rem); 
+                                                min-width: 300px;
+                                                margin-bottom: 2rem;">
+                                        <!-- Heart Icon -->
+
+                                        <a href="javascript:void(0);"
+                                            onclick="toggleHeart(this, '{{ $item->id }}', '{{ $item->item_name }}')">
+                                            <i class="{{ $item->isFavorite ? 'fa-solid' : 'fa-regular' }} fa-heart"
+                                                style="font-size: 1.5rem; color: red;">
+                                            </i>
+                                        </a>
+                                        <div
+                                            style="width: 100%; 
+                                                    display: flex; 
+                                                    flex-direction: column; 
+                                                    align-items: center;
+                                                    position: relative;">
+
+                                            <!-- Image Container -->
+                                            <div class="w-full overflow-hidden rounded-t-lg">
+                                                <img src="{{ asset('storage/' . $item->item_image) }}"
+                                                    class="transition-transform duration-300 hover:scale-105"
+                                                    style="height: 230px; 
+                                                            width: 100%;
+                                                            object-fit: contain;"
+                                                    alt="{{ $item->item_name }}">
+                                            </div>
+
+                                            <!-- Content -->
+                                            <div class="card-body text-center p-6 w-full">
+                                                <h4 class="text-xl font-semibold mb-4">{{ $item->item_name }}</h4>
+                                                <hr class="my-4 border-gray-200">
+                                                <p class="text-lg font-bold text-blue-600 mb-4">{{ $item->item_price }} JOD</p>
+
+                                                <!-- Buttons -->
+                                                <div class="flex justify-center gap-3">
+                                                    <a href="{{ route('Detail', $item->id) }}"
+                                                        class="btn btn-primary inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg transition-colors duration-300 hover:bg-blue-700">
+                                                        <i class="fa-solid fa-eye mr-2"></i>
+                                                    </a>
+                                                    <button type="button"
+                                                        onclick="addToCart('{{ $item->id }}', '{{ $item->item_name }}')"
+                                                        class="btn btn-primary inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg transition-colors duration-300 hover:bg-blue-700">
                                                         <i class="fa-solid fa-cart-shopping"></i>
                                                     </button>
                                                 </div>
@@ -41,7 +71,6 @@
                                         </div>
                                     </div>
                                     @endforeach
-
                                 </div>
                             </div>
                         </div>
@@ -50,7 +79,6 @@
             </div>
         </div>
         @endif
-
     </div>
 </section>
 

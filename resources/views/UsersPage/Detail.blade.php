@@ -7,7 +7,7 @@
 <section id="item-detail" class="position-relative">
     <div class="container my-5 py-5">
         <h2 class="text-center my-5">Detail for <span class="text-primary">{{ $item->item_name }}</span></h2>
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div>
             <div class="p-6 text-gray-900">
                 <div id="demo" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
@@ -34,7 +34,9 @@
                                     </div>
                                     <p class="card-text"><strong>Price:</strong> {{ $item->item_price }} JOD</p>
                                     <div class="d-flex mt-4">
-                                        <button type="button" class="btn btn-primary danger me-2" onclick="addToCart('{{ $item->id }}', '{{ $item->item_name }}')">Add to Cart
+                                        <button type="button"
+                                            onclick="addToCart('{{ $item->id }}', '{{ $item->item_name }}')"
+                                            class="btn btn-primary inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg transition-colors duration-300 hover:bg-blue-700">
                                             <i class="fa-solid fa-cart-shopping"></i>
                                         </button>
                                     </div>
@@ -49,7 +51,10 @@
     </div>
 </section>
 
-<section id="items" class="position-relative"style="margin-top:80px">
+<hr>
+
+
+<section id="items" class="position-relative" style="margin-top:80px">
     <div class="container my-5 py-5">
         <h2 class="text-center my-5">Related <span class="text-primary">Products</span></h2>
         @if($relatedItems->isEmpty())

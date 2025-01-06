@@ -4,12 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ContactUs;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB; 
+
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
+
+    public function index()
+    {
+        $contactMessages = ContactUs::select('user_name','user_email',  'message')->get();
+    
+        $contactMessages = ContactUs::all(); 
+        return view('admin.Contact.Contact', compact('contactMessages'));
+    }
+    
+    public function show($id)
+    {
+        $contact = ContactUs::find($id); 
+    
+        return view('admin.Contact.show', compact('contact'));
+    }
+    
+
+
     public function send(Request $request)
     {
         $request->validate([
@@ -38,22 +58,28 @@ class ContactController extends Controller
         return redirect()->back()->with('success', 'Your message has been sent successfully. Thank you for contacting us');
     }
 
-    // public function showMessages()
-    // {
-    //     // Fetch the last 5 messages from the 'contacts' table
-    //     $messages = DB::table('contact_us')
-    //         ->orderBy('created_at', 'desc')
-    //         ->take(5)
-    //         ->get();
 
-    //         dd($messages); 
-    //         return view('layouts.navbar', compact('messages'));
-    // }
     public function showMessages()
     {
-        $totalMessages = ContactUs::all(); 
-
-        return view('layouts.navbar', compact('totalMessage'));
+        $totalMessages = ContactUs::all();
+        $Contact = $totalMessages->count(); 
+    
+        return view('layouts.navbar', compact('totalMessages', 'Contact'));
     }
+    
+
+
+    public function destroy(string $id)
+    {
+        
+        $Contact = ContactUs::findOrFail($id);
+    
+       
+    
+        $Contact->delete();
+    
+        return redirect()->route('Contact')->with('success', 'Contact deleted successfully');
+    }
+
 
 }

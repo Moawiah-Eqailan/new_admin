@@ -68,10 +68,13 @@
                                             <h6 class="mb-0 item-total-price">{{$cartItem->item->item_price}}</h6>
                                         </div>
                                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                            <form action="{{ route('cart.remove', $cartItem->id) }}" method="POST">
+
+                                            <form id="delete-form-{{ $cartItem->id }}" action="{{ route('cart.remove', $cartItem->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $cartItem->id }}')">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
                                             </form>
                                         </div>
                                     </div>
@@ -105,9 +108,9 @@
                                     </div>
                                     <form action="{{route('orders.create')}}" method="post">
                                         @csrf()
-                                    <button class="btn btn-primary btn-lg btn-block" style="font-size: 12px;">
-                                        Checkout
-                                    </button>
+                                        <button class="btn btn-primary btn-lg btn-block" style="font-size: 12px;">
+                                            Checkout
+                                        </button>
                                     </form>
                                     @endif
 
@@ -124,6 +127,10 @@
 @include('UsersPage.layouts.footer')
 
 <script>
+    function confirmDelete(id) {
+        document.getElementById(`delete-form-${id}`).submit();
+    }
+
     const style = document.createElement('style');
     style.textContent = `
         .text-left {
@@ -186,13 +193,13 @@
     });
 </script>
 @if(session('swal'))
-    <script>
-        Swal.fire({
-            icon: "{{ session('swal')['icon'] }}",
-            title: "{{ session('swal')['title'] }}",
-            text: "{{ session('swal')['text'] }}",
-        }).then(function() {
-            window.location.href = "/";
-        });
-    </script>
+<script>
+    Swal.fire({
+        icon: "{{ session('swal')['icon'] }}",
+        title: "{{ session('swal')['title'] }}",
+        text: "{{ session('swal')['text'] }}",
+    }).then(function() {
+        window.location.href = "/";
+    });
+</script>
 @endif

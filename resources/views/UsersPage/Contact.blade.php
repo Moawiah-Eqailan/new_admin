@@ -231,40 +231,40 @@
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-user"></i> Full Name</label>
-                    <input type="text" name="name" value="{{ Auth::user()->name }}" readonly>
+                    <input type="text" name="name" value="" required>
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-envelope"></i> Email</label>
-                    <input type="email" name="email" value="{{ Auth::user()->email }}" readonly>
+                    <input type="email" name="email" value="" required>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-phone"></i> Phone Number</label>
-                    <input type="tel" name="phone" value="{{ Auth::user()->phone }}" readonly>
+                    <input type="tel" name="phone" value="" required>
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-tag"></i> Subject</label>
-                    <input type="text" name="subject" placeholder="Enter the subject" required>
+                    <input type="text" name="subject" placeholder="Enter the subject" value="" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <label><i class="fas fa-comment"></i> Your Message</label>
-                <textarea name="message" rows="5" placeholder="Write your message here" required></textarea>
+                <textarea name="message" rows="5" placeholder="Write your message here" value="" required></textarea>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label class="form-label"> <i class="fas fa-home"></i> Address / Street</label>
-                    <input name="state" type="text" class="form-input" value="{{ Auth::user()->state }}">
+                    <input name="state" type="text" class="form-input" value="" required>
                 </div>
+
 
                 <div class="form-group">
                     <label><i class="fas fa-city"></i> City</label>
-                    <select name="city" readonly>
-                        <option value="{{ Auth::user()->city }}" selected>{{ Auth::user()->city }}</option>
+                    <select name="city">
                         <option value="Amman">Amman</option>
                         <option value="Zarqa">Zarqa</option>
                         <option value="Irbid">Irbid</option>

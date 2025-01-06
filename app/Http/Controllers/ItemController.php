@@ -291,8 +291,6 @@ class ItemController extends Controller
             ->limit(6)
             ->get();
     
-        logger($relatedItems);
-    
         return view('UsersPage.detail', [
             'item' => $item,
             'relatedItems' => $relatedItems,

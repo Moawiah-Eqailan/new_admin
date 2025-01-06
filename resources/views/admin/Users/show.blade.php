@@ -13,40 +13,94 @@
         </div>
 
         <div class="user-form">
-            <div class="form-group">
-                <label class="form-label">
-                    <i class="fas fa-user me-2" style="margin: 8px;"></i>
-                    Name
-                </label>
-                <input type="text"
-                    name="name"
-                    class="form-input"
-                    value="{{ $users->name }}"
-                    readonly disabled>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-user me-2" style="margin: 8px;"></i>
+                            Name
+                        </label>
+                        <input type="text"
+                            name="name"
+                            class="form-input"
+                            value="{{ $users->name }}"
+                            readonly disabled>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-envelope me-2" style="margin: 8px;"></i>
+                            Email
+                        </label>
+                        <input type="text"
+                            name="email"
+                            class="form-input"
+                            value="{{ $users->email }}"
+                            readonly disabled>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label class="form-label">
-                    <i class="fas fa-envelope me-2" style="margin: 8px;"></i>
-                    Email
-                </label>
-                <input type="text"
-                    name="email"
-                    class="form-input"
-                    value="{{ $users->email }}"
-                    readonly disabled>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-phone me-2" style="margin: 8px;"></i>
+                            Phone
+                        </label>
+                        <input type="text"
+                            name="Phone"
+                            class="form-input"
+                            value="{{ $users->phone }}"
+                            readonly disabled>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-map-marker-alt me-2" style="margin: 8px;"></i>
+                            Address
+                        </label>
+                        <input type="text"
+                            name="Address"
+                            class="form-input"
+                            value="{{ $users->address }}"
+                            readonly disabled>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label class="form-label">
-                    <i class="fas fa-phone me-2" style="margin: 8px;"></i>
-                    Phone
-                </label>
-                <input type="text"
-                    name="Phone"
-                    class="form-input"
-                    value="{{ $users->phone }}"
-                    readonly disabled>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-map-marker-alt me-2" style="margin: 8px;"></i>
+                            City
+                        </label>
+                        <input type="text"
+                            name="City"
+                            class="form-input"
+                            value="{{ $users->city }}"
+                            readonly disabled>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-map-marker-alt me-2" style="margin: 8px;"></i>
+                            State
+                        </label>
+                        <input type="text"
+                            name="Phone"
+                            class="form-input"
+                            value="{{ $users->state }}"
+                            readonly disabled>
+                    </div>
+                </div>
             </div>
 
 
@@ -78,11 +132,12 @@
 
             <div class="form-actions">
                 <a href="{{ route('Users') }}" class="return-btn">
-                    <i class="fas fa-arrow-left me-2"></i>
+                    <i class="fas fa-arrow-left me-2" style="margin: 8px;"></i>
                     Back to Users
                 </a>
             </div>
         </div>
+
     </div>
 </div>
 

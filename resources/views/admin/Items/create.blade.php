@@ -283,7 +283,6 @@
 </style>
 
 <script>
-    // Reuse the same image preview functionality
     document.getElementById('image').addEventListener('change', function(e) {
         const preview = document.getElementById('imagePreview');
         const file = e.target.files[0];

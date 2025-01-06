@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
@@ -102,19 +103,25 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(string $category_id)
     {
+        
         $category = Category::findOrFail($category_id);
-
+    
+        if ($category->products()->exists()) {
+            return redirect()->route('Categories')->with('error', 'Cannot delete this category as it has associated products.');
+        }
+    
         if ($category->category_image && Storage::exists('public/' . $category->category_image)) {
             Storage::delete('public/' . $category->category_image);
         }
-
+    
         $category->delete();
-
+    
         return redirect()->route('Categories')->with('success', 'Category deleted successfully');
     }
-
+    
     public function searchh(Request $request)
     {
         $query = $request->input('query');

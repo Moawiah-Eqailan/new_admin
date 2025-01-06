@@ -1,4 +1,5 @@
 <?php
+
 use App\Mail\Email;
 
 use Illuminate\Support\Facades\Route;
@@ -94,6 +95,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/ssearchh', 'ssearchh')->name('ssearchh');
         });
 
+        // Contact Route
+        Route::controller(ContactController::class)->prefix('Contact')->group(function () {
+            Route::get('', 'index')->name('Contact');
+            Route::get('show/{id}', 'show')->name('Contact.show');
+            Route::delete('destroy/{id}', 'destroy')->name('Contact.destroy');
+        });
+
+
         // Profile Route
         Route::get('profile', [AuthController::class, 'profile'])->name('profile');
     });
@@ -101,134 +110,143 @@ Route::middleware('auth')->group(function () {
 
 
 
+Route::middleware('auth')->group(function () {
+    // Middleware for Customer Role
+    Route::group(['middleware' => function ($request, $next) {
+        if (Auth::user()->role !== 'customer') {
+            return redirect()->route('login');
+        }
+        return $next($request);
+    }], function () {
 
-// User Profile Routes
-Route::get('/UserProfile', function () {
-    return view('UsersPage.UserPage.UserProfile');
-})->name('UserProfile');
+        // User Profile Routes
+        Route::get('/UserProfile', function () {
+            return view('UsersPage.UserPage.UserProfile');
+        })->name('UserProfile');
 
-// Route::get('/order', function () {
-//     return view('UsersPage.UserPage.order');
-// })->name('order');
+        // Route::get('/order', function () {
+        //     return view('UsersPage.UserPage.order');
+        // })->name('order');
 
-// Route::get('/order', [OrderController::class, 'showOrders'])->name('order');
-
-
-
-Route::get('/orders', [OrderController::class, 'index'])->name('Orders');
-
-// In web.php or api.php
-
-Route::post('/orders/create', [OrderController::class, 'createOrder'])->name('orders.create');
-
-
-
-Route::get('/editProfile', function () {
-    return view('UsersPage.UserPage.EditUserProfile');
-})->name('EditUserProfile');
-
-Route::get('/changepassword', function () {
-    return view('UsersPage.UserPage.ChangePassword');
-})->name('ChangePassword');
-Route::post('/password/update', [UserController::class, 'updatePassword'])->name('password.update');
-
-Route::post('/profile/update', [UserController::class, 'updateUserProfile'])->name('profile.update');
+        // Route::get('/order', [OrderController::class, 'showOrders'])->name('order');
 
 
 
+        Route::get('/orders', [OrderController::class, 'index'])->name('Orders');
 
-// Home Page Routes
-Route::get('/', [HomeController::class, 'home'])->name('home');
-Route::get('/find-parts', [HomeController::class, 'findParts']);
+        // In web.php or api.php
 
-// Product Routes for Users
-Route::get('/product', [ProductController::class, 'view'])->name('product');
-Route::get('/product/{category_id}', [ProductController::class, 'showProducts'])->name('product');
-Route::get('/get-products/{category_id}', [ProductController::class, 'getProductsByCategory']);
-
-// Item Routes
-Route::get('/Item/{product_id}', [ItemController::class, 'showItem'])->name('Item');
-Route::get('/item/{id}', [ItemController::class, 'Item'])->name('Item');
-Route::get('/get-items/{product_id}', [ItemController::class, 'getItemsByProduct']);
-Route::get('/detail/{id}', [ItemController::class, 'detail'])->name('Detail');
-Route::get('/detail/{id}', [ItemController::class, 'showItemDetail'])->name('Detail');
+        Route::post('/orders/create', [OrderController::class, 'createOrder'])->name('orders.create');
 
 
-// Favorites Routes
-Route::get('/favorites', [FavoriteController::class, 'index'])->name('Favorites');
-Route::post('/favorites/toggle/{id}', [FavoriteController::class, 'toggle']);
-Route::post('/favorites/{item_id}', [FavoriteController::class, 'addToCart'])->name('Favorites');
 
-// Cart Routes
-Route::post('/cart/{item_id}/add', [CartController::class, 'addToCart'])->name('cart.add');
-Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
-Route::post('/cart/update/{cart_id}', [CartController::class, 'updateCart'])->name('cart.update');
-Route::delete('/cart/remove/{cart_id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-Route::post('/item/{item_id}', [CartController::class, 'addToCart'])->name('item');
-Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
-// Static Pages
-Route::get('/about', function () {
-    return view('UsersPage.About');
-})->name('about');
+        Route::get('/editProfile', function () {
+            return view('UsersPage.UserPage.EditUserProfile');
+        })->name('EditUserProfile');
+
+        Route::get('/changepassword', function () {
+            return view('UsersPage.UserPage.ChangePassword');
+        })->name('ChangePassword');
+        Route::post('/password/update', [UserController::class, 'updatePassword'])->name('password.update');
+
+        Route::post('/profile/update', [UserController::class, 'updateUserProfile'])->name('profile.update');
 
 
 
 
+        // Home Page Routes
+        Route::get('/', [HomeController::class, 'home'])->name('home');
+        Route::get('/find-parts', [HomeController::class, 'findParts']);
+
+        // Product Routes for Users
+        Route::get('/product', [ProductController::class, 'view'])->name('product');
+        Route::get('/product/{category_id}', [ProductController::class, 'showProducts'])->name('product');
+        Route::get('/get-products/{category_id}', [ProductController::class, 'getProductsByCategory']);
+
+        // Item Routes
+        Route::get('/Item/{product_id}', [ItemController::class, 'showItem'])->name('Item');
+        Route::get('/item/{id}', [ItemController::class, 'Item'])->name('Item');
+        Route::get('/get-items/{product_id}', [ItemController::class, 'getItemsByProduct']);
+        Route::get('/detail/{id}', [ItemController::class, 'detail'])->name('Detail');
+        Route::get('/detail/{id}', [ItemController::class, 'showItemDetail'])->name('Detail');
+
+
+        // Favorites Routes
+        Route::get('/favorites', [FavoriteController::class, 'index'])->name('Favorites');
+        Route::post('/favorites/toggle/{id}', [FavoriteController::class, 'toggle']);
+        Route::post('/favorites/{item_id}', [FavoriteController::class, 'addToCart'])->name('Favorites');
+
+        // Cart Routes
+        Route::post('/cart/{item_id}/add', [CartController::class, 'addToCart'])->name('cart.add');
+        Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
+        Route::post('/cart/update/{cart_id}', [CartController::class, 'updateCart'])->name('cart.update');
+        Route::delete('/cart/remove/{cart_id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+        Route::post('/item/{item_id}', [CartController::class, 'addToCart'])->name('item');
+        Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
+
+        
+
+
+
+        // Static Pages
+        Route::get('/about', function () {
+            return view('UsersPage.About');
+        })->name('about');
 
 
 
 
-Route::get('/contact', function () {
-    return view('UsersPage.contact');  
+
+
+
+
+        Route::get('/contact', function () {
+            return view('UsersPage.contact');
+        });
+        Route::post('/contact', [ContactController::class, 'send'])->name('contact');
+
+
+
+
+
+
+        // Filter and Search Routes
+        Route::get('/filter', [AuthController::class, 'filter'])->name('filter');
+        Route::post('/filter/toggle/{id}', [FilterController::class, 'toggle']);
+        Route::post('/filter/toggle/{id}', [FilterController::class, 'index']);
+
+
+
+        Route::get('/favorites/count', function () {
+            return response()->json([
+                'count' => DB::table('favorites')->where('user_id', '=', Auth::user()->id)->count('id')
+            ]);
+        });
+
+        Route::get('/cart/count', function () {
+            return response()->json([
+                'count' => DB::table('carts')->where('user_id', '=', Auth::user()->id)->count('id')
+            ]);
+        });
+
+
+        Route::get('/check-auth', function () {
+            return response()->json(['isAuthenticated' => auth()->check()]);
+        });
+
+
+
+
+        Route::get('/CheckOut', function () {
+            return view('UsersPage.CheckOut');
+        })->name('CheckOut');
+
+
+
+
+
+        Route::get('/orders/create', function () {
+            return view('UsersPage.UserPage.Orders');
+        });
+    });
 });
-Route::post('/contact', [ContactController::class, 'send'])->name('contact');  
-
-
-
-
-
-
-// Filter and Search Routes
-Route::get('/filter', [AuthController::class, 'filter'])->name('filter');
-Route::post('/filter/toggle/{id}', [FilterController::class, 'toggle']);
-Route::post('/filter/toggle/{id}', [FilterController::class, 'index']);
-
-
-
-Route::get('/favorites/count', function () {
-    return response()->json([
-        'count' => DB::table('favorites')->where('user_id', '=', Auth::user()->id)->count('id')
-    ]);
-});
-
-Route::get('/cart/count', function () {
-    return response()->json([
-        'count' => DB::table('carts')->where('user_id', '=', Auth::user()->id)->count('id')
-    ]);
-});
-
-
-Route::get('/check-auth', function () {
-    return response()->json(['isAuthenticated' => auth()->check()]);
-});
-
-
-
-
-Route::get('/CheckOut', function () {
-    return view('UsersPage.CheckOut');
-})->name('CheckOut');
-
-
-
-
-
-Route::get('/orders/create', function () {
-    return view('UsersPage.UserPage.Orders');  
-});
-
-
-
-
-
-

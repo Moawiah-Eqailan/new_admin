@@ -32,7 +32,7 @@
     <script src="{{ asset('js/modernizr.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-   
+
 </head>
 
 <body>
@@ -53,18 +53,16 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('about') }}">About</a>
                         </li>
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('contact') }}">Contact</a>
+                        </li>
                     </ul>
                     @if (Route::has('login'))
 
 
                     <ul class="navbar-nav ms-auto">
                         @auth
-                        <ul class="navbar-nav" style="margin-right: 530px;">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('contact') }}">Contact</a>
-                            </li>
-                        </ul>
+
                         <div class="d-flex align-items-center gap-4">
 
                             @php($favorites = DB::table('favorites')->where('user_id', '=', Auth::user()->id)->count('id'))

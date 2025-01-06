@@ -129,13 +129,16 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
-        $product->items()->delete();
-
+    
+        if ($product->items()->exists()) {
+            return redirect()->route('products')->with('error', 'Cannot delete this product as it has associated items.');
+        }
+    
         $product->delete();
-
+    
         return redirect()->route('products')->with('success', 'Product deleted successfully');
     }
-
+    
 
 
 

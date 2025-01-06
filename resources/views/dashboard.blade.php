@@ -182,7 +182,8 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 Pending Orders</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$totalMessage}}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"> {{$totalStatus }}
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-comments fa-2x text-warning opacity-75"></i>
@@ -249,7 +250,7 @@
                                     </td>
 
                                 </tr>
-                      
+
                                 <tr class="stats-row">
                                     <td class="text-center">3</td>
                                     <td>

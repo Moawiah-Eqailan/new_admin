@@ -77,6 +77,15 @@
                                 });
                             </script>
                             @endif
+                            @if(session('error'))
+                            <script>
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: '{{ session("error") }}'
+                                });
+                            </script>
+                            @endif
                             <a href="{{ route('products.edit', $rs->product_id)}}" class="action-btn edit-btn" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </a>

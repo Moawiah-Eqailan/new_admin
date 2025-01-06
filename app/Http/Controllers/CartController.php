@@ -122,4 +122,6 @@ class CartController extends Controller
         $cartItems = Cart::where('user_id', $userId)->get();
         return response()->json($cartItems);
     }
+    
+    
 }

@@ -72,12 +72,27 @@
                                 });
                             </script>
                             @endif
+                            @if(session('error'))
+                            <script>
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: '{{ session("error") }}'
+                                });
+                            </script>
+                            @endif
+
                             <a href="{{ route('Categories.edit', $rs->category_id)}}" class="action-btn edit-btn" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </a>
+                            <form id="delete-form-{{ $rs->category_id }}" action="{{ route('Categories.destroy', $rs->category_id) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('DELETE')
+                            </form>
                             <button type="button" class="action-btn delete-btn" onclick="confirmDelete('{{ $rs->category_id }}')" title="Delete">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
+
                         </div>
                     </td>
                 </tr>
@@ -400,12 +415,6 @@
     }
 </script>
 
-<!-- Hidden Delete Forms -->
-@foreach($categories as $rs)
-<form id="delete-form-{{ $rs->category_id }}" action="{{ route('Categories.destroy', $rs->category_id) }}" method="POST" style="display: none;">
-    @csrf
-    @method('DELETE')
-</form>
-@endforeach
+
 
 @endsection
