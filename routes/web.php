@@ -190,16 +190,6 @@ Route::middleware('auth')->group(function () {
 
 
 
-        // Static Pages
-        Route::get('/about', function () {
-            return view('UsersPage.About');
-        })->name('about');
-
-
-        Route::get('/contact', function () {
-            return view('UsersPage.contact');
-        });
-        Route::post('/contact', [ContactController::class, 'send'])->name('contact');
 
 
 
@@ -236,3 +226,15 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
+
+
+        // Static Pages
+        Route::get('/about', function () {
+            return view('UsersPage.About');
+        })->name('about');
+
+
+        Route::get('/contact', function () {
+            return view('UsersPage.contact');
+        });
+        Route::post('/contact', [ContactController::class, 'send'])->name('contact');

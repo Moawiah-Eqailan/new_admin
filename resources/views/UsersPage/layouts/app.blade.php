@@ -79,7 +79,7 @@
                 <div class="col-6 col-lg-3 text-start my-4">
                     <div class="bullet"></div>
                     <h5 class="text-uppercase mt-5"> Payment Options </h5>
-                    <p>You can pay using a credit card (Visa) or choose to pay cash on delivery. Choose the option that's most convenient for you.</p>
+                    <p>You can pay using choose to pay cash on delivery..</p>
                 </div>
 
                 <div class="col-6 col-lg-3 text-start my-4">
@@ -105,7 +105,7 @@
     <section id="rental" class="position-relative">
         <div class="container my-5 py-5">
             <h2 class="text-center my-5 text-3xl font-bold">Cars for <span class="text-blue-600">Category</span></h2>
-            
+
             <div class="swiper rental-swiper mb-5">
                 <div class="swiper-wrapper">
                     <div class="py-12">
@@ -114,29 +114,29 @@
                                 <div class="p-6 text-gray-900">
                                     <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
                                         @foreach($categories as $rs)
-                                        <div class="category-item transition-transform duration-300 hover:scale-105" 
-                                             style="flex: 0 1 calc(33.333% - 2rem); 
+                                        <div class="category-item transition-transform duration-300 hover:scale-105"
+                                            style="flex: 0 1 calc(33.333% - 2rem); 
                                                     max-width: calc(33.333% - 2rem); 
                                                     min-width: 300px;
                                                     margin-bottom: 2rem;">
-                                            <div  
-                                                 style="width: 100%; 
+                                            <div
+                                                style="width: 100%; 
                                                         display: flex; 
                                                         flex-direction: column; 
                                                         align-items: center;">
                                                 <div class="w-full overflow-hidden rounded-t-lg">
-                                                    <img src="{{ asset('storage/' . $rs->category_image) }}" 
-                                                         class="card-img-top transition-transform duration-300 hover:scale-105"
-                                                         style="height: 230px; 
+                                                    <img src="{{ asset('storage/' . $rs->category_image) }}"
+                                                        class="card-img-top transition-transform duration-300 hover:scale-105"
+                                                        style="height: 230px; 
                                                                 width: 100%;
-                                                                object-fit: contain;" 
-                                                         alt="{{ $rs->category_name }}">
+                                                                object-fit: contain;"
+                                                        alt="{{ $rs->category_name }}">
                                                 </div>
                                                 <div class="card-body text-center p-6 w-full">
                                                     <h5 class="card-title text-xl font-semibold mb-4">{{ $rs->category_name }}</h5>
                                                     <hr class="my-4 border-gray-200">
                                                     <a href="{{ route('product', ['category_id' => $rs->category_id]) }}" 
-                                                       class="btn btn-primary inline-block px-6 py-3 bg-blue-600 text-white rounded-lg transition-colors duration-300 hover:bg-blue-700">
+                                                        class="btn btn-primary inline-block px-6 py-3 bg-blue-600 text-white rounded-lg transition-colors duration-300 hover:bg-blue-700 view-more">
                                                         View More
                                                     </a>
                                                 </div>
@@ -153,7 +153,7 @@
         </div>
     </section>
 
- 
+
 
 
 
@@ -219,6 +219,32 @@
 
         window.location.href = `/filter?category=${categoryId}&product=${productId}&id=${id}`;
     });
+
+
+
+    document.querySelectorAll('.view-more').forEach(button => {
+    button.addEventListener('click', function(event) {
+        @auth
+        return;
+        @else
+        event.preventDefault();
+        Swal.fire({
+            title: 'Please log in first',
+            text: 'You must log in to access your Product.',
+            icon: 'warning',
+            confirmButtonText: 'Log In',
+            showCancelButton: true,
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '{{ route("login") }}';
+            }
+        });
+        @endauth
+    });
+});
+
 </script>
 
 
@@ -242,6 +268,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+
 
 
 </body>

@@ -170,4 +170,29 @@
                 })
                 .catch(error => console.log(error));
         }
+
+
+
+
+        document.querySelector('.fa-heart').addEventListener('click', function(event) {
+            @auth
+            return;
+            @else
+            event.preventDefault();
+            Swal.fire({
+                title: 'Please log in first',
+                text: 'You must log in to access your Favorites.',
+                icon: 'warning',
+                confirmButtonText: 'Log In',
+                showCancelButton: true,
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '{{ route("login") }}';
+
+                }
+            });
+            @endauth
+        });
     </script>

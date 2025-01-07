@@ -178,7 +178,6 @@
     };
 
     function addToCart(itemId, itemName) {
-        // تحقق من تسجيل الدخول
         fetch(`/check-auth`, {
                 method: 'GET',
                 headers: {
@@ -189,7 +188,6 @@
             .then(response => response.json())
             .then(data => {
                 if (data.isAuthenticated) {
-                    // إذا كان المستخدم مسجلاً دخوله، قم بإضافة العنصر إلى السلة
                     fetch(`/item/${itemId}`, {
                             method: 'POST',
                             headers: {
@@ -203,11 +201,9 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                // تم إضافة العنصر إلى السلة بنجاح
                                 console.log(`${itemName} تمت إضافته إلى السلة.`);
-                                location.reload(); // تحديث السلة
+                                location.reload();
                             } else {
-                                // فشل في إضافة العنصر
                                 console.error('فشل في إضافة المنتج إلى السلة.');
                             }
                         })
@@ -215,7 +211,6 @@
                             console.error('حدث خطأ أثناء إضافة العنصر:', error);
                         });
                 } else {
-                    // إذا لم يكن المستخدم مسجلاً دخوله
                     console.error('يرجى تسجيل الدخول لإضافة العنصر.');
                 }
             })

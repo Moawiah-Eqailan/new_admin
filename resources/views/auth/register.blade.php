@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Auto Parts Store</title>
+
+    <title>BATPARTS</title>
+    <link href="{{ asset('images/BATPARTS.jpg') }}" type="image/x-icon" rel="icon">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -90,7 +87,7 @@
                 <div class="relative z-10">
                     <i class="fas fa-user-plus text-[#94CA21] text-6xl mb-4"></i>
                     <h2 class="text-2xl font-bold text-gray-800">Create Account</h2>
-                    <p class="text-gray-600 mt-2">Join Auto Parts Store</p>
+                    <p class="text-gray-600 mt-2">Join BAT<span class="text-primary" style="color:  #94CA21; font-weight: bold;">PARTS</span></p>
                 </div>
             </div>
 
@@ -185,5 +182,3 @@
         </div>
     </main>
 </body>
-
-</html>
