@@ -1,9 +1,11 @@
 <head>
 
-<title>BATPARTS</title>
-<link href="{{ asset('images/BATPARTS.jpg') }}" type="image/x-icon" rel="icon">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <title>BATPARTS</title>
+    <link href="{{ asset('images/BATPARTS.jpg') }}" type="image/x-icon" rel="icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
     <style>
         @keyframes slideIn {
             from {
@@ -100,14 +102,12 @@
                     <input id="email" type="email" name="email" required placeholder="Email Address"
                         class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
                     <i class="fas fa-envelope input-icon"></i>
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
 
                 <div class="mb-6 relative">
                     <input id="password" type="password" name="password" required placeholder="Password"
                         class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:border-[#94CA21] focus:ring-2 focus:ring-[#94CA21] focus:ring-opacity-50 transition-all duration-300">
                     <i class="fas fa-lock input-icon"></i>
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
 
                 </div>
 
